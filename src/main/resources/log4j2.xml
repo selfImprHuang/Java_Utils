@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ @(#) log4j2.xml
+  ~ log4j的配置文件
+  ~ <br> Copyright:  Copyright (c) 2018
+  ~ <br> Company:黄志军
+  ~ <br> @author selfImpr
+  ~ <br> 2018-05-21 16:20:42
+  ~ <br> @description
+  ~
+  ~
+  -->
+
+<Configuration status="WARN">
+    <Properties>
+
+        <Property name="appId" value="Spring"/>
+
+        <Property name="moduleId" value="Spring"/>
+
+        <!--<Property name="logDir" value="/opt/logs/"/>-->
+        <Property name="logDir" value="F:/sunsharing-program-code/运行日志/sunsharing/logs/"/><!-- windows use this-->
+        <Property name="logFilePrefix" value="${logDir}/${appId}/${appId}-${moduleId}"/>
+        <Property name="commonPath" value="${logFilePrefix}.log"/>
+        <Property name="exceptionPath" value="${logFilePrefix}-exception.log"/>
+        <Property name="accessPath" value="${logFilePrefix}-access.log"/>
+        <Property name="commonPattern" value="%d{MM-dd HH:mm:ss.SSS} %p %thread %X{invokeNo} %logger{40} %line %msg%n"/>
+    </Properties>
+
+    <Appenders>
+
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${commonPattern}"/>
+        </Console>
+
+        <RollingFile name="fileAppender" fileName="${commonPath}" filePattern="${commonPath}.%d{yyyy-MM-dd}" append="true">
+            <PatternLayout pattern="${commonPattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="errorAppender" fileName="${exceptionPath}" filePattern="${exceptionPath}.%d{yyyy-MM-dd}" append="true">
+            <PatternLayout pattern="${commonPattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+            </Policies>
+            <Filters>
+                <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+        </RollingFile>
+
+        <RollingFile name="accessAppender" fileName="${accessPath}" filePattern="${accessPath}.%d{yyyy-MM-dd}" append="true">
+            <PatternLayout pattern="${commonPattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+            </Policies>
+        </RollingFile>
+
+    </Appenders>
+
+    <Loggers>
+        <Logger name="com.sunsharing" level="DEBUG"/>
+        <Logger name="jdbc.sqltiming" level="INFO"/>
+
+        <Root level="WARN">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="fileAppender"/>
+            <AppenderRef ref="errorAppender"/>
+        </Root>
+    </Loggers>
+
+</Configuration>

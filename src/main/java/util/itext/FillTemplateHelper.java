@@ -25,7 +25,6 @@ import com.itextpdf.tool.xml.pipeline.css.CssResolverPipeline;
 import com.itextpdf.tool.xml.pipeline.end.ElementHandlerPipeline;
 import com.itextpdf.tool.xml.pipeline.html.HtmlPipeline;
 import com.itextpdf.tool.xml.pipeline.html.HtmlPipelineContext;
-import org.apache.log4j.Logger;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
@@ -37,7 +36,6 @@ import java.nio.charset.Charset;
  * @author iText
  */
 public class FillTemplateHelper extends PdfPageEventHelper {
-    public static Logger logger = Logger.getLogger(FillTemplateHelper.class);
 
     // initialized in constructor
     protected PdfReader reader;
@@ -90,7 +88,6 @@ public class FillTemplateHelper extends PdfPageEventHelper {
         XMLWorker worker = new XMLWorker(css, true);
         XMLParser p = new XMLParser(worker);
         p.parse(new FileInputStream(content), Charset.forName("utf8"));
-        logger.debug("元素转换成功");
         return elements;
     }
 
@@ -116,7 +113,6 @@ public class FillTemplateHelper extends PdfPageEventHelper {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        logger.debug("元素转换成功");
         return elements;
     }
 

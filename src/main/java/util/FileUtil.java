@@ -4,8 +4,6 @@ package util;
 
 
 import entity.FileItem;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -20,13 +18,11 @@ import java.util.List;
  */
 public class FileUtil {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FileUtil.class);
-
     private static final byte[] BUF = new byte[1024];
 
     private static final int BUF_SIZE = 1024;
 
-        public static void deleteFile(String filePath) {
+    public static void deleteFile(String filePath) {
             File file = new File(filePath);
             if (!file.exists()) {
                 throw new RuntimeException("文件不存在");
@@ -67,5 +63,65 @@ public class FileUtil {
                 e.printStackTrace();
             }
         });
+    }
+
+    public static boolean fileExist(String filePath){
+        File file = new File(filePath);
+        return file.exists();
+    }
+
+    public static boolean  isFile(String filePath){
+        File file = new File(filePath);
+        if ( file.exists()){
+            return file.isFile();
+        }
+        return false;
+    }
+
+    public static boolean isDir(String filePath){
+        File file = new File(filePath);
+        if ( file.exists()){
+            return file.isDirectory();
+        }
+        return false;
+    }
+
+    /**
+     * 文件已存在或者创建成功返回true
+     * 文件不存在或者非文件（文件夹）或者创建失败，返回false
+     */
+    public static boolean createFile(String filePath){
+        if(fileExist(filePath)){
+            return isFile(filePath);
+        }
+        File file = new File(filePath);
+        try {
+            return file.createNewFile();
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    /**
+     * 创建并获取一个File对象
+     * 如果是文件、创建成功返回对应的文件对象
+     * 其他情况直接返回null.
+     */
+    public static File createGetFile(String filePath){
+        if(fileExist(filePath)){
+            if ( isFile(filePath)){
+                return new File(filePath);
+            }
+        }
+        File file = new File(filePath);
+        try {
+            boolean result = file.createNewFile();
+            if (result){
+                return file;
+            }
+        } catch (IOException e) {
+            return null;
+        }
+        return null;
     }
 }
