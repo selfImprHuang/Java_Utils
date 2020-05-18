@@ -21,3 +21,5 @@
 
 2020/5/15 : 添加zip压缩工具类ZipOutputUtil、TarArchiveGZIPOutputUtil及其单测类ZipTest、添加树节点工具类TreeUtils和单测类
 添加验证码工具类CaptchaUtil和单测、添加二维码工具类QRCodeUtil和单测，修改FileUtil添加部分方法、删除log4j依赖
+
+2020/5/18 : 添加xml、json转换工具JsonBinder和XmlBinder，添加测试代码,添加图片压缩工具类PicturesCompressUtil以及单测，增加FileUtil中文件内容读入读出方法

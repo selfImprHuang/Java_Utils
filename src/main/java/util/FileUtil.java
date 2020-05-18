@@ -5,10 +5,7 @@ package util;
 
 import entity.FileItem;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 
 /**
@@ -123,5 +120,50 @@ public class FileUtil {
             return null;
         }
         return null;
+    }
+
+    /**
+     * 文件转换成byte数组
+     */
+    public static byte[] fileToByte(String filePath) {
+        FileInputStream in = null;
+        try {
+            in = new FileInputStream(new File(filePath));
+            byte[] bytes = new byte[in.available()];
+            in.read(bytes);
+            return bytes;
+        } catch (IOException e) {
+           throw new RuntimeException("转换失败",e);
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    /**
+     * byte数组写入文件
+     */
+    public static void bytesToFile(String filePath,byte[] content){
+        FileOutputStream out = null;
+        try {
+            out = new FileOutputStream(new File(filePath));
+            out.write(content);
+            out.flush();
+        } catch (IOException e) {
+            throw new RuntimeException("写入失败",e);
+        } finally {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }
