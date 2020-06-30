@@ -3,13 +3,18 @@
 package util;
 
 
+import com.google.common.collect.Lists;
 import entity.FileItem;
+import org.springframework.util.CollectionUtils;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 /**
- * 网宿业务--日志下载
  *
  * @author huangzj1
  */
@@ -42,8 +47,7 @@ public class FileUtil {
 
         fileItems.forEach(fileItem -> {
             File fileItemFile = new File(dirPath + File.separator + fileItem.getFileName());
-            BufferedWriter writer = null;
-            FileOutputStream fileOutputStream = null;
+            FileOutputStream fileOutputStream;
 
             try {
                 //创建文件
@@ -57,7 +61,7 @@ public class FileUtil {
                 fileOutputStream.close();
                 fileItem.getInputStream().close();
             } catch (IOException e) {
-                e.printStackTrace();
+               throw new RuntimeException("生成文件错误");
             }
         });
     }
@@ -165,5 +169,95 @@ public class FileUtil {
                 }
             }
         }
+    }
+
+
+    /**
+     * 拿到文件夹下面的所有文件夹(包括它自己)
+     */
+    public static List<File> findAllDirFromDir(String dirPath){
+        File dir = new File(dirPath);
+        if(!dir.exists() || !dir.isDirectory()){
+            throw new RuntimeException("非文件夹或者文件夹位置错误");
+        }
+        List<File> result = findDir(dir);
+        result.add(dir);
+        return result;
+    }
+
+    private static List<File> findDir(File file ){
+        List<File> list = Lists.newArrayList();
+        for(File child : Objects.requireNonNull(file.listFiles())){
+            if(child.isDirectory()){
+                list.add(child);
+                List<File> tempList = findDir(child);
+                if(!CollectionUtils.isEmpty(tempList)){
+                    list.addAll(tempList);
+                }
+            }
+        }
+        return list;
+    }
+
+
+    /**
+     * 拿到文件夹下面的所有空文件夹
+     */
+    public static List<File> findAllEmptyDirFromDir( String dirPath){
+        List<File> list = Lists.newArrayList();
+        File dir = new File(dirPath);
+        if(!dir.exists() || !dir.isDirectory()){
+            throw new RuntimeException("非文件夹或者文件夹位置错误");
+        }
+        List<File> allList =  findAllDirFromDir(dirPath);
+        for(File dirFile:allList){
+            if(isEmptyFile(dirFile)){
+                list.add(dirFile);
+            }
+        }
+        return list;
+    }
+
+
+    /**
+     * 通过目录获取目录下所有的文件
+     */
+    public static List<File> findAllFile(File dir){
+        List<File> list = Lists.newArrayList();
+        for (File file : Objects.requireNonNull(dir.listFiles())){
+            if(file.isFile()){
+                list.add(file);
+            }else{
+                List<File> tempList = findAllFile(file);
+                if(!CollectionUtils.isEmpty(tempList)){
+                    list.addAll(tempList);
+                }
+            }
+        }
+        return list;
+    }
+
+    private static boolean isEmptyFile(File dir) {
+        List<File> child = findAllFile(dir);
+        return  CollectionUtils.isEmpty(child);
+    }
+
+
+    /**
+     * 拿到文件夹下面的所有非空文件夹
+     */
+    public static List<File> findAllNotEmptyDirFromDir( String dirPath){
+        List<File> list = Lists.newArrayList();
+        File dir = new File(dirPath);
+        if(!dir.exists() || !dir.isDirectory()){
+            throw new RuntimeException("非文件夹或者文件夹位置错误");
+        }
+        List<File> allList =  findAllDirFromDir(dirPath);
+        for(File dirFile:allList){
+            if(!isEmptyFile(dir)){
+                list.add(dirFile);
+            }
+        }
+        return list;
     }
 }

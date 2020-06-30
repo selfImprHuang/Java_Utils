@@ -23,3 +23,7 @@
 添加验证码工具类CaptchaUtil和单测、添加二维码工具类QRCodeUtil和单测，修改FileUtil添加部分方法、删除log4j依赖
 
 2020/5/18 : 添加xml、json转换工具JsonBinder和XmlBinder，添加测试代码,添加图片压缩工具类PicturesCompressUtil以及单测，增加FileUtil中文件内容读入读出方法
+
+2020/5/22 : 添加FullFillTimeValueUtil单测类、添加FileUtil文件夹方法、添加FileUtilTest单测类
+
+2020/6/30 ：添加FileUtil获取文件夹文件、单测
