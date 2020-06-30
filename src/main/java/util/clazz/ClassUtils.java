@@ -27,7 +27,7 @@ public class ClassUtils {
     /**
      * final基本类型对象
      */
-    private static List<Class> basicWrapType = new ArrayList<>();
+    private static List<Class> basicWrapType;
 
 
     static {
@@ -214,9 +214,10 @@ public class ClassUtils {
     }
 
 
+    @SuppressWarnings("unchecked")
     public static Set<Class> getClassesByInterface(String[] filePath, Class interfaceClass) {
-        Set<Class> interfaceImpClasses = new HashSet<Class>();
-        Set<Class> classes = new HashSet<Class>();
+        Set<Class> interfaceImpClasses = new HashSet<>();
+        Set<Class> classes = new HashSet<>();
 
         for (String path : filePath) {
             //把前面那个"/"去掉
@@ -240,7 +241,6 @@ public class ClassUtils {
     /**
      * @param file        查找路径的File对象 -- 不区分是不是抽象类或者是借口
      * @param packageName 查找的路径（根）
-     * @return
      */
     public static Set<Class> getAllClass(File file, String packageName) {
         Set<Class> classSet = new HashSet<>();
@@ -329,16 +329,17 @@ public class ClassUtils {
     }
 
 
-    public static <T> T newInstance(String ClassName,Class<T> surperClass){
+    @SuppressWarnings("unchecked")
+    public static <T> T newInstance(String className,Class<T> superClass){
         Class<?> classType = null;
         try {
-            classType = Class.forName(ClassName);
+            classType = Class.forName(className);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("生成Class出错",e);
         }
 
-        if(!surperClass.isAssignableFrom(classType)){
-            throw new RuntimeException("类必须继承" + surperClass.getName());
+        if(!superClass.isAssignableFrom(classType)){
+            throw new RuntimeException("类必须继承" + superClass.getName());
         }
 
         Class<T> classes = (Class<T>) classType;
