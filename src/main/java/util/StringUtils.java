@@ -23,7 +23,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author selfImpr
+ * @author 志军
  * 补充Strings的缺失
  */
 class StringUtils {

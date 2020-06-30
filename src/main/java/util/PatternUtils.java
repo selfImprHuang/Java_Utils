@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
  * 参考网上的地址：http://tools.jb51.net/regex/create_reg
  * https://www.jb51.net/article/115170.htm
  *
- * @author selfImpr
+ * @author 志军
  */
 public class PatternUtils {
 

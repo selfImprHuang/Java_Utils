@@ -6,6 +6,7 @@ import java.text.MessageFormat;
 
 /**
  * Created by huangzj on 2017/8/21.
+ * @author 志军
  */
 public class MessageUtils {
     /**

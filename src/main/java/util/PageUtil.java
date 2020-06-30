@@ -24,7 +24,7 @@ import static java.lang.Math.min;
 /**
  * 分页工具类
  *
- * @author huangzj
+ * @author 志军
  * @date
  */
 public class PageUtil {
