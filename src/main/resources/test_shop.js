@@ -63,12 +63,12 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
     }
     message += "----\n\n"
   }
-  postToDingTalk(message)
 })()
     .catch((e) => {
       $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
     })
     .finally(() => {
+       postToDingTalk(message)
       $.done();
     })
 async function jdShop() {
