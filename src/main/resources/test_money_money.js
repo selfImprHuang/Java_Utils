@@ -62,7 +62,7 @@ const inviteCodes = [
     }
     message += "----\n\n"
   }
-  postToDingTalk(message)
+
   for (let i = 0; i < cookiesArr.length; i++) {
     $.canHelp = true
     if (cookiesArr[i]) {
@@ -81,6 +81,7 @@ const inviteCodes = [
     $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
   })
   .finally(() => {
+     postToDingTalk(message)
     $.done();
   })
 
