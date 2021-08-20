@@ -46,13 +46,15 @@ const urlSchema = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%2
     }
   }
 
-  that.log(messgae)
-  postToDingTalk(messgae)
+  that.log(message)
+  postToDingTalk(message)
 })()
     .catch((e) => {
       $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
     })
     .finally(() => {
+    that.log(message)
+    postToDingTalk(message)
       $.done();
     })
 async function jdFruit() {
@@ -202,7 +204,7 @@ async function doDailyTask() {
   //   getExtraAward(),//领取额外水滴奖励
   //   turntableFarm()//天天抽奖得好礼
   // ])
-  await getAwardInviteFriend();
+  // await getAwardInviteFriend();
   await clockInIn();//打卡领水
   await executeWaterRains();//水滴雨
   await getExtraAward();//领取额外水滴奖励
