@@ -127,6 +127,7 @@ function toWithdraw() {
                 that.log(`当前总鹅蛋数量:${data.resultData.data.userLevelDto.userHaveEggNum}`);
               } else if (data.resultData.code !== '0000') {
                 that.log(`收取鹅蛋失败:${data.resultData.msg}`)
+                message += "<font color=\'#778899\' size=2>" + `收取鹅蛋失败:${data.resultData.msg}` + "</font>\n\n"
               }
             }
           } else {
@@ -243,7 +244,7 @@ function jsonParse(str) {
 
 //我加的函数
 function postToDingTalk(messgae) {
-    const dingtalk = "https://oapi.dingtalk.com/robot/send?access_token=2a8124fdff33639034e415df2aacba8b6befdf12c97a881d83c95ddedaf64518"
+    const dingtalk = "https://oapi.dingtalk.com/robot/send?access_token=fa87e34729eaa6113fddfa857efebb477dea0a433d6eecfe93b1d3f5e24847b9"
 
     const message1 = "" + messgae
     that.log(messgae)
