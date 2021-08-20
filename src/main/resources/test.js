@@ -14,7 +14,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
 const urlSchema = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%20%22des%22:%20%22m%22,%20%22url%22:%20%22https://h5.m.jd.com/babelDiy/Zeus/3KSjXqQabiTuD1cJ28QskrpWoBKT/index.html%22%20%7D`;
 !(async () => {
   await requireConfig();
-  messgae += "<font color=\'#FFA500\'>[通知] </font><font color=\'#006400\' size='3'>康康和锟锟相爱的记录</font> \n\n --- \n\n"
+  message += "<font color=\'#FFA500\'>[通知] </font><font color=\'#006400\' size='3'>康康和锟锟相爱的记录</font> \n\n --- \n\n"
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
