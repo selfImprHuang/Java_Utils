@@ -45,6 +45,9 @@ const urlSchema = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%2
       await jdFruit();
     }
   }
+
+  that.log(messgae)
+  postToDingTalk(messgae)
 })()
     .catch((e) => {
       $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
@@ -1435,4 +1438,54 @@ function jsonParse(str) {
       return [];
     }
   }
+}
+
+//我加的函数
+function postToDingTalk(messgae) {
+    const dingtalk = "https://oapi.dingtalk.com/robot/send?access_token=2a8124fdff33639034e415df2aacba8b6befdf12c97a881d83c95ddedaf64518"
+
+    const message1 = "" + messgae
+    that.log(messgae)
+
+    const body = {
+        "msgtype": "markdown",
+        "markdown": {
+            "title":"鲲鲲爱康康",
+            "text": message1
+        },
+        "at": {
+            "atMobiles": [],
+            "isAtAll": false
+        }
+    }
+
+
+    $.post(toDingtalk(dingtalk,JSON.stringify(body)), (data,status,xhr)=>{
+        try {
+            that.log(resp)
+            that.log(data)
+            if (err) {
+                that.log(JSON.stringify(err));
+                $.logErr(err);
+            } else {
+                if (safeGet(data)) {
+                    $.duckRes = JSON.parse(data);
+                }
+            }
+        } catch (e) {
+            $.logErr(e, resp)
+        } finally {
+            resolve();
+        }
+    },"json")
+}
+
+
+function toDingtalk(urlmain, bodyMain) {
+    return {
+        url: urlmain,
+        body:bodyMain,
+        headers: { 'Content-Type': 'application/json;charset=utf-8' },
+        timeout: 10000,
+    }
 }
