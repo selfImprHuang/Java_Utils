@@ -63,8 +63,8 @@ async function jdFruit() {
     await initForFarm();
     if ($.farmInfo.farmUserPro) {
       // option['media-url'] = $.farmInfo.farmUserPro.goodsImage;
-       message = message +  "<font color=\\'#778899\\' size=2>【水果名称】 " + `${$.farmInfo.farmUserPro.name}` + "</font>\n\n";
-      message +=  "<font color=\\'#778899\\' size=2>【已兑换水果】" + `${$.farmInfo.farmUserPro.winTimes}` +  "次</font>\n\n";
+       message = message +  "<font color=\'#778899\' size=2>【水果名称】 " + `${$.farmInfo.farmUserPro.name}` + "</font>\n\n";
+      message +=  "<font color=\'#778899\' size=2>【已兑换水果】" + `${$.farmInfo.farmUserPro.winTimes}` +  "次</font>\n\n";
       that.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${$.farmInfo.farmUserPro.shareCode}\n`);
       that.log(`\n【已成功兑换水果】${$.farmInfo.farmUserPro.winTimes}次\n`);
       message += `【已兑换水果】${$.farmInfo.farmUserPro.winTimes}次\n`;
@@ -73,7 +73,7 @@ async function jdFruit() {
        await setHelp();
       if ($.farmInfo.treeState === 2 || $.farmInfo.treeState === 3) {
         option['open-url'] = urlSchema;
-        message = message + "<font color=\\'#778899\\' size=2> " +  $.UserName + "\n【提醒⏰】" + fruitName + "已可领取\n请去京东APP或微信小程序查看\n点击弹窗即达</font>"
+        message = message + "<font color=\'#778899\' size=2> " +  $.UserName + "\n【提醒⏰】" + fruitName + "已可领取\n请去京东APP或微信小程序查看\n点击弹窗即达</font>"
         $.msg($.name, ``, `【京东账号${$.index}】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n请去京东APP或微信小程序查看\n点击弹窗即达`, option);
         if ($.isNode()) {
           await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}水果已可领取`, `【京东账号${$.index}】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n请去京东APP或微信小程序查看`);
@@ -85,7 +85,7 @@ async function jdFruit() {
         //已下单购买, 但未开始种植新的水果
         option['open-url'] = urlSchema;
         $.msg($.name, ``, `【京东账号${$.index}】 ${$.nickName || $.UserName}\n【提醒⏰】您忘了种植新的水果\n请去京东APP或微信小程序选购并种植新的水果\n点击弹窗即达`, option);
-        message = message + "<font color=\\'#778899\\' size=2> " +  $.UserName + " \n【提醒⏰】您忘了种植新的水果\n请去京东APP或微信小程序选购并种植新的水果\n点击弹窗即达" + "</font>"
+        message = message + "<font color=\'#778899\' size=2> " +  $.UserName + " \n【提醒⏰】您忘了种植新的水果\n请去京东APP或微信小程序选购并种植新的水果\n点击弹窗即达" + "</font>"
         if ($.isNode()) {
           await notify.sendNotify(`${$.name} - 您忘了种植新的水果`, `京东账号${$.index} ${$.nickName}\n【提醒⏰】您忘了种植新的水果\n请去京东APP或微信小程序选购并种植新的水果`);
         }
@@ -98,7 +98,7 @@ async function jdFruit() {
       await getWaterFriendGotAward();//领取为2好友浇水奖励
       await duck();
       await doTenWaterAgain();//再次浇水
-    //  await predictionFruit();//预测水果成熟时间
+      await predictionFruit();//预测水果成熟时间
     } else {
       that.log(`初始化农场数据异常, 请登录京东 app查看农场0元水果功能是否正常,农场初始化数据: ${JSON.stringify($.farmInfo)}`);
       message = `【京东账号${$.index}】 ${$.nickName || $.UserName}\n【数据异常】请手动登录京东app查看此账号${$.name}是否正常`;
@@ -215,7 +215,7 @@ async function predictionFruit() {
   await initForFarm();
   await taskInitForFarm();
   let waterEveryDayT = $.farmTask.totalWaterTaskInit.totalWaterTaskTimes;//今天到到目前为止，浇了多少次水
-  message +=   "<font color=\'#778899\' size=2>【今日共浇水】" + `${waterEveryDayT}` + "次 </font>\n\n"
+    message +=  "<font color=\'#778899\' size=2>【今日共浇水】" + `${waterEveryDayT}` + "次 </font>\n\n"
     message += "<font color=\'#778899\' size=2>【剩余 水滴】" + `${$.farmInfo.farmUserPro.totalEnergy}` + "g💧 </font> \n\n"
     message += "<font color=\'#BA55D3\' size=2>【水果🍉进度】" + `${(($.farmInfo.farmUserPro.treeEnergy /
     $.farmInfo.farmUserPro.treeTotalEnergy) * 100).toFixed(2)}` + "%，已浇水" +`${$.farmInfo.farmUserPro.treeEnergy / 10}` + "次,还需"+`${($.farmInfo.farmUserPro.treeTotalEnergy - $.farmInfo.farmUserPro.treeEnergy) / 10}` +"次 </font> \n\n"
@@ -569,7 +569,7 @@ async function getExtraAward() {
         await masterGotFinishedTaskForFarm();
         if ($.masterGotFinished.code === '0') {
           that.log(`已成功领取好友助力奖励：【${$.masterGotFinished.amount}】g水`);
-          message += "<font color=\\'#778899\\' size=2>【额外奖励】" + `${$.masterGotFinished.amount}` + "g水领取成功</font>\n\n";
+          message += "<font color=\'#778899\' size=2>【额外奖励】" + `${$.masterGotFinished.amount}` + "g水领取成功</font>\n\n";
         }
       } else {
         that.log("已经领取过5好友助力额外奖励");
@@ -577,7 +577,7 @@ async function getExtraAward() {
       }
     } else {
       that.log("助力好友未达到5个");
-      message += "<font color=\\'#778899\\' size=2>【额外奖励】领取失败,原因：给您助力的人未达5个</font>\n\n";
+      message += "<font color=\'#778899\' size=2>【额外奖励】领取失败,原因：给您助力的人未达5个</font>\n\n";
     }
     if ($.masterHelpResult.masterHelpPeoples && $.masterHelpResult.masterHelpPeoples.length > 0) {
       let str = '';
