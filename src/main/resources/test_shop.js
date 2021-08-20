@@ -101,6 +101,8 @@ async function jdShop() {
         // if ($.isNode()) {
         //   await notify.BarkNotify(`${$.name}`, `京东账号${$.index} ${UserName}\n成功领取${beanCount}京豆`);
         // }
+      }else{
+         message += "<font color=\'#778899\' size=2>" + `今天已经领过豆子了，淦`  + "</font>\n\n"
       }
     }
   }
@@ -224,7 +226,7 @@ function jsonParse(str) {
 
 //我加的函数
 function postToDingTalk(messgae) {
-    const dingtalk = "https://oapi.dingtalk.com/robot/send?access_token=2a8124fdff33639034e415df2aacba8b6befdf12c97a881d83c95ddedaf64518"
+    const dingtalk = "https://oapi.dingtalk.com/robot/send?access_token=fa87e34729eaa6113fddfa857efebb477dea0a433d6eecfe93b1d3f5e24847b9"
 
     const message1 = "" + messgae
     that.log(messgae)
