@@ -60,12 +60,12 @@ let randomCount = $.isNode() ? 20 : 5;
   if ($.isNode() && allMessage && $.ctrTemp) {
     await notify.sendNotify(`${$.name}`, `${allMessage}`)
   }
-  postToDingTalk(message)
 })()
     .catch((e) => {
       $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
     })
     .finally(() => {
+       postToDingTalk(message)
       $.done();
     })
 async function jdPet() {
