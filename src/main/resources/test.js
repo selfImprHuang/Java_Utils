@@ -27,8 +27,20 @@ const urlSchema = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%2
       $.isLogin = true;
       $.nickName = '';
       await TotalBean();
+      username = "新来的朋友"
+      if ($.UserName == "jd_66ea783827d30"){
+        username = "跑腿小弟"
+      }
+      if ($.UserName == "jd_4521b375ebb5d"){
+        username = "康康最爱的锟锟"
+      }
+      if ($.UserName == "jd_542c10c0222bc"){
+        username = "锟锟最爱的康康"
+      }
+      
+      
        //加上名称
-       message = message + "<font color=\\'#778899\\' size=2>【羊毛姐妹】" +  $.UserName + " </font> \n\n "
+       message = message + "<font color=\'#778899\' size=2>【羊毛姐妹】<font color=\'#FFA500\' size=3>" +  username + " </font> </font> \n\n "
       that.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
       if (!$.isLogin) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
@@ -56,6 +68,9 @@ const urlSchema = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%2
     postToDingTalk(message)
       $.done();
     })
+
+
+
 async function jdFruit() {
   subTitle = `【京东账号${$.index}】${$.nickName}`;
   try {
@@ -228,7 +243,7 @@ async function predictionFruit() {
 
   let waterD = Math.ceil(waterTotalT / waterEveryDayT);
 
-  message += `【预测】${waterD === 1 ? '明天' : waterD === 2 ? '后天' : waterD + '天之后'}(${timeFormat(24 * 60 * 60 * 1000 * waterD + Date.now())}日)可兑换水果🍉`
+  message = message + "<font color=\'#BA55D3\' size=2>" + `【预测】${waterD === 1 ? '明天' : waterD === 2 ? '后天' : waterD + '天之后'}(${timeFormat(24 * 60 * 60 * 1000 * waterD + Date.now())}日)可兑换水果🍉` +"</font>\n\n";
 }
 //浇水十次
 async function doTenWater() {
