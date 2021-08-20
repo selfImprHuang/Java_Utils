@@ -74,13 +74,13 @@ const JD_API_HOST = 'https://api.m.jd.com/', actCode = 'visa-card-001';
     }
     message = message +"----\n"
 }
-    postToDingTalk(message)
 
 })()
   .catch((e) => {
     $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
   })
   .finally(() => {
+     postToDingTalk(message)
     $.done();
   })
 
