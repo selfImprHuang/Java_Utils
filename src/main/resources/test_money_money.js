@@ -358,130 +358,130 @@ async function helpFriends() {
 //   })
 // }
 function getHelp() {
-		$.newShareCodes = [];
-		return new Promise(resolve => {
-			$.get({
-				url: "http://api.tyh52.com/act/get/jdzz/3"
-			}, (err, resp, data) => {
-				try {
-					if (data) {
-						data = JSON.parse(data);
-						if (data.code == 1) {
-							let list = data.data;
-							if (!(list instanceof Array)) {
-								list = JSON.parse(list);
-							}
-							if (list.length > 0) {
-								for (var i in list) {
-									$.newShareCodes.push(list[i]);
-								}
-							}
-						}
-					}
-				} catch (e) {
-					$.logErr(e, resp);
-				} finally {
-					resolve(data);
-				}
-			})
-		});
-	}
+    $.newShareCodes = [];
+    return new Promise(resolve => {
+      $.get({
+        url: "http://api.tyh52.com/act/get/jdzz/3"
+      }, (err, resp, data) => {
+        try {
+          if (data) {
+            data = JSON.parse(data);
+            if (data.code == 1) {
+              let list = data.data;
+              if (!(list instanceof Array)) {
+                list = JSON.parse(list);
+              }
+              if (list.length > 0) {
+                for (var i in list) {
+                  $.newShareCodes.push(list[i]);
+                }
+              }
+            }
+          }
+        } catch (e) {
+          $.logErr(e, resp);
+        } finally {
+          resolve(data);
+        }
+      })
+    });
+  }
 
-	function setHelp() {
-		return new Promise(resolve => {
-			if ($.shareId) {
-				$.get({
-					url: "http://api.tyh52.com/act/set/jdzz/" + $.shareId
-				}, (err, resp, data) => {
-					try {
-						if (data) {
-							data = JSON.parse(data);
-							if (data.code == 1) {
-								that.log("提交自己的邀請碼成功");
-							} else {
-								that.log("提交邀请码失败，" + data.message);
-							}
-						}
-					} catch (e) {
-						$.logErr(e, resp);
-					} finally {
-						resolve(data);
-					}
-				})
-			} else {
-				resolve();
-			}
+  function setHelp() {
+    return new Promise(resolve => {
+      if ($.shareId) {
+        $.get({
+          url: "http://api.tyh52.com/act/set/jdzz/" + $.shareId
+        }, (err, resp, data) => {
+          try {
+            if (data) {
+              data = JSON.parse(data);
+              if (data.code == 1) {
+                that.log("提交自己的邀請碼成功");
+              } else {
+                that.log("提交邀请码失败，" + data.message);
+              }
+            }
+          } catch (e) {
+            $.logErr(e, resp);
+          } finally {
+            resolve(data);
+          }
+        })
+      } else {
+        resolve();
+      }
 
-		});
-	}
-	
-	function getHelpTuan() {
-		$.tuanList = [];
-		return new Promise(resolve => {
-			$.get({
-				url: "http://api.tyh52.com/act/get/jdzzTuan/3"
-			}, (err, resp, data) => {
-				try {
-					if (data) {
-						data = JSON.parse(data);
-						if (data.code == 1) {
-							let list = data.data;
-							if (!(list instanceof Array)) {
-								list = JSON.parse(list);
-							}
-							if (list.length > 0) {
-								for (var item of list) {
-								    let its=item.split('@');
-								    if(its.length==2){
-								        let  tuan={
+    });
+  }
+  
+  function getHelpTuan() {
+    $.tuanList = [];
+    return new Promise(resolve => {
+      $.get({
+        url: "http://api.tyh52.com/act/get/jdzzTuan/3"
+      }, (err, resp, data) => {
+        try {
+          if (data) {
+            data = JSON.parse(data);
+            if (data.code == 1) {
+              let list = data.data;
+              if (!(list instanceof Array)) {
+                list = JSON.parse(list);
+              }
+              if (list.length > 0) {
+                for (var item of list) {
+                    let its=item.split('@');
+                    if(its.length==2){
+                        let  tuan={
                                             "activityIdEncrypted": $.tuanActId,
                                             "assistStartRecordId": its[0],
                                             "assistedPinEncrypted": its[1],
                                             "channel": "FISSION_BEAN"
                                         }
-									    $.tuanList.push(tuan);
-								    }
-								}
-							}
-						}
-					}
-				} catch (e) {
-					$.logErr(e, resp);
-				} finally {
-					resolve(data);
-				}
-			})
-		});
-	}
+                      $.tuanList.push(tuan);
+                    }
+                }
+              }
+            }
+          }
+        } catch (e) {
+          $.logErr(e, resp);
+        } finally {
+          resolve(data);
+        }
+      })
+    });
+  }
 
-	function setHelpTuan() {
-		return new Promise(resolve => {
-			if ($.tuan) {
-				$.get({
-					url: "http://api.tyh52.com/act/set/jdzzTuan/" + $.tuan.assistStartRecordId+'@'+$.tuan.assistedPinEncrypted
-				}, (err, resp, data) => {
-					try {
-						if (data) {
-						    that.log(data);
-							data = JSON.parse(data);
-							if (data.code == 1) {
-								that.log("提交自己的开团碼成功");
-							}else{
-							    that.log("提交开团码失败，" + data.message);
-							}
-						}
-					} catch (e) {
-						$.logErr(e, resp);
-					} finally {
-						resolve(data);
-					}
-				})
-			} else {
-				resolve();
-			}
+  function setHelpTuan() {
+    return new Promise(resolve => {
+      if ($.tuan) {
+        $.get({
+          url: "http://api.tyh52.com/act/set/jdzzTuan/" + $.tuan.assistStartRecordId+'@'+$.tuan.assistedPinEncrypted
+        }, (err, resp, data) => {
+          try {
+            if (data) {
+                that.log(data);
+              data = JSON.parse(data);
+              if (data.code == 1) {
+                that.log("提交自己的开团碼成功");
+              }else{
+                  that.log("提交开团码失败，" + data.message);
+              }
+            }
+          } catch (e) {
+            $.logErr(e, resp);
+          } finally {
+            resolve(data);
+          }
+        })
+      } else {
+        resolve();
+      }
 
-		});
-	}
+    });
+  }
 //格式化助力码
 function shareCodesFormat() {
   return new Promise(async resolve => {
@@ -649,7 +649,7 @@ function jsonParse(str) {
 
 //我加的函数
 function postToDingTalk(messgae) {
-    const dingtalk = "https://oapi.dingtalk.com/robot/send?access_token=2a8124fdff33639034e415df2aacba8b6befdf12c97a881d83c95ddedaf64518"
+    const dingtalk = "https://oapi.dingtalk.com/robot/send?access_token=fa87e34729eaa6113fddfa857efebb477dea0a433d6eecfe93b1d3f5e24847b9"
 
     const message1 = "" + messgae
     that.log(messgae)
