@@ -113,6 +113,7 @@ async function jdFruit() {
       await duck();
       await doTenWaterAgain();//再次浇水
       await predictionFruit();//预测水果成熟时间
+      message = message + "----\n\n"
     } else {
       that.log(`初始化农场数据异常, 请登录京东 app查看农场0元水果功能是否正常,农场初始化数据: ${JSON.stringify($.farmInfo)}`);
       message = `【京东账号${$.index}】 ${$.nickName || $.UserName}\n【数据异常】请手动登录京东app查看此账号${$.name}是否正常`;
@@ -243,7 +244,7 @@ async function predictionFruit() {
 
   let waterD = Math.ceil(waterTotalT / waterEveryDayT);
 
-  message = message + "<font color=\'#BA55D3\' size=2>" + `【预测】${waterD === 1 ? '明天' : waterD === 2 ? '后天' : waterD + '天之后'}(${timeFormat(24 * 60 * 60 * 1000 * waterD + Date.now())}日)可兑换水果🍉` +"</font>\n\n\n\n";
+  message = message + "<font color=\'#BA55D3\' size=2>" + `【预测】${waterD === 1 ? '明天' : waterD === 2 ? '后天' : waterD + '天之后'}(${timeFormat(24 * 60 * 60 * 1000 * waterD + Date.now())}日)可兑换水果🍉` +"</font>\n\n";
 }
 //浇水十次
 async function doTenWater() {
