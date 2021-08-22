@@ -2,7 +2,7 @@ let cookiesArr = [], cookie = '';
 const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m';
 const notify = $.isNode() ? require('./sendNotify') : '';
 let message = "" 
-//Node.js用户请在jdCookie.js处填写京东ck;
+//Node.js用户请在jdCookie.js处填写动动ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -14,9 +14,9 @@ if ($.isNode()) {
 }
 !(async () => {
 
-    message += "<font color=\'#FFA500\'>[通知] </font><font color=\'#006400\' size='3'>康康和锟锟相爱的天天提鹅</font> \n\n --- \n\n"
+    message += "<font color=\'#FFA500\'>[通知] </font><font color=\'#006400\' size='3'>天天提鹅</font> \n\n --- \n\n"
   if (!cookiesArr[0]) {
-    $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
+    $.msg($.name, '【提示】请先获取动动账号一cookie\n直接使用NobyDa的动动签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
   for (let i = 0; i < cookiesArr.length; i++) {
@@ -32,19 +32,19 @@ if ($.isNode()) {
         username = "跑腿小弟"
       }
       if ($.UserName == "jd_4521b375ebb5d"){
-        username = "康康最爱的锟锟"
+        username = "锟锟"
       }
       if ($.UserName == "jd_542c10c0222bc"){
-        username = "锟锟最爱的康康"
+        username = "康康"
       }
        //加上名称
        message = message + "<font color=\'#778899\' size=2>【羊毛姐妹】<font color=\'#FFA500\' size=3>" +  username + " </font> </font> \n\n "
-      that.log(`\n***********开始【京东账号${$.index}】${$.nickName || $.UserName}********\n`);
+      that.log(`\n***********开始【动动账号${$.index}】${$.nickName || $.UserName}********\n`);
       if (!$.isLogin) {
-        $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
+        $.msg($.name, `【提示】cookie已失效`, `动动账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
 
         if ($.isNode()) {
-          await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
+          await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `动动账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
         }
         continue
       }
@@ -92,7 +92,7 @@ function toGoldExchange() {
               }
             }
           } else {
-            that.log(`京东服务器返回空数据`)
+            that.log(`动动服务器返回空数据`)
           }
         }
       } catch (e) {
@@ -131,7 +131,7 @@ function toWithdraw() {
               }
             }
           } else {
-            that.log(`京东服务器返回空数据`)
+            that.log(`动动服务器返回空数据`)
           }
         }
       } catch (e) {
@@ -159,7 +159,7 @@ function toDailyHome() {
             // that.log(data)
             data = JSON.parse(data);
           } else {
-            that.log(`京东服务器返回空数据`)
+            that.log(`动动服务器返回空数据`)
           }
         }
       } catch (e) {
@@ -202,7 +202,7 @@ function TotalBean() {
               $.nickName = $.UserName
             }
           } else {
-            that.log(`京东服务器返回空数据`)
+            that.log(`动动服务器返回空数据`)
           }
         }
       } catch (e) {
@@ -252,7 +252,7 @@ function postToDingTalk(messgae) {
     const body = {
         "msgtype": "markdown",
         "markdown": {
-            "title":"鲲鲲爱康康",
+            "title":"天天提鹅",
             "text": message1
         },
         "at": {
