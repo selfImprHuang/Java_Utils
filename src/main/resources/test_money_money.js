@@ -1,5 +1,5 @@
 const notify = $.isNode() ? require('./sendNotify') : '';
-//Node.js用户请在jdCookie.js处填写京东ck;
+//Node.js用户请在jdCookie.js处填写动动ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let helpAuthor=true; // 帮助作者
 const randomCount = $.isNode() ? 0 : 5;
@@ -19,11 +19,11 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
 const inviteCodes = [
 ]
 !(async () => {
-    message += "<font color=\'#FFA500\'>[通知] </font><font color=\'#006400\' size='3'>康康和锟锟相爱的京东赚赚</font> \n\n --- \n\n"
+    message += "<font color=\'#FFA500\'>[通知] </font><font color=\'#006400\' size='3'>动动赚赚</font> \n\n --- \n\n"
   $.tuanList = []
   await requireConfig();
   if (!cookiesArr[0]) {
-    $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
+    $.msg($.name, '【提示】请先获取动动账号一cookie\n直接使用NobyDa的动动签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
   for (let i = 0; i < cookiesArr.length; i++) {
@@ -40,20 +40,20 @@ const inviteCodes = [
         username = "跑腿小弟"
       }
       if ($.UserName == "jd_4521b375ebb5d"){
-        username = "康康最爱的锟锟"
+        username = "锟锟"
       }
       if ($.UserName == "jd_542c10c0222bc"){
-        username = "锟锟最爱的康康"
+        username = "康康"
       }
        //加上名称
        message = message + "<font color=\'#778899\' size=2>【羊毛姐妹】<font color=\'#FFA500\' size=3>" +  username + " </font> </font> \n\n "
 
-      that.log(`\n******开始【京东账号${$.index}】${$.nickName || $.UserName}*********\n`);
+      that.log(`\n******开始【动动账号${$.index}】${$.nickName || $.UserName}*********\n`);
       if (!$.isLogin) {
-        $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
+        $.msg($.name, `【提示】cookie已失效`, `动动账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
 
         if ($.isNode()) {
-          await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
+          await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `动动账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
         }
         continue
       }
@@ -123,12 +123,12 @@ function showMsg() {
     message += "<font color=\'#778899\' size=2>" +  `本次获得${parseInt($.totalBeanNum) - $.nowBean}京豆，${parseInt($.totalNum) - $.nowNum}金币\n` + "</font>\n\n"
     message += "<font color=\'#778899\' size=2>"  + `累计获得${$.totalBeanNum}京豆，${$.totalNum}金币\n可兑换${$.totalNum / 10000}元无门槛红包` + "</font>\n\n"
     if (parseInt($.totalBeanNum) - $.nowBean > 0) {
-      $.msg($.name, '', `京东账号${$.index} ${$.nickName}\n${message}`);
+      $.msg($.name, '', `动动账号${$.index} ${$.nickName}\n${message}`);
     } else {
       $.log(message)
     }
     // 云端大于10元无门槛红包时进行通知推送
-    if ($.isNode() && $.totalNum >= 1000000) await notify.sendNotify(`${$.name} - 京东账号${$.index} - ${$.nickName}`, `京东账号${$.index} ${$.nickName}\n当前金币：${$.totalNum}个\n可兑换无门槛红包：${parseInt($.totalNum) / 10000}元\n`,)
+    if ($.isNode() && $.totalNum >= 1000000) await notify.sendNotify(`${$.name} - 动动账号${$.index} - ${$.nickName}`, `动动账号${$.index} ${$.nickName}\n当前金币：${$.totalNum}个\n可兑换无门槛红包：${parseInt($.totalNum) / 10000}元\n`,)
     resolve();
   })
 }
@@ -249,7 +249,7 @@ function getUserInfo() {
           if (safeGet(data)) {
             data = JSON.parse(data);
             // if (data.data.shareTaskRes) {
-            //   that.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${data.data.shareTaskRes.itemId}\n`);
+            //   that.log(`\n【动动账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${data.data.shareTaskRes.itemId}\n`);
             // } else {
             //   that.log(`\n\n已满5人助力或助力功能已下线,故暂时无${$.name}好友助力码\n\n`)
             // }
@@ -279,7 +279,7 @@ function getTaskList(flag = false) {
             $.totalBeanNum = data.data.totalBeanNum
             if (flag && $.taskList.filter(item => !!item && item['taskId']=== 3) && $.taskList.filter(item => !!item && item['taskId']=== 3).length) {
                  $.shareId=$.taskList.filter(item => !!item && item['taskId']=== 3)[0]['itemId'];
-              that.log(`\n【京东账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${$.taskList.filter(item => !!item && item['taskId']=== 3)[0]['itemId']}\n`);
+              that.log(`\n【动动账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${$.taskList.filter(item => !!item && item['taskId']=== 3)[0]['itemId']}\n`);
             }
           }
         }
@@ -486,12 +486,12 @@ function getHelp() {
 //格式化助力码
 function shareCodesFormat() {
   return new Promise(async resolve => {
-    // that.log(`第${$.index}个京东账号的助力码:::${$.shareCodesArr[$.index - 1]}`)
+    // that.log(`第${$.index}个动动账号的助力码:::${$.shareCodesArr[$.index - 1]}`)
     $.newShareCodes = [];
     // if ($.shareCodesArr[$.index - 1]) {
     //   $.newShareCodes = $.shareCodesArr[$.index - 1].split('@');
     // } else {
-    //   that.log(`由于您第${$.index}个京东账号未提供shareCode,将采纳本脚本自带的助力码\n`)
+    //   that.log(`由于您第${$.index}个动动账号未提供shareCode,将采纳本脚本自带的助力码\n`)
     //   const tempIndex = $.index > inviteCodes.length ? (inviteCodes.length - 1) : ($.index - 1);
     //   $.newShareCodes = inviteCodes[tempIndex].split('@');
     // }
@@ -499,7 +499,7 @@ function shareCodesFormat() {
     // if (readShareCodeRes && readShareCodeRes.code === 200) {
     //   $.newShareCodes = [...new Set([...$.newShareCodes, ...(readShareCodeRes.data || [])])];
     // }
-    // that.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify($.newShareCodes)}`)
+    // that.log(`第${$.index}个动动账号将要助力的好友${JSON.stringify($.newShareCodes)}`)
     resolve();
   })
 }
@@ -507,7 +507,7 @@ function shareCodesFormat() {
 function requireConfig() {
   return new Promise(resolve => {
     that.log(`开始获取${$.name}配置文件\n`);
-    //Node.js用户请在jdCookie.js处填写京东ck;
+    //Node.js用户请在jdCookie.js处填写动动ck;
     let shareCodes = [];
     if ($.isNode()) {
       if (process.env.JDZZ_SHARECODES) {
@@ -518,7 +518,7 @@ function requireConfig() {
         }
       }
     }
-    that.log(`共${cookiesArr.length}个京东账号\n`);
+    that.log(`共${cookiesArr.length}个动动账号\n`);
     $.shareCodesArr = [];
     if ($.isNode()) {
       Object.keys(shareCodes).forEach((item) => {
@@ -610,7 +610,7 @@ function TotalBean() {
               $.nickName = $.UserName
             }
           } else {
-            that.log(`京东服务器返回空数据`)
+            that.log(`动动服务器返回空数据`)
           }
         }
       } catch (e) {
@@ -629,7 +629,7 @@ function safeGet(data) {
     }
   } catch (e) {
     that.log(e);
-    that.log(`京东服务器访问数据为空，请检查自身设备网络情况`);
+    that.log(`动动服务器访问数据为空，请检查自身设备网络情况`);
     return false;
   }
 }
@@ -658,7 +658,7 @@ function postToDingTalk(messgae) {
     const body = {
         "msgtype": "markdown",
         "markdown": {
-            "title":"鲲鲲爱康康",
+            "title":"动动赚赚",
             "text": message1
         },
         "at": {
