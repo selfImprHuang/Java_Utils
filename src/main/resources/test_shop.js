@@ -1,5 +1,5 @@
 const notify = $.isNode() ? require('./sendNotify') : '';
-//Node.js用户请在jdCookie.js处填写京东ck;
+//Node.js用户请在jdCookie.js处填写动动ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
 //IOS等用户直接用NobyDa的jd cookie
@@ -23,9 +23,9 @@ let message = '', subTitle = '';
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 !(async () => {
 
-  message += "<font color=\'#FFA500\'>[通知] </font><font color=\'#006400\' size='3'>康康和锟锟相爱的京东超市</font> \n\n --- \n\n"
+  message += "<font color=\'#FFA500\'>[通知] </font><font color=\'#006400\' size='3'>动动超市</font> \n\n --- \n\n"
   if (!cookiesArr[0]) {
-    $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
+    $.msg($.name, '【提示】请先获取动动账号一cookie\n直接使用NobyDa的动动签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
   for (let i = 0; i < cookiesArr.length; i++) {
@@ -42,19 +42,19 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
         username = "跑腿小弟"
       }
       if ($.UserName == "jd_4521b375ebb5d"){
-        username = "康康最爱的锟锟"
+        username = "锟锟"
       }
       if ($.UserName == "jd_542c10c0222bc"){
-        username = "锟锟最爱的康康"
+        username = "康康"
       }
        //加上名称
        message = message + "<font color=\'#778899\' size=2>【羊毛姐妹】<font color=\'#FFA500\' size=3>" +  username + " </font> </font> \n\n "
-      that.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
+      that.log(`\n开始【动动账号${$.index}】${$.nickName || $.UserName}\n`);
       if (!$.isLogin) {
-        $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
+        $.msg($.name, `【提示】cookie已失效`, `动动账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
 
         if ($.isNode()) {
-          await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
+          await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `动动账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
         }
         continue
       }
@@ -76,13 +76,15 @@ async function jdShop() {
   if (taskData.code === '0') {
     if (!taskData.data.taskList) {
       that.log(`${taskData.data.taskErrorTips}\n`);
-      $.msg($.name, '', `京东账号 ${$.index} ${$.nickName}\n${taskData.data.taskErrorTips}`);
+      $.msg($.name, '', `动动账号 ${$.index} ${$.nickName}\n${taskData.data.taskErrorTips}`);
+      message += "<font color=\'#778899\' size=2>" + `${taskData.data.taskErrorTips}`  + "</font>\n\n"
     } else {
       const { taskList } = taskData.data;
       let beanCount = 0;
       for (let item of taskList) {
         if (item.taskStatus === 3) {
           that.log(`${item.shopName} 已拿到2京豆\n`)
+          message += "<font color=\'#778899\' size=2>" + `成功领取${beanCount}京豆`  + "</font>\n\n"
         } else {
           that.log(`taskId::${item.taskId}`)
           const doTaskRes = await doTask(item.taskId);
@@ -94,15 +96,13 @@ async function jdShop() {
       that.log(`beanCount::${beanCount}`);
       if (beanCount > 0) { 
         message += "<font color=\'#778899\' size=2>" + `成功领取${beanCount}京豆`  + "</font>\n\n"
-        $.msg($.name, '', `京东账号 ${$.index} ${$.nickName}\n成功领取${beanCount}京豆`);
+        $.msg($.name, '', `动动账号 ${$.index} ${$.nickName}\n成功领取${beanCount}京豆`);
         // if ($.isNode()) {
-        //   await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `京东账号${$.index} ${UserName}\n成功领取${beanCount}京豆`);
+        //   await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `动动账号${$.index} ${UserName}\n成功领取${beanCount}京豆`);
         // }
         // if ($.isNode()) {
-        //   await notify.BarkNotify(`${$.name}`, `京东账号${$.index} ${UserName}\n成功领取${beanCount}京豆`);
+        //   await notify.BarkNotify(`${$.name}`, `动动账号${$.index} ${UserName}\n成功领取${beanCount}京豆`);
         // }
-      }else{
-         message += "<font color=\'#778899\' size=2>" + `今天已经领过豆子了，淦`  + "</font>\n\n"
       }
     }
   }
@@ -200,7 +200,7 @@ function TotalBean() {
               $.nickName = $.UserName
             }
           } else {
-            that.log(`京东服务器返回空数据`)
+            that.log(`动动服务器返回空数据`)
           }
         }
       } catch (e) {
@@ -234,7 +234,7 @@ function postToDingTalk(messgae) {
     const body = {
         "msgtype": "markdown",
         "markdown": {
-            "title":"鲲鲲爱康康",
+            "title":"动动超市",
             "text": message1
         },
         "at": {
