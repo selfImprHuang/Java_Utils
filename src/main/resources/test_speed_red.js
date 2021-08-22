@@ -17,7 +17,7 @@ if ($.isNode()) {
 $.linkId="";
 $.linkIds=["9wdf1YTT2L59Vr-meKskLA"];
 !(async () => {
-    
+    message += "<font color=\'#FFA500\'>[通知] </font><font color=\'#006400\' size='3'>极速签到领红包</font> \n\n --- \n\n"
     if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取动动账号一cookie\n直接使用NobyDa的动动签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
@@ -70,6 +70,7 @@ $.linkIds=["9wdf1YTT2L59Vr-meKskLA"];
 			if ($.list) {
 				for (var item of $.list) {
 					if (item.state == 0 && item.prizeType == 4) {
+                        message = message + "<font color=\'#778899\' size=2>" + "有" + item.amount + "现金没有提现，尝试提现中" +  "</font>\n\n" 
 						that.log("有" + item.amount + "现金没有提现，尝试提现中");
 						await apCashWithDraw(item);
 						await $.wait(1000);
