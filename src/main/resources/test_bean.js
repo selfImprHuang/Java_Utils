@@ -1,51 +1,51 @@
 /*
 种豆得豆 脚本更新地址：https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean.js
 更新时间：2021-04-9
-活动入口：京东APP我的-更多工具-种豆得豆
-已支持IOS京东多账号,云端多京东账号
+活动入口：动动APP我的-更多工具-种豆得豆
+已支持IOS动动多账号,云端多动动账号
 脚本兼容: QuantumultX, Surge, Loon, JSBox, Node.js
 注：会自动关注任务中的店铺跟商品，介意者勿使用。
 互助码shareCode请先手动运行脚本查看打印可看到
-每个京东账号每天只能帮助3个人。多出的助力码将会助力失败。
+每个动动账号每天只能帮助3个人。多出的助力码将会助力失败。
 =====================================Quantumult X=================================
 [task_local]
 1 7-21/2 * * * https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean.js, tag=种豆得豆, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdzd.png, enabled=true
 
 =====================================Loon================================
 [Script]
-cron "1 7-21/2 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean.js,tag=京东种豆得豆
+cron "1 7-21/2 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean.js,tag=动动种豆得豆
 
 ======================================Surge==========================
-京东种豆得豆 = type=cron,cronexp="1 7-21/2 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean.js
+动动种豆得豆 = type=cron,cronexp="1 7-21/2 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean.js
 
 ====================================小火箭=============================
-京东种豆得豆 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean.js, cronexpr="1 7-21/2 * * *", timeout=3600, enable=true
+动动种豆得豆 = type=cron,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_plantBean.js, cronexpr="1 7-21/2 * * *", timeout=3600, enable=true
 
 */
-const $ = new Env('京东种豆得豆');
-//Node.js用户请在jdCookie.js处填写京东ck;
+const $ = new Env('动动种豆得豆');
+//Node.js用户请在jdCookie.js处填写动动ck;
 //ios等软件用户直接用NobyDa的jd cookie
 let jdNotify = true;//是否开启静默运行。默认true开启
 let cookiesArr = [], cookie = '', jdPlantBeanShareArr = [], isBox = false, notify, newShareCodes, option,subTitle;
 let message = ""
-//京东接口地址
+//动动接口地址
 const JD_API_HOST = 'https://api.m.jd.com/client.action';
 //助力好友分享码(最多3个,否则后面的助力失败)
-//此此内容是IOS用户下载脚本到本地使用，填写互助码的地方，同一京东账号的好友互助码请使用@符号隔开。
-//下面给出两个账号的填写示例（iOS只支持2个京东账号）
+//此此内容是IOS用户下载脚本到本地使用，填写互助码的地方，同一动动账号的好友互助码请使用@符号隔开。
+//下面给出两个账号的填写示例（iOS只支持2个动动账号）
 let shareCodes = ['']
 let allMessage = ``;
 let currentRoundId = null;//本期活动id
 let lastRoundId = null;//上期id
 let roundList = [];
-let awardState = '';//上期活动的京豆是否收取
+let awardState = '';//上期活动的豆豆是否收取
 let randomCount = $.isNode() ? 20 : 5;
 let num;
 !(async () => {
-   message += "<font color=\'#FFA500\'>[通知] </font><font color=\'#006400\' size='3'>康康和锟锟相爱的种豆得豆</font> \n\n --- \n\n"
+   message += "<font color=\'#FFA500\'>[通知] </font><font color=\'#006400\' size='3'>种豆得豆</font> \n\n --- \n\n"
   await requireConfig();
   if (!cookiesArr[0]) {
-    $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
+    $.msg($.name, '【提示】请先获取动动账号一cookie\n直接使用NobyDa的动动签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
   for (let i = 0; i < cookiesArr.length; i++) {
@@ -56,15 +56,15 @@ let num;
       $.isLogin = true;
       $.nickName = '';
 
-      username = "新来的朋友"
+      username = $.UserName
       if ($.UserName == "jd_66ea783827d30"){
         username = "跑腿小弟"
       }
       if ($.UserName == "jd_4521b375ebb5d"){
-        username = "康康最爱的锟锟"
+        username = "锟锟"
       }
       if ($.UserName == "jd_542c10c0222bc"){
-        username = "锟锟最爱的康康"
+        username = "康康"
       }
       
       
@@ -72,16 +72,15 @@ let num;
        message = message + "<font color=\'#778899\' size=2>【羊毛姐妹】<font color=\'#FFA500\' size=3>" +  username + " </font> </font> \n\n "
 
       await TotalBean();
-      console.log(`\n开始【京东账号${$.index}】${$.nickName || $.UserName}\n`);
+      console.log(`\n开始【动动账号${$.index}】${$.nickName || $.UserName}\n`);
       if (!$.isLogin) {
-        $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
+        $.msg($.name, `【提示】cookie已失效`, `动动账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
 
         if ($.isNode()) {
-          await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
+          await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `动动账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
         }
         continue
       }
-    //   message = '';
       subTitle = '';
       option = {};
       await shareCodesFormat();
@@ -117,13 +116,13 @@ async function jdPlantBean() {
     if ($.plantBeanIndexResult && $.plantBeanIndexResult.code === '0' && $.plantBeanIndexResult.data) {
       const shareUrl = $.plantBeanIndexResult.data.jwordShareInfo.shareUrl
       $.myPlantUuid = getParam(shareUrl, 'plantUuid')
-      console.log(`\n【京东账号${$.index}（${$.UserName}）的${$.name}好友互助码】${$.myPlantUuid}\n`);
+      console.log(`\n【动动账号${$.index}（${$.UserName}）的${$.name}好友互助码】${$.myPlantUuid}\n`);
       roundList = $.plantBeanIndexResult.data.roundList;
       currentRoundId = roundList[num].roundId;//本期的roundId
       lastRoundId = roundList[num - 1].roundId;//上期的roundId
       awardState = roundList[num - 1].awardState;
       $.taskList = $.plantBeanIndexResult.data.taskList;
-      subTitle = `【京东昵称】${$.plantBeanIndexResult.data.plantUserInfo.plantNickName}`;
+      subTitle = `【动动昵称】${$.plantBeanIndexResult.data.plantUserInfo.plantNickName}`;
       message +=  "<font color=\'#778899\' size=2> " + `【上期时间】${roundList[num - 1].dateDesc.replace('上期 ', '')}\n` + "</font>\n\n";
       message +=  "<font color=\'#778899\' size=2> " + `【上期成长值】${roundList[num - 1].growth}\n` + "</font>\n\n";
       await receiveNutrients();//定时领取营养液
@@ -140,34 +139,34 @@ async function jdPlantBean() {
     }
   } catch (e) {
     $.logErr(e);
-    const errMsg = `京东账号${$.index} ${$.nickName || $.UserName}\n任务执行异常，请检查执行日志 ‼️‼️`;
+    const errMsg = `动动账号${$.index} ${$.nickName || $.UserName}\n任务执行异常，请检查执行日志 ‼️‼️`;
     if ($.isNode()) await notify.sendNotify(`${$.name}`, errMsg);
     $.msg($.name, '', `${errMsg}`)
   }
 }
 async function doGetReward() {
-  console.log(`【上轮京豆】${awardState === '4' ? '采摘中' : awardState === '5' ? '可收获了' : '已领取'}`);
+  console.log(`【上轮豆豆】${awardState === '4' ? '采摘中' : awardState === '5' ? '可收获了' : '已领取'}`);
   if (awardState === '4') {
-    //京豆采摘中...
+    //豆豆采摘中...
     message +=  "<font color=\'#778899\' size=2>" +  `【上期状态】${roundList[num - 1].tipBeanEndTitle}\n` + "</font>\n\n";
   } else if (awardState === '5') {
     //收获
     await getReward();
-    console.log('开始领取京豆');
+    console.log('开始领取豆豆');
     if ($.getReward && $.getReward.code === '0') {
-      console.log('京豆领取成功');
-      message += "<font color=\'#778899\' size=2>" +  `【上期兑换京豆】${$.getReward.data.awardBean}个\n` + "</font>\n\n";
+      console.log('豆豆领取成功');
+      message += "<font color=\'#778899\' size=2>" +  `【上期兑换豆豆】${$.getReward.data.awardBean}个\n` + "</font>\n\n";
       $.msg($.name, subTitle, message);
-      allMessage += `京东账号${$.index} ${$.nickName}\n${message}${$.index !== cookiesArr.length ? '\n\n' : ''}`
+      allMessage += `动动账号${$.index} ${$.nickName}\n${message}${$.index !== cookiesArr.length ? '\n\n' : ''}`
       // if ($.isNode()) {
-      //   await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName || $.UserName}`, `京东账号${$.index} ${$.nickName}\n${message}`);
+      //   await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName || $.UserName}`, `动动账号${$.index} ${$.nickName}\n${message}`);
       // }
     } else {
       console.log(`$.getReward 异常：${JSON.stringify($.getReward)}`)
     }
   } else if (awardState === '6') {
-    //京豆已领取
-    message +=  "<font color=\'#778899\' size=2>" +  `【上期兑换京豆】${roundList[num - 1].awardBeans}个\n` + "</font>\n\n";
+    //豆豆已领取
+    message +=  "<font color=\'#778899\' size=2>" +  `【上期兑换豆豆】${roundList[num - 1].awardBeans}个\n` + "</font>\n\n";
   }
   if (roundList[num].dateDesc.indexOf('本期 ') > -1) {
     roundList[num].dateDesc = roundList[num].dateDesc.substr(roundList[num].dateDesc.indexOf('本期 ') + 3, roundList[num].dateDesc.length);
@@ -255,7 +254,7 @@ async function doTask() {
         continue;
       } else {
         if (item.taskType === 8) {
-          console.log(`\n【${item.taskName}】任务未完成,需自行手动去京东APP完成，${item.desc}营养液\n`)
+          console.log(`\n【${item.taskName}】任务未完成,需自行手动去动动APP完成，${item.desc}营养液\n`)
         } else {
           console.log(`\n【${item.taskName}】任务未完成,${item.desc}营养液\n`)
         }
@@ -413,7 +412,7 @@ function showTaskProcess() {
 //助力好友
 async function doHelp() {
   for (let plantUuid of newShareCodes) {
-    console.log(`开始助力京东账号${$.index} - ${$.nickName}的好友: ${plantUuid}`);
+    console.log(`开始助力动动账号${$.index} - ${$.nickName}的好友: ${plantUuid}`);
     if (!plantUuid) continue;
     if (plantUuid === $.myPlantUuid) {
       console.log(`\n跳过自己的plantUuid\n`)
@@ -450,7 +449,7 @@ function showMsg() {
   }
 }
 // ================================================此处是API=================================
-//每轮种豆活动获取结束后,自动收取京豆
+//每轮种豆活动获取结束后,自动收取豆豆
 async function getReward() {
   const body = {
     "roundId": lastRoundId
@@ -579,12 +578,12 @@ function readShareCode() {
 //格式化助力码
 function shareCodesFormat() {
   return new Promise(async resolve => {
-    // console.log(`第${$.index}个京东账号的助力码:::${$.shareCodesArr[$.index - 1]}`)
+    // console.log(`第${$.index}个动动账号的助力码:::${$.shareCodesArr[$.index - 1]}`)
     newShareCodes = [];
     if ($.shareCodesArr[$.index - 1]) {
       newShareCodes = $.shareCodesArr[$.index - 1].split('@');
     } else {
-      console.log(`由于您第${$.index}个京东账号未提供shareCode,将采纳本脚本自带的助力码\n`)
+      console.log(`由于您第${$.index}个动动账号未提供shareCode,将采纳本脚本自带的助力码\n`)
       const tempIndex = $.index > shareCodes.length ? (shareCodes.length - 1) : ($.index - 1);
       newShareCodes = shareCodes[tempIndex].split('@');
     }
@@ -592,7 +591,7 @@ function shareCodesFormat() {
     // if (readShareCodeRes && readShareCodeRes.code === 200) {
     //   newShareCodes = [...new Set([...newShareCodes, ...(readShareCodeRes.data || [])])];
     // }
-    console.log(`第${$.index}个京东账号将要助力的好友${JSON.stringify(newShareCodes)}`)
+    console.log(`第${$.index}个动动账号将要助力的好友${JSON.stringify(newShareCodes)}`)
     resolve();
   })
 }
@@ -600,7 +599,7 @@ function requireConfig() {
   return new Promise(resolve => {
     console.log('开始获取种豆得豆配置文件\n')
     notify = $.isNode() ? require('./sendNotify') : '';
-    //Node.js用户请在jdCookie.js处填写京东ck;
+    //Node.js用户请在jdCookie.js处填写动动ck;
     const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
     const jdPlantBeanShareCodes = $.isNode() ? require('./jdPlantBeanShareCodes.js') : '';
     //IOS等用户直接用NobyDa的jd cookie
@@ -614,7 +613,7 @@ function requireConfig() {
     } else {
       cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
     }
-    console.log(`共${cookiesArr.length}个京东账号\n`)
+    console.log(`共${cookiesArr.length}个动动账号\n`)
     $.shareCodesArr = [];
     if ($.isNode()) {
       Object.keys(jdPlantBeanShareCodes).forEach((item) => {
@@ -703,7 +702,7 @@ function TotalBean() {
               $.nickName = $.UserName
             }
           } else {
-            console.log(`京东服务器返回空数据`)
+            console.log(`动动服务器返回空数据`)
           }
         }
       } catch (e) {
@@ -787,7 +786,7 @@ function postToDingTalk(messgae) {
     const body = {
         "msgtype": "markdown",
         "markdown": {
-            "title":"鲲鲲爱康康",
+            "title":"种豆得豆",
             "text": message1
         },
         "at": {
