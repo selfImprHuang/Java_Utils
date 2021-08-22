@@ -96,6 +96,7 @@ let num;
     await notify.sendNotify(`${$.name}`, `${allMessage}`)
   }
 })().catch((e) => {
+    message +=  "<font color=\'#778899\' size=2> " +  `❌ ${$.name}, 失败! 原因: ${e}!` + "</font>\n\n"
   $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
 }).finally(() => {
    postToDingTalk(message)
