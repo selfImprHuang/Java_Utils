@@ -66,6 +66,7 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
 })()
     .catch((e) => {
       $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
+      message = message + "<font color=\'#778899\' size=2>" +`❌ ${$.name}, 失败! 原因: ${e}!` +  "</font>\n\n"
     })
     .finally(() => {
        postToDingTalk(message)
@@ -94,16 +95,8 @@ async function jdShop() {
         }
       }
       that.log(`beanCount::${beanCount}`);
-      if (beanCount > 0) { 
         message += "<font color=\'#778899\' size=2>" + `成功领取${beanCount}京豆`  + "</font>\n\n"
         $.msg($.name, '', `动动账号 ${$.index} ${$.nickName}\n成功领取${beanCount}京豆`);
-        // if ($.isNode()) {
-        //   await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `动动账号${$.index} ${UserName}\n成功领取${beanCount}京豆`);
-        // }
-        // if ($.isNode()) {
-        //   await notify.BarkNotify(`${$.name}`, `动动账号${$.index} ${UserName}\n成功领取${beanCount}京豆`);
-        // }
-      }
     }
   }
 }
