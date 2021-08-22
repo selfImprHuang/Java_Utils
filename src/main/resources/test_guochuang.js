@@ -80,45 +80,42 @@ const JD_API_HOST = `https://api.m.jd.com/client.action`;
                 await superBrandTaskLottery()
                 await superBrandTaskLottery()   
             }
-            message = message +"----\n\n"
-        }
-    }
-    for (let i = 0; i < cookiesArr.length; i++) {
-        cookie = cookiesArr[i];
-        if (cookie) {
-           $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
-            $.index = i + 1;
-            $.isLogin = true;
-            $.nickName = '';
-        //    $.beans = 0
-     //       message = ''
+           
+            cookie = cookiesArr[i];
+            if (cookie) {
+               $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
+                $.index = i + 1;
+                $.isLogin = true;
+                $.nickName = '';
+            //    $.beans = 0
+         //       message = ''
+    
+                //   await shareCodesFormat();
+                that.log(`\n******开始【动动账号${$.index}】\n`);
+         
+           for (l = 0; l < codeList.length; l++) {
+           that.log(`为 ${codeList[l]}助力中`)
+                    await doTask("secondfloor",$.enpid,$.inviteenaid, codeList[l], 2)
+                }
+            } 
 
-            //   await shareCodesFormat();
-            that.log(`\n******开始【动动账号${$.index}】\n`);
-     
-       for (l = 0; l < codeList.length; l++) {
-       that.log(`为 ${codeList[l]}助力中`)
-                await doTask("secondfloor",$.enpid,$.inviteenaid, codeList[l], 2)
+            cookie = cookiesArr[i];
+            if (cookie) {
+               $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
+                $.index = i + 1;
+                $.isLogin = true;
+                $.nickName = '';
+                //   await shareCodesFormat();
+                that.log(`\n******开始【动动账号${$.index}】抽奖\n`);
+                    await superBrandTaskLottery()
+                    await superBrandTaskLottery()
+                    await superBrandTaskLottery()   
+             //     that.log(`共获得${$.beans} 京豆`)
             }
+            message = message + "<font color=\'#778899\' size=2>" + `共获得${$.beans} 京豆\n` + "</font>\n\n"
         }
+        message = message +"----\n\n"
     }
-for (let i = 0; i < cookiesArr.length; i++) {
-        cookie = cookiesArr[i];
-        if (cookie) {
-           $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
-            $.index = i + 1;
-            $.isLogin = true;
-            $.nickName = '';
-            //   await shareCodesFormat();
-            that.log(`\n******开始【动动账号${$.index}】抽奖\n`);
-                await superBrandTaskLottery()
-                await superBrandTaskLottery()
-                await superBrandTaskLottery()   
-         //     that.log(`共获得${$.beans} 京豆`)
-        }
-        message = message + "<font color=\'#778899\' size=2>" + `共获得${$.beans} 京豆\n` + "</font>\n\n"
-    }
-  //  await notify.sendNotify(`特物Z|万物皆可国创`, `${message}`);
 })()
 .catch((e) => {
     $.logErr(e)
