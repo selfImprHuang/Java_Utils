@@ -6,7 +6,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 let merge = {}
 let codeList = []
 //IOS等用户直接用NobyDa的jd cookie
-let cookiesArr = [],message,timeout,l,
+let cookiesArr = [],message =- "",timeout,l,
     cookie = '';
 if ($.isNode()) {
     Object.keys(jdCookieNode).forEach((item) => {
@@ -79,8 +79,8 @@ const JD_API_HOST = `https://api.m.jd.com/client.action`;
                 await superBrandTaskLottery()
                 await superBrandTaskLottery()
                 await superBrandTaskLottery()   
-}
-message = message +"----\n\n"
+            }
+            message = message +"----\n\n"
         }
     }
     for (let i = 0; i < cookiesArr.length; i++) {
@@ -125,7 +125,10 @@ for (let i = 0; i < cookiesArr.length; i++) {
     
   //  await notify.sendNotify(`特物Z|万物皆可国创`, `${message}`);
 })()
-.catch((e) => $.logErr(e))
+.catch((e) => {
+    $.logErr(e)
+    message = message + "<font color=\'#778899\' size=2>" + e + "</font>\n\n"
+    })
     .finally(() => {
         postToDingTalk(message)
         $.done()
