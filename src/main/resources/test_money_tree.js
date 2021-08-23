@@ -632,7 +632,7 @@ async function stealFriendFruit() {
 
 //获取好友列表API
 async function friendRank() {
-  await $.wait(1000); //歇口气儿, 不然会报操作频繁
+  // await $.wait(1000); //歇口气儿, 不然会报操作频繁
   const params = {
     "source": 2,
     "riskDeviceParam": {
