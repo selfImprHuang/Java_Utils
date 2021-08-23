@@ -833,6 +833,6 @@ function getPic(){
     let address = "\n\n ![screenshot](https://cdn.jsdelivr.net/gh/selfImprHuang/Go-Tool@v1.2/test/emptyDirTest/3/"
 
         pos = parseInt(11*Math.random())
-    address = address + code[pos] + ")/n/n"
+    address = address + code[pos] + ")"
     return address
 }
