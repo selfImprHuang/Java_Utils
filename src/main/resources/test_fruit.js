@@ -55,6 +55,7 @@ const urlSchema = `openjd://virtual?params=%7B%20%22category%22:%20%22jump%22,%2
       await shareCodesFormat();
       await jdFruit();
     }
+     message += "----\n\n"
   }
 
   that.log(message)
@@ -115,11 +116,11 @@ async function jdFruit() {
       message = message + "----\n\n"
     } else {
       that.log(`初始化农场数据异常, 请登录动动 app查看农场0元水果功能是否正常,农场初始化数据: ${JSON.stringify($.farmInfo)}`);
-      message = message + "<font color=\'#778899\' size=2> " + `【动动账号${$.index}】 ${$.nickName || $.UserName}\n【数据异常】请手动登录动动app查看此账号${$.name}是否正常` + "</font>\n\n";
+      message = message + "<font color=\'#778899\' size=2> " + `初始化农场数据异常, 请登录动动 app查看农场0元水果功能是否正常,农场初始化数据: ${JSON.stringify($.farmInfo)}` + "</font>\n\n";
     }
   } catch (e) {
     that.log(`任务执行异常，请检查执行日志 ‼️‼️`);
-    message = message + "<font color=\'#778899\' size=2> " +  `任务执行异常，请检查执行日志 ‼️‼️` + "</font>\n\n";
+    message = message + "<font color=\'#778899\' size=2> " +  `任务执行异常，请检查执行日志 ‼️‼️` + e +  "</font>\n\n";
     $.logErr(e);
   }
   await showMsg();
