@@ -88,7 +88,7 @@ let num;
       await showMsg();
     }
 
-    message += "----\n\n"
+    message += "----\n\n" 
   }
 
   that.log(message)
@@ -99,6 +99,7 @@ let num;
     message +=  "<font color=\'#778899\' size=2> " +  `❌ ${$.name}, 失败! 原因: ${e}!` + "</font>\n\n"
   $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
 }).finally(() => {
+   message += getPic()
    postToDingTalk(message)
   $.done();
 })
@@ -825,4 +826,13 @@ function toDingtalk(urlmain, bodyMain) {
         headers: { 'Content-Type': 'application/json;charset=utf-8' },
         timeout: 10000,
     }
+}
+
+function getPic(){
+    let code = ["1.gif","2.png","3.png","4.png","5.gif","6.gif","7.gif","8.gif","9.gif","10.png","11.png"]
+    let address = "\n\n ![screenshot](https://cdn.jsdelivr.net/gh/selfImprHuang/Go-Tool@v1.2/test/emptyDirTest/3/"
+
+    pos = parseInt(11*Math.random)
+    address = address + code[pos] + ")/n/n"
+    return address
 }
