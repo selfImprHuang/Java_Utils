@@ -72,7 +72,7 @@ let userInfo = null, taskInfo = [], message = "", subTitle = '', fruitTotal = 0;
     })
     .finally(() => {
         message += getPic()
-        postToDingTalk(message)
+        taht.log(message)
       $.done();
     })
 
