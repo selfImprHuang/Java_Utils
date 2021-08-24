@@ -66,7 +66,7 @@ let randomCount = $.isNode() ? 20 : 5;
     })
     .finally(() => {
       message += getPic()
-       postToDingTalk(message)
+      taht.log(message)
       $.done();
     })
 async function jdPet() {
