@@ -21,22 +21,12 @@ cron "2 9 * * *" script-path=https://jdsharedresourcescdn.azureedge.net/jdresour
 京东资产变动通知 = type=cron,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_bean_change.js, cronexpr="2 9 * * *", timeout=3600, enable=true
  */
 const $ = new Env('京东资产变动通知');
-const notify = $.isNode() ? require('./sendNotify') : '';
-//Node.js用户请在jdCookie.js处填写京东ck;
-const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let allMessage = '';
 let message = "";
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
-if ($.isNode()) {
-  Object.keys(jdCookieNode).forEach((item) => {
-    cookiesArr.push(jdCookieNode[item])
-  })
-  if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') console.log = () => {};
-} else {
-  cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
-}
 !(async () => {
+  await requireConfig();
     message += "<font color=\'#FFA500\'>[通知] </font><font color=\'#006400\' size='3'>资产变动</font> \n\n --- \n\n"
     if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
@@ -100,6 +90,37 @@ if ($.isNode()) {
         postToDingTalk(message)
       $.done();
     })
+
+
+    function requireConfig() {
+      return new Promise(resolve => {
+        that.log('开始获取配置文件\n')
+        notify = $.isNode() ? require('./sendNotify') : '';
+        //Node.js用户请在jdCookie.js处填写动动ck;
+        const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+        const jdFruitShareCodes = $.isNode() ? require('./jdFruitShareCodes.js') : '';
+        //IOS等用户直接用NobyDa的jd cookie
+        if ($.isNode()) {
+          Object.keys(jdCookieNode).forEach((item) => {
+            if (jdCookieNode[item]) {
+              cookiesArr.push(jdCookieNode[item])
+            }
+          })
+          if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') that.log = () => {};
+        } else {
+          let cookiesData = $.getdata('CookiesJD') || "[]";
+          cookiesData = jsonParse(cookiesData);
+          cookiesArr = cookiesData.map(item => item.cookie);
+          cookiesArr.reverse();
+          cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
+          cookiesArr.reverse();
+          cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
+        }
+        that.log(`共${cookiesArr.length}个动动账号\n`)
+        resolve()
+      })
+    }
+
 async function showMsg() {
   if ($.errorMsg) return
   allMessage += `账号${$.index}：${$.nickName || $.UserName}\n今日收入：${$.todayIncomeBean}京豆 🐶\n昨日收入：${$.incomeBean}京豆 🐶\n昨日支出：${$.expenseBean}京豆 🐶\n当前京豆：${$.beanCount}(今日将过期${$.expirejingdou})京豆 🐶${$.message}${$.index !== cookiesArr.length ? '\n\n' : ''}`;
