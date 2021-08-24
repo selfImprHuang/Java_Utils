@@ -81,7 +81,7 @@ const JD_API_HOST = 'https://api.m.jd.com/', actCode = 'visa-card-001';
   })
   .finally(() => {
     message += getPic()
-     postToDingTalk(message)
+    taht.log(message)
     $.done();
   })
 
