@@ -25,6 +25,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let allMessage = '';
+let message = "";
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
 if ($.isNode()) {
@@ -68,7 +69,7 @@ if ($.isNode()) {
       }
        //加上名称
        message = message + "<font color=\'#778899\' size=2>【羊毛姐妹】<font color=\'#FFA500\' size=3>" +  username + " </font> </font> \n\n "
-       
+
       await TotalBean();
       console.log(`\n********开始【京东账号${$.index}】${$.nickName || $.UserName}******\n`);
       if (!$.isLogin) {
@@ -102,7 +103,11 @@ if ($.isNode()) {
 async function showMsg() {
   if ($.errorMsg) return
   allMessage += `账号${$.index}：${$.nickName || $.UserName}\n今日收入：${$.todayIncomeBean}京豆 🐶\n昨日收入：${$.incomeBean}京豆 🐶\n昨日支出：${$.expenseBean}京豆 🐶\n当前京豆：${$.beanCount}(今日将过期${$.expirejingdou})京豆 🐶${$.message}${$.index !== cookiesArr.length ? '\n\n' : ''}`;
-  message += "<font color=\'#778899\' size=2>" + `今日收入：${$.todayIncomeBean}京豆 🐶\n昨日收入：${$.incomeBean}京豆 🐶\n昨日支出：${$.expenseBean}京豆 🐶\n当前京豆：${$.beanCount}(今日将过期${$.expirejingdou})京豆 🐶${$.message}${$.index !== cookiesArr.length ? '\n\n' : ''}` +"</font>\n\n"
+  message += "<font color=\'#778899\' size=2>" + `今日收入：${$.todayIncomeBean}京豆 🐶\n` +"</font>\n\n"
+  message += "<font color=\'#778899\' size=2>" + `昨日收入：${$.incomeBean}京豆 🐶\n` +"</font>\n\n"
+  message += "<font color=\'#778899\' size=2>" + `昨日支出：${$.expenseBean}京豆 🐶\n` +"</font>\n\n"
+  message += "<font color=\'#778899\' size=2>" + `当前京豆：${$.beanCount}` +"</font>\n\n"
+  message += "<font color=\'#778899\' size=2>" + `(今日将过期${$.expirejingdou})京豆 🐶${$.message}${$.index !== cookiesArr.length ? '\n\n' : ''}` +"</font>\n\n"
   // if ($.isNode()) {
   //   await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `账号${$.index}：${$.nickName || $.UserName}\n昨日收入：${$.incomeBean}京豆 🐶\n昨日支出：${$.expenseBean}京豆 🐶\n当前京豆：${$.beanCount}京豆 🐶${$.message}`, { url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean` })
   // }
@@ -1294,25 +1299,7 @@ async function jdFruit() {
     const body = {"shareCode": shareCode, "version": 6, "channel": 1}
     $.waterFriendForFarmRes = await request('waterFriendForFarm', body);
   }
-  async function showMsg() {
-    let ctrTemp;
-    if ($.isNode() && process.env.FRUIT_NOTIFY_CONTROL) {
-      ctrTemp = `${process.env.FRUIT_NOTIFY_CONTROL}` === 'false';
-    } else if ($.getdata('jdFruitNotify')) {
-      ctrTemp = $.getdata('jdFruitNotify') === 'false';
-    } else {
-      ctrTemp = `${jdNotify}` === 'false';
-    }
-    if (ctrTemp) {
-      $.msg($.name, subTitle, message, option);
-      if ($.isNode()) {
-        await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `${subTitle}\n${message}`);
-      }
-    } else {
-      $.log(`\n${message}\n`);
-    }
-  }
-  
+
 
   function readShareCode() {
     return new Promise(async resolve => {
@@ -1684,8 +1671,13 @@ function redPacket() {
             $.jdhRed = $.jdhRed.toFixed(2)
             $.balance = data.balance
             $.expiredBalance = ($.jxRedExpire + $.jsRedExpire + $.jdRedExpire).toFixed(2)
-            $.message += `\n当前总红包：${$.balance}(今日总过期${$.expiredBalance})元 🧧\n京喜红包：${$.jxRed}(今日将过期${$.jxRedExpire.toFixed(2)})元 🧧\n极速红包：${$.jsRed}(今日将过期${$.jsRedExpire.toFixed(2)})元 🧧\n京东红包：${$.jdRed}(今日将过期${$.jdRedExpire.toFixed(2)})元 🧧\n健康红包：${$.jdhRed}(今日将过期${$.jdhRedExpire.toFixed(2)})元 🧧`;
-            message += "<font color=\'#778899\' size=2>" +`\n当前总红包：${$.balance}(今日总过期${$.expiredBalance})元 🧧\n京喜红包：${$.jxRed}(今日将过期${$.jxRedExpire.toFixed(2)})元 🧧\n极速红包：${$.jsRed}(今日将过期${$.jsRedExpire.toFixed(2)})元 🧧\n京东红包：${$.jdRed}(今日将过期${$.jdRedExpire.toFixed(2)})元 🧧\n健康红包：${$.jdhRed}(今日将过期${$.jdhRedExpire.toFixed(2)})元 🧧` + "</font>\n\n"
+            // message += "<font color=\'#778899\' size=2>" +`\n当前总红包：${$.balance}(今日总过期${$.expiredBalance})元 🧧\n京喜红包：${$.jxRed}(今日将过期${$.jxRedExpire.toFixed(2)})元 🧧\n极速红包：${$.jsRed}(今日将过期${$.jsRedExpire.toFixed(2)})元 🧧\n京东红包：${$.jdRed}(今日将过期${$.jdRedExpire.toFixed(2)})元 🧧\n健康红包：${$.jdhRed}(今日将过期${$.jdhRedExpire.toFixed(2)})元 🧧` + "</font>\n\n"
+            message += "<font color=\'#778899\' size=2>" +  `当前总红包：${$.balance}(今日总过期${$.expiredBalance})元🧧\n` +"</font>\n\n"
+            message += "<font color=\'#778899\' size=2>" + `京喜红包：${$.jxRed}(今日将过期${$.jxRedExpire.toFixed(2)})元 🧧\n` +"</font>\n\n"
+            message += "<font color=\'#778899\' size=2>" + `极速红包：${$.jsRed}(今日将过期${$.jsRedExpire.toFixed(2)})元 🧧\n` +"</font>\n\n"
+            message += "<font color=\'#778899\' size=2>" + `京东红包：${$.jdRed}(今日将过期${$.jdRedExpire.toFixed(2)})元 🧧\n` +"</font>\n\n"
+            message += "<font color=\'#778899\' size=2>" + `健康红包：${$.jdhRed}(今日将过期${$.jdhRedExpire.toFixed(2)})元 🧧` +"</font>\n\n"
+
         } else {
             console.log(`京东服务器返回空数据`)
           }
@@ -1733,7 +1725,7 @@ function postToDingTalk(messgae) {
     const body = {
         "msgtype": "markdown",
         "markdown": {
-            "title":"动动摇钱树",
+            "title":"资产总变化",
             "text": message1
         },
         "at": {
