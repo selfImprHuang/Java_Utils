@@ -58,7 +58,7 @@ if ($.isNode()) {
     })
     .finally(() => {
       message = message + getPic()
-       postToDingTalk(message)
+      that.log(message)
       $.done();
     })
 async function jdDailyEgg() {
