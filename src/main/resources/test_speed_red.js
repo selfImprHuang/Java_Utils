@@ -88,7 +88,7 @@ $.linkIds=["9wdf1YTT2L59Vr-meKskLA"];
 			})
 			.finally(() => {
 				message += getPic()
-                postToDingTalk(message)
+                taht.log(message)
 				$.done();
 			})
 
