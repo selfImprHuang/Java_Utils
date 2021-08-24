@@ -146,7 +146,7 @@ async function showMsg() {
   
 
 
-  message += "<font color=\'#CCFF00\' size=2>" + `【当前总红包】：${$.balance}( 今日总过期${$.expiredBalance} )元 🧧` +"</font>\n\n"
+  message += "<font color=\'#990000\' size=3>" + `【当前总红包】：${$.balance}( 今日总过期${$.expiredBalance} )元 🧧` +"</font>\n\n"
   message += "<font color=\'#778899\' size=2>" + `【京喜红包】：${$.jxRed}( 今日将过期${$.jxRedExpire.toFixed(2)} )元 🧧` +"</font>\n\n"
   message += "<font color=\'#778899\' size=2>" + `【极速红包】：${$.jsRed}( 今日将过期${$.jsRedExpire.toFixed(2)} )元 🧧` +"</font>\n\n"
   message += "<font color=\'#778899\' size=2>" + `【京东红包】：${$.jdRed}( 今日将过期${$.jdRedExpire.toFixed(2)} )元 🧧` +"</font>\n\n"
