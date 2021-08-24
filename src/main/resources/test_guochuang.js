@@ -123,7 +123,8 @@ const JD_API_HOST = `https://api.m.jd.com/client.action`;
     })
     .finally(() => {
         message = message + getPic()
-        postToDingTalk(message)
+        that.log(message)
+        // postToDingTalk(message)
         $.done()
     })
 //获取活动信息
