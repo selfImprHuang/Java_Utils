@@ -1,5 +1,5 @@
 const notify = $.isNode() ? require('./sendNotify') : '';
-//Node.js用户请在jdCookie.js处填写动动ck;
+//Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 
 //IOS等用户直接用NobyDa的jd cookie
@@ -19,7 +19,7 @@ const JD_API_HOST = 'https://ms.jr.jd.com/gw/generic/uc/h5/m';
 let userInfo = null, taskInfo = [], message = "", subTitle = '', fruitTotal = 0;
 !(async () => {
   if (!cookiesArr[0]) {
-    $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的动动签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
+    $.msg($.name, '【提示】请先获取cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
   }
   message += "<font color=\'#FFA500\'>[通知] </font><font color=\'#006400\' size='3'>动动摇钱树</font> \n\n --- \n\n"
   for (let i = 0; i < cookiesArr.length; i++) {
@@ -46,12 +46,12 @@ let userInfo = null, taskInfo = [], message = "", subTitle = '', fruitTotal = 0;
 
 
       await TotalBean();
-      that.log(`\n****开始【动动账号${$.index}】${$.nickName || $.UserName}****\n`);
+      that.log(`\n****开始【京东账号${$.index}】${$.nickName || $.UserName}****\n`);
       if (!$.isLogin) {
-        $.msg($.name, `【提示】cookie已失效`, `动动账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
+        $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
 
         if ($.isNode()) {
-          await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `动动账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
+          await notify.sendNotify(`${$.name}cookie已失效 - ${$.UserName}`, `京东账号${$.index} ${$.UserName}\n请重新登录获取cookie`);
         }
         continue
       }
@@ -115,7 +115,7 @@ function user_info() {
     $.post(taskurl('login', params), async (err, resp, data) => {
       try {
         if (err) {
-          that.log("\n摇钱树动动API请求失败 ‼️‼️")
+          that.log("\n摇钱树京东API请求失败 ‼️‼️")
           that.log(JSON.stringify(err));
         } else {
           if (data) {
@@ -134,9 +134,9 @@ function user_info() {
                   message += "<font color=\'#778899\' size=2>" + `【我的金币数量】${userInfo.treeInfo.coin}\n` + "</font>\n\n";
                   message += "<font color=\'#778899\' size=2>" + `【距离${userInfo.treeInfo.level + 1}级摇钱树还差】${userInfo.treeInfo.progressLeft}\n` + "</font>\n\n";
                 } else {
-                  $.log(`动动账号${$.index}${$.UserName}运行失败\n此账号未实名认证或者未参与过此活动\n①如未参与活动,请先去动动app参加摇钱树活动\n入口：我的->游戏与互动->查看更多\n②如未实名认证,请进行实名认证`)
-                  // $.msg($.name, `【提示】动动账号${$.index}${$.UserName}运行失败`, '此账号未实名认证或者未参与过此活动\n①如未参与活动,请先去动动app参加摇钱树活动\n入口：我的->游戏与互动->查看更多\n②如未实名认证,请进行实名认证', {"open-url": "openApp.jdMobile://"});
-                  message += "<font color=\'#778899\' size=2>" + `运行失败\n此账号未实名认证或者未参与过此活动\n①如未参与活动,请先去动动app参加摇钱树活动\n入口：我的->游戏与互动->查看更多\n②如未实名认证,请进行实名认证` + "</font>\n\n"
+                  $.log(`京东账号${$.index}${$.UserName}运行失败\n此账号未实名认证或者未参与过此活动\n①如未参与活动,请先去京东app参加摇钱树活动\n入口：我的->游戏与互动->查看更多\n②如未实名认证,请进行实名认证`)
+                  // $.msg($.name, `【提示】京东账号${$.index}${$.UserName}运行失败`, '此账号未实名认证或者未参与过此活动\n①如未参与活动,请先去京东app参加摇钱树活动\n入口：我的->游戏与互动->查看更多\n②如未实名认证,请进行实名认证', {"open-url": "openApp.jdMobile://"});
+                  message += "<font color=\'#778899\' size=2>" + `运行失败\n此账号未实名认证或者未参与过此活动\n①如未参与活动,请先去京东app参加摇钱树活动\n入口：我的->游戏与互动->查看更多\n②如未实名认证,请进行实名认证` + "</font>\n\n"
                 }
               }
             } else {
@@ -155,7 +155,7 @@ function user_info() {
   })
 }
 
-function dayWork() {
+async function dayWork() {
   that.log(`开始做任务userInfo了\n`)
   return new Promise(async resolve => {
     const data = {
@@ -425,7 +425,7 @@ function signIndex() {
   })
 }
 
-function signEveryDay() {
+async function signEveryDay() {
   return new Promise(async (resolve) => {
     try {
       let signIndexRes = await signIndex();
@@ -632,7 +632,7 @@ async function stealFriendFruit() {
 
 //获取好友列表API
 async function friendRank() {
-  // await $.wait(1000); //歇口气儿, 不然会报操作频繁
+  await $.wait(1000); //歇口气儿, 不然会报操作频繁
   const params = {
     "source": 2,
     "riskDeviceParam": {
@@ -658,7 +658,7 @@ async function friendRank() {
     $.post(taskurl('friendRank', params), (err, resp, data) => {
       try {
         if (err) {
-          that.log("\n摇钱树动动API请求失败 ‼️‼️");
+          that.log("\n摇钱树京东API请求失败 ‼️‼️");
           that.log(JSON.stringify(err));
           $.logErr(err);
         } else {
@@ -707,7 +707,7 @@ async function friendTreeRoom(friendPin) {
     $.post(taskurl('friendTree', params), (err, resp, data) => {
       try {
         if (err) {
-          that.log("\n摇钱树动动API请求失败 ‼️‼️");
+          that.log("\n摇钱树京东API请求失败 ‼️‼️");
           that.log(JSON.stringify(err));
           $.logErr(err);
         } else {
@@ -757,7 +757,7 @@ async function stealFruit(friendPin, stoleId) {
     $.post(taskurl('stealFruit', params), (err, resp, data) => {
       try {
         if (err) {
-          that.log("\n摇钱树动动API请求失败 ‼️‼️");
+          that.log("\n摇钱树京东API请求失败 ‼️‼️");
           that.log(JSON.stringify(err));
           $.logErr(err);
         } else {
@@ -783,7 +783,7 @@ async function request(function_id, body = {}) {
     $.post(taskurl(function_id, body), (err, resp, data) => {
       try {
         if (err) {
-          that.log("\n摇钱树动动API请求失败 ‼️‼️");
+          that.log("\n摇钱树京东API请求失败 ‼️‼️");
           that.log(JSON.stringify(err));
           $.logErr(err);
         } else {
@@ -851,7 +851,7 @@ function TotalBean() {
               $.nickName = data.data.userInfo.baseInfo.nickname;
             }
           } else {
-            $.log('动动服务器返回空数据');
+            $.log('京东服务器返回空数据');
           }
         }
       } catch (e) {
