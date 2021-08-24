@@ -100,7 +100,7 @@ let num;
   $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
 }).finally(() => {
    message += getPic()
-   postToDingTalk(message)
+   that.log(message)
   $.done();
 })
 
