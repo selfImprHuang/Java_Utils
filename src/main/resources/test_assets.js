@@ -139,10 +139,10 @@ let cookiesArr = [], cookie = '';
 async function showMsg() {
   if ($.errorMsg) return
   allMessage += `账号${$.index}：${$.nickName || $.UserName}\n今日收入：${$.todayIncomeBean}京豆 🐶\n昨日收入：${$.incomeBean}京豆 🐶\n昨日支出：${$.expenseBean}京豆 🐶\n当前京豆：${$.beanCount}(今日将过期${$.expirejingdou})京豆 🐶${$.message}${$.index !== cookiesArr.length ? '\n\n' : ''}`;
-  message += "<font color=\'#778899\' size=2>" + `今日收入：${$.todayIncomeBean}京豆 🐶\n` +"</font>\n\n"
-  message += "<font color=\'#778899\' size=2>" + `昨日收入：${$.incomeBean}京豆 🐶\n` +"</font>\n\n"
-  message += "<font color=\'#778899\' size=2>" + `昨日支出：${$.expenseBean}京豆 🐶\n` +"</font>\n\n"
-  message += "<font color=\'#778899\' size=2>" + `当前京豆：${$.beanCount}(今日将过期${$.expirejingdou})京豆 🐶` +"</font>\n\n"
+  message += "<font color=\'#778899\' size=2>" + `【今日收入】：${$.todayIncomeBean}京豆 🐶` +"</font>\n\n"
+  message += "<font color=\'#778899\' size=2>" + `【昨日收入】：${$.incomeBean}京豆 🐶` +"</font>\n\n"
+  message += "<font color=\'#778899\' size=2>" + `【昨日支出】：${$.expenseBean}京豆 🐶` +"</font>\n\n"
+  message += "<font color=\'#778899\' size=2>" + `【当前京豆】：${$.beanCount}(今日将过期${$.expirejingdou})京豆 🐶` +"</font>\n\n"
   // if ($.isNode()) {
   //   await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `账号${$.index}：${$.nickName || $.UserName}\n昨日收入：${$.incomeBean}京豆 🐶\n昨日支出：${$.expenseBean}京豆 🐶\n当前京豆：${$.beanCount}京豆 🐶${$.message}`, { url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean` })
   // }
@@ -392,6 +392,11 @@ function redPacket() {
             $.balance = data.balance
             $.expiredBalance = ($.jxRedExpire + $.jsRedExpire + $.jdRedExpire).toFixed(2)
             $.message += `\n当前总红包：${$.balance}(今日总过期${$.expiredBalance})元 🧧\n京喜红包：${$.jxRed}(今日将过期${$.jxRedExpire.toFixed(2)})元 🧧\n极速红包：${$.jsRed}(今日将过期${$.jsRedExpire.toFixed(2)})元 🧧\n京东红包：${$.jdRed}(今日将过期${$.jdRedExpire.toFixed(2)})元 🧧\n健康红包：${$.jdhRed}(今日将过期${$.jdhRedExpire.toFixed(2)})元 🧧`;
+            message += "<font color=\'#778899\' size=2>" + `【当前总红包】：${$.balance}(今日总过期${$.expiredBalance})元 🧧` +"</font>\n\n"
+            message += "<font color=\'#778899\' size=2>" + `【京喜红包】：${$.jxRed}(今日将过期${$.jxRedExpire.toFixed(2)})元 🧧` +"</font>\n\n"
+            message += "<font color=\'#778899\' size=2>" + `【极速红包】：${$.jsRed}(今日将过期${$.jsRedExpire.toFixed(2)})元 🧧` +"</font>\n\n"
+            message += "<font color=\'#778899\' size=2>" + `【京东红包】：${$.jdRed}(今日将过期${$.jdRedExpire.toFixed(2)})元 🧧` +"</font>\n\n"
+            message += "<font color=\'#778899\' size=2>" + `【健康红包】：${$.jdhRed}(今日将过期${$.jdhRedExpire.toFixed(2)})元 🧧` +"</font>\n\n"
           } else {
             console.log(`京东服务器返回空数据`)
           }
@@ -436,7 +441,7 @@ async function jdFruit() {
       if ($.farmInfo.farmUserPro) {
         // option['media-url'] = $.farmInfo.farmUserPro.goodsImage;
         message = message +  "<font color=\'#778899\' size=2>【水果名称】 " + `${$.farmInfo.farmUserPro.name}` + "</font>\n\n";
-        message +=  "<font color=\'#778899\' size=2>【已兑换水果】" + `${$.farmInfo.farmUserPro.winTimes}` +  "次</font>\n\n";
+        // message +=  "<font color=\'#778899\' size=2>【已兑换水果】" + `${$.farmInfo.farmUserPro.winTimes}` +  "次</font>\n\n";
         that.log(`\n【动动账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${$.farmInfo.farmUserPro.shareCode}\n`);
         that.log(`\n【已成功兑换水果】${$.farmInfo.farmUserPro.winTimes}次\n`);
         await getHelp();
@@ -583,7 +588,7 @@ async function jdFruit() {
     await initForFarm();
     await taskInitForFarm();
     let waterEveryDayT = $.farmTask.totalWaterTaskInit.totalWaterTaskTimes;//今天到到目前为止，浇了多少次水
-      message +=  "<font color=\'#778899\' size=2>【今日共浇水】" + `${waterEveryDayT}` + "次 </font>\n\n"
+      // message +=  "<font color=\'#778899\' size=2>【今日共浇水】" + `${waterEveryDayT}` + "次 </font>\n\n"
       message += "<font color=\'#778899\' size=2>【剩余 水滴】" + `${$.farmInfo.farmUserPro.totalEnergy}` + "g💧 </font> \n\n"
       message += "<font color=\'#BA55D3\' size=2>【水果🍉进度】" + `${(($.farmInfo.farmUserPro.treeEnergy /
       $.farmInfo.farmUserPro.treeTotalEnergy) * 100).toFixed(2)}` + "%，已浇水" +`${$.farmInfo.farmUserPro.treeEnergy / 10}` + "次,还需"+`${($.farmInfo.farmUserPro.treeTotalEnergy - $.farmInfo.farmUserPro.treeEnergy) / 10}` +"次 </font> \n\n"
@@ -1710,7 +1715,7 @@ async function jdFruit() {
 
 //我加的函数
 function postToDingTalk(messgae) {
-    const dingtalk = "https://oapi.dingtalk.com/robot/send?access_token=2a8124fdff33639034e415df2aacba8b6befdf12c97a881d83c95ddedaf64518"
+    const dingtalk = "https://oapi.dingtalk.com/robot/send?access_token=fa87e34729eaa6113fddfa857efebb477dea0a433d6eecfe93b1d3f5e24847b9"
 
     const message1 = "" + messgae
     that.log(messgae)
