@@ -20,10 +20,10 @@ cron "2 9 * * *" script-path=https://jdsharedresourcescdn.azureedge.net/jdresour
 ============小火箭=========
 京东资产变动通知 = type=cron,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_bean_change.js, cronexpr="2 9 * * *", timeout=3600, enable=true
  */
-let $ = new Env('京东资产变动通知');
-let notify = $.isNode() ? require('./sendNotify') : '';
+const $ = new Env('京东资产变动通知');
+const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
-let jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
+const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let allMessage = '';
 let message = "";
 //IOS等用户直接用NobyDa的jd cookie
@@ -37,7 +37,6 @@ if ($.isNode()) {
   cookiesArr = [$.getdata('CookieJD'), $.getdata('CookieJD2'), ...jsonParse($.getdata('CookiesJD') || "[]").map(item => item.cookie)].filter(item => !!item);
 }
 !(async () => {
-    await requireConfig();
     message += "<font color=\'#FFA500\'>[通知] </font><font color=\'#006400\' size='3'>资产变动</font> \n\n --- \n\n"
     if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
@@ -120,9 +119,9 @@ async function bean() {
   // 不管哪个时区。得到都是当前时刻北京时间的时间戳 new Date().getTime() + new Date().getTimezoneOffset()*60*1000 + 8*60*60*1000
 
   //前一天的0:0:0时间戳
-  let tm = parseInt((Date.now() + 28800000) / 86400000) * 86400000 - 28800000 - (24 * 60 * 60 * 1000);
+  const tm = parseInt((Date.now() + 28800000) / 86400000) * 86400000 - 28800000 - (24 * 60 * 60 * 1000);
   // 今天0:0:0时间戳
-  let tm1 = parseInt((Date.now() + 28800000) / 86400000) * 86400000 - 28800000;
+  const tm1 = parseInt((Date.now() + 28800000) / 86400000) * 86400000 - 28800000;
   let page = 1, t = 0, yesterdayArr = [], todayArr = [];
   do {
     let response = await getJingBeanBalanceDetail(page);
@@ -132,7 +131,7 @@ async function bean() {
       let detailList = response.detailList;
       if (detailList && detailList.length > 0) {
         for (let item of detailList) {
-          let date = item.date.replace(/-/g, '/') + "+08:00";
+          const date = item.date.replace(/-/g, '/') + "+08:00";
           if (new Date(date).getTime() >= tm1 && (!item['eventMassage'].includes("退还") && !item['eventMassage'].includes('扣赠'))) {
             todayArr.push(item);
           } else if (tm <= new Date(date).getTime() && new Date(date).getTime() < tm1 && (!item['eventMassage'].includes("退还") && !item['eventMassage'].includes('扣赠'))) {
@@ -177,7 +176,7 @@ async function bean() {
 }
 function TotalBean() {
   return new Promise(async resolve => {
-    let options = {
+    const options = {
       url: "https://me-api.jd.com/user_new/info/GetJDUserInfoUnion",
       headers: {
         Host: "me-api.jd.com",
@@ -221,7 +220,7 @@ function TotalBean() {
 }
 function getJingBeanBalanceDetail(page) {
   return new Promise(async resolve => {
-    let options = {
+    const options = {
       "url": `https://api.m.jd.com/client.action?functionId=getJingBeanBalanceDetail`,
       "body": `body=${escape(JSON.stringify({"pageSize": "20", "page": page.toString()}))}&appid=ld`,
       "headers": {
@@ -254,7 +253,7 @@ function getJingBeanBalanceDetail(page) {
 }
 function queryexpirejingdou() {
   return new Promise(async resolve => {
-    let options = {
+    const options = {
       "url": `https://wq.jd.com/activep3/singjd/queryexpirejingdou?_=${Date.now()}&g_login_type=1&sceneval=2`,
       "headers": {
         "Accept": "*/*",
@@ -301,7 +300,7 @@ function queryexpirejingdou() {
 }
 function redPacket() {
   return new Promise(async resolve => {
-    let options = {
+    const options = {
       "url": `https://m.jingxi.com/user/info/QueryUserRedEnvelopesV2?type=1&orgFlag=JD_PinGou_New&page=1&cashRedType=1&redBalanceFlag=1&channel=1&_=${+new Date()}&sceneval=2&g_login_type=1&g_ty=ls`,
       "headers": {
         'Host': 'm.jingxi.com',
@@ -390,7 +389,7 @@ function timeFormat(time) {
   return date.getFullYear() + '-' + ((date.getMonth() + 1) >= 10 ? (date.getMonth() + 1) : '0' + (date.getMonth() + 1)) + '-' + (date.getDate() >= 10 ? date.getDate() : '0' + date.getDate());
 }
 // prettier-ignore
-function Env(t,e){class s{letructor(t){this.env=t}send(t,e="GET"){t="string"==typeof t?{url:t}:t;let s=this.get;return"POST"===e&&(s=this.post),new Promise((e,i)=>{s.call(this,t,(t,s,r)=>{t?i(t):e(s)})})}get(t){return this.send.call(this.env,t)}post(t){return this.send.call(this.env,t,"POST")}}return new class{letructor(t,e){this.name=t,this.http=new s(this),this.data=null,this.dataFile="box.dat",this.logs=[],this.isMute=!1,this.isNeedRewrite=!1,this.logSeparator="\n",this.startTime=(new Date).getTime(),Object.assign(this,e),this.log("",`🔔${this.name}, 开始!`)}isNode(){return"undefined"!=typeof module&&!!module.exports}isQuanX(){return"undefined"!=typeof $task}isSurge(){return"undefined"!=typeof $httpClient&&"undefined"==typeof $loon}isLoon(){return"undefined"!=typeof $loon}toObj(t,e=null){try{return JSON.parse(t)}catch{return e}}toStr(t,e=null){try{return JSON.stringify(t)}catch{return e}}getjson(t,e){let s=e;let i=this.getdata(t);if(i)try{s=JSON.parse(this.getdata(t))}catch{}return s}setjson(t,e){try{return this.setdata(JSON.stringify(t),e)}catch{return!1}}getScript(t){return new Promise(e=>{this.get({url:t},(t,s,i)=>e(i))})}runScript(t,e){return new Promise(s=>{let i=this.getdata("@chavy_boxjs_userCfgs.httpapi");i=i?i.replace(/\n/g,"").trim():i;let r=this.getdata("@chavy_boxjs_userCfgs.httpapi_timeout");r=r?1*r:20,r=e&&e.timeout?e.timeout:r;let[o,h]=i.split("@"),n={url:`http://${h}/v1/scripting/evaluate`,body:{script_text:t,mock_type:"cron",timeout:r},headers:{"X-Key":o,Accept:"*/*"}};this.post(n,(t,e,i)=>s(i))}).catch(t=>this.logErr(t))}loaddata(){if(!this.isNode())return{};{this.fs=this.fs?this.fs:require("fs"),this.path=this.path?this.path:require("path");let t=this.path.resolve(this.dataFile),e=this.path.resolve(process.cwd(),this.dataFile),s=this.fs.existsSync(t),i=!s&&this.fs.existsSync(e);if(!s&&!i)return{};{let i=s?t:e;try{return JSON.parse(this.fs.readFileSync(i))}catch(t){return{}}}}}writedata(){if(this.isNode()){this.fs=this.fs?this.fs:require("fs"),this.path=this.path?this.path:require("path");let t=this.path.resolve(this.dataFile),e=this.path.resolve(process.cwd(),this.dataFile),s=this.fs.existsSync(t),i=!s&&this.fs.existsSync(e),r=JSON.stringify(this.data);s?this.fs.writeFileSync(t,r):i?this.fs.writeFileSync(e,r):this.fs.writeFileSync(t,r)}}lodash_get(t,e,s){let i=e.replace(/\[(\d+)\]/g,".$1").split(".");let r=t;for(let t of i)if(r=Object(r)[t],void 0===r)return s;return r}lodash_set(t,e,s){return Object(t)!==t?t:(Array.isArray(e)||(e=e.toString().match(/[^.[\]]+/g)||[]),e.slice(0,-1).reduce((t,s,i)=>Object(t[s])===t[s]?t[s]:t[s]=Math.abs(e[i+1])>>0==+e[i+1]?[]:{},t)[e[e.length-1]]=s,t)}getdata(t){let e=this.getval(t);if(/^@/.test(t)){let[,s,i]=/^@(.*?)\.(.*?)$/.exec(t),r=s?this.getval(s):"";if(r)try{let t=JSON.parse(r);e=t?this.lodash_get(t,i,""):e}catch(t){e=""}}return e}setdata(t,e){let s=!1;if(/^@/.test(e)){let[,i,r]=/^@(.*?)\.(.*?)$/.exec(e),o=this.getval(i),h=i?"null"===o?null:o||"{}":"{}";try{let e=JSON.parse(h);this.lodash_set(e,r,t),s=this.setval(JSON.stringify(e),i)}catch(e){let o={};this.lodash_set(o,r,t),s=this.setval(JSON.stringify(o),i)}}else s=this.setval(t,e);return s}getval(t){return this.isSurge()||this.isLoon()?$persistentStore.read(t):this.isQuanX()?$prefs.valueForKey(t):this.isNode()?(this.data=this.loaddata(),this.data[t]):this.data&&this.data[t]||null}setval(t,e){return this.isSurge()||this.isLoon()?$persistentStore.write(t,e):this.isQuanX()?$prefs.setValueForKey(t,e):this.isNode()?(this.data=this.loaddata(),this.data[e]=t,this.writedata(),!0):this.data&&this.data[e]||null}initGotEnv(t){this.got=this.got?this.got:require("got"),this.cktough=this.cktough?this.cktough:require("tough-cookie"),this.ckjar=this.ckjar?this.ckjar:new this.cktough.CookieJar,t&&(t.headers=t.headers?t.headers:{},void 0===t.headers.Cookie&&void 0===t.cookieJar&&(t.cookieJar=this.ckjar))}get(t,e=(()=>{})){t.headers&&(delete t.headers["Content-Type"],delete t.headers["Content-Length"]),this.isSurge()||this.isLoon()?(this.isSurge()&&this.isNeedRewrite&&(t.headers=t.headers||{},Object.assign(t.headers,{"X-Surge-Skip-Scripting":!1})),$httpClient.get(t,(t,s,i)=>{!t&&s&&(s.body=i,s.statusCode=s.status),e(t,s,i)})):this.isQuanX()?(this.isNeedRewrite&&(t.opts=t.opts||{},Object.assign(t.opts,{hints:!1})),$task.fetch(t).then(t=>{let{statusCode:s,statusCode:i,headers:r,body:o}=t;e(null,{status:s,statusCode:i,headers:r,body:o},o)},t=>e(t))):this.isNode()&&(this.initGotEnv(t),this.got(t).on("redirect",(t,e)=>{try{if(t.headers["set-cookie"]){let s=t.headers["set-cookie"].map(this.cktough.Cookie.parse).toString();s&&this.ckjar.setCookieSync(s,null),e.cookieJar=this.ckjar}}catch(t){this.logErr(t)}}).then(t=>{let{statusCode:s,statusCode:i,headers:r,body:o}=t;e(null,{status:s,statusCode:i,headers:r,body:o},o)},t=>{let{message:s,response:i}=t;e(s,i,i&&i.body)}))}post(t,e=(()=>{})){if(t.body&&t.headers&&!t.headers["Content-Type"]&&(t.headers["Content-Type"]="application/x-www-form-urlencoded"),t.headers&&delete t.headers["Content-Length"],this.isSurge()||this.isLoon())this.isSurge()&&this.isNeedRewrite&&(t.headers=t.headers||{},Object.assign(t.headers,{"X-Surge-Skip-Scripting":!1})),$httpClient.post(t,(t,s,i)=>{!t&&s&&(s.body=i,s.statusCode=s.status),e(t,s,i)});else if(this.isQuanX())t.method="POST",this.isNeedRewrite&&(t.opts=t.opts||{},Object.assign(t.opts,{hints:!1})),$task.fetch(t).then(t=>{let{statusCode:s,statusCode:i,headers:r,body:o}=t;e(null,{status:s,statusCode:i,headers:r,body:o},o)},t=>e(t));else if(this.isNode()){this.initGotEnv(t);let{url:s,...i}=t;this.got.post(s,i).then(t=>{let{statusCode:s,statusCode:i,headers:r,body:o}=t;e(null,{status:s,statusCode:i,headers:r,body:o},o)},t=>{let{message:s,response:i}=t;e(s,i,i&&i.body)})}}time(t,e=null){let s=e?new Date(e):new Date;let i={"M+":s.getMonth()+1,"d+":s.getDate(),"H+":s.getHours(),"m+":s.getMinutes(),"s+":s.getSeconds(),"q+":Math.floor((s.getMonth()+3)/3),S:s.getMilliseconds()};/(y+)/.test(t)&&(t=t.replace(RegExp.$1,(s.getFullYear()+"").substr(4-RegExp.$1.length)));for(let e in i)new RegExp("("+e+")").test(t)&&(t=t.replace(RegExp.$1,1==RegExp.$1.length?i[e]:("00"+i[e]).substr((""+i[e]).length)));return t}msg(e=t,s="",i="",r){let o=t=>{if(!t)return t;if("string"==typeof t)return this.isLoon()?t:this.isQuanX()?{"open-url":t}:this.isSurge()?{url:t}:void 0;if("object"==typeof t){if(this.isLoon()){let e=t.openUrl||t.url||t["open-url"],s=t.mediaUrl||t["media-url"];return{openUrl:e,mediaUrl:s}}if(this.isQuanX()){let e=t["open-url"]||t.url||t.openUrl,s=t["media-url"]||t.mediaUrl;return{"open-url":e,"media-url":s}}if(this.isSurge()){let e=t.url||t.openUrl||t["open-url"];return{url:e}}}};if(this.isMute||(this.isSurge()||this.isLoon()?$notification.post(e,s,i,o(r)):this.isQuanX()&&$notify(e,s,i,o(r))),!this.isMuteLog){let t=["","==============📣系统通知📣=============="];t.push(e),s&&t.push(s),i&&t.push(i),console.log(t.join("\n")),this.logs=this.logs.concat(t)}}log(...t){t.length>0&&(this.logs=[...this.logs,...t]),console.log(t.join(this.logSeparator))}logErr(t,e){let s=!this.isSurge()&&!this.isQuanX()&&!this.isLoon();s?this.log("",`❗️${this.name}, 错误!`,t.stack):this.log("",`❗️${this.name}, 错误!`,t)}wait(t){return new Promise(e=>setTimeout(e,t))}done(t={}){let e=(new Date).getTime(),s=(e-this.startTime)/1e3;this.log("",`🔔${this.name}, 结束! 🕛 ${s} 秒`),this.log(),(this.isSurge()||this.isQuanX()||this.isLoon())&&$done(t)}}(t,e)}
+function Env(t,e){class s{constructor(t){this.env=t}send(t,e="GET"){t="string"==typeof t?{url:t}:t;let s=this.get;return"POST"===e&&(s=this.post),new Promise((e,i)=>{s.call(this,t,(t,s,r)=>{t?i(t):e(s)})})}get(t){return this.send.call(this.env,t)}post(t){return this.send.call(this.env,t,"POST")}}return new class{constructor(t,e){this.name=t,this.http=new s(this),this.data=null,this.dataFile="box.dat",this.logs=[],this.isMute=!1,this.isNeedRewrite=!1,this.logSeparator="\n",this.startTime=(new Date).getTime(),Object.assign(this,e),this.log("",`🔔${this.name}, 开始!`)}isNode(){return"undefined"!=typeof module&&!!module.exports}isQuanX(){return"undefined"!=typeof $task}isSurge(){return"undefined"!=typeof $httpClient&&"undefined"==typeof $loon}isLoon(){return"undefined"!=typeof $loon}toObj(t,e=null){try{return JSON.parse(t)}catch{return e}}toStr(t,e=null){try{return JSON.stringify(t)}catch{return e}}getjson(t,e){let s=e;const i=this.getdata(t);if(i)try{s=JSON.parse(this.getdata(t))}catch{}return s}setjson(t,e){try{return this.setdata(JSON.stringify(t),e)}catch{return!1}}getScript(t){return new Promise(e=>{this.get({url:t},(t,s,i)=>e(i))})}runScript(t,e){return new Promise(s=>{let i=this.getdata("@chavy_boxjs_userCfgs.httpapi");i=i?i.replace(/\n/g,"").trim():i;let r=this.getdata("@chavy_boxjs_userCfgs.httpapi_timeout");r=r?1*r:20,r=e&&e.timeout?e.timeout:r;const[o,h]=i.split("@"),n={url:`http://${h}/v1/scripting/evaluate`,body:{script_text:t,mock_type:"cron",timeout:r},headers:{"X-Key":o,Accept:"*/*"}};this.post(n,(t,e,i)=>s(i))}).catch(t=>this.logErr(t))}loaddata(){if(!this.isNode())return{};{this.fs=this.fs?this.fs:require("fs"),this.path=this.path?this.path:require("path");const t=this.path.resolve(this.dataFile),e=this.path.resolve(process.cwd(),this.dataFile),s=this.fs.existsSync(t),i=!s&&this.fs.existsSync(e);if(!s&&!i)return{};{const i=s?t:e;try{return JSON.parse(this.fs.readFileSync(i))}catch(t){return{}}}}}writedata(){if(this.isNode()){this.fs=this.fs?this.fs:require("fs"),this.path=this.path?this.path:require("path");const t=this.path.resolve(this.dataFile),e=this.path.resolve(process.cwd(),this.dataFile),s=this.fs.existsSync(t),i=!s&&this.fs.existsSync(e),r=JSON.stringify(this.data);s?this.fs.writeFileSync(t,r):i?this.fs.writeFileSync(e,r):this.fs.writeFileSync(t,r)}}lodash_get(t,e,s){const i=e.replace(/\[(\d+)\]/g,".$1").split(".");let r=t;for(const t of i)if(r=Object(r)[t],void 0===r)return s;return r}lodash_set(t,e,s){return Object(t)!==t?t:(Array.isArray(e)||(e=e.toString().match(/[^.[\]]+/g)||[]),e.slice(0,-1).reduce((t,s,i)=>Object(t[s])===t[s]?t[s]:t[s]=Math.abs(e[i+1])>>0==+e[i+1]?[]:{},t)[e[e.length-1]]=s,t)}getdata(t){let e=this.getval(t);if(/^@/.test(t)){const[,s,i]=/^@(.*?)\.(.*?)$/.exec(t),r=s?this.getval(s):"";if(r)try{const t=JSON.parse(r);e=t?this.lodash_get(t,i,""):e}catch(t){e=""}}return e}setdata(t,e){let s=!1;if(/^@/.test(e)){const[,i,r]=/^@(.*?)\.(.*?)$/.exec(e),o=this.getval(i),h=i?"null"===o?null:o||"{}":"{}";try{const e=JSON.parse(h);this.lodash_set(e,r,t),s=this.setval(JSON.stringify(e),i)}catch(e){const o={};this.lodash_set(o,r,t),s=this.setval(JSON.stringify(o),i)}}else s=this.setval(t,e);return s}getval(t){return this.isSurge()||this.isLoon()?$persistentStore.read(t):this.isQuanX()?$prefs.valueForKey(t):this.isNode()?(this.data=this.loaddata(),this.data[t]):this.data&&this.data[t]||null}setval(t,e){return this.isSurge()||this.isLoon()?$persistentStore.write(t,e):this.isQuanX()?$prefs.setValueForKey(t,e):this.isNode()?(this.data=this.loaddata(),this.data[e]=t,this.writedata(),!0):this.data&&this.data[e]||null}initGotEnv(t){this.got=this.got?this.got:require("got"),this.cktough=this.cktough?this.cktough:require("tough-cookie"),this.ckjar=this.ckjar?this.ckjar:new this.cktough.CookieJar,t&&(t.headers=t.headers?t.headers:{},void 0===t.headers.Cookie&&void 0===t.cookieJar&&(t.cookieJar=this.ckjar))}get(t,e=(()=>{})){t.headers&&(delete t.headers["Content-Type"],delete t.headers["Content-Length"]),this.isSurge()||this.isLoon()?(this.isSurge()&&this.isNeedRewrite&&(t.headers=t.headers||{},Object.assign(t.headers,{"X-Surge-Skip-Scripting":!1})),$httpClient.get(t,(t,s,i)=>{!t&&s&&(s.body=i,s.statusCode=s.status),e(t,s,i)})):this.isQuanX()?(this.isNeedRewrite&&(t.opts=t.opts||{},Object.assign(t.opts,{hints:!1})),$task.fetch(t).then(t=>{const{statusCode:s,statusCode:i,headers:r,body:o}=t;e(null,{status:s,statusCode:i,headers:r,body:o},o)},t=>e(t))):this.isNode()&&(this.initGotEnv(t),this.got(t).on("redirect",(t,e)=>{try{if(t.headers["set-cookie"]){const s=t.headers["set-cookie"].map(this.cktough.Cookie.parse).toString();s&&this.ckjar.setCookieSync(s,null),e.cookieJar=this.ckjar}}catch(t){this.logErr(t)}}).then(t=>{const{statusCode:s,statusCode:i,headers:r,body:o}=t;e(null,{status:s,statusCode:i,headers:r,body:o},o)},t=>{const{message:s,response:i}=t;e(s,i,i&&i.body)}))}post(t,e=(()=>{})){if(t.body&&t.headers&&!t.headers["Content-Type"]&&(t.headers["Content-Type"]="application/x-www-form-urlencoded"),t.headers&&delete t.headers["Content-Length"],this.isSurge()||this.isLoon())this.isSurge()&&this.isNeedRewrite&&(t.headers=t.headers||{},Object.assign(t.headers,{"X-Surge-Skip-Scripting":!1})),$httpClient.post(t,(t,s,i)=>{!t&&s&&(s.body=i,s.statusCode=s.status),e(t,s,i)});else if(this.isQuanX())t.method="POST",this.isNeedRewrite&&(t.opts=t.opts||{},Object.assign(t.opts,{hints:!1})),$task.fetch(t).then(t=>{const{statusCode:s,statusCode:i,headers:r,body:o}=t;e(null,{status:s,statusCode:i,headers:r,body:o},o)},t=>e(t));else if(this.isNode()){this.initGotEnv(t);const{url:s,...i}=t;this.got.post(s,i).then(t=>{const{statusCode:s,statusCode:i,headers:r,body:o}=t;e(null,{status:s,statusCode:i,headers:r,body:o},o)},t=>{const{message:s,response:i}=t;e(s,i,i&&i.body)})}}time(t,e=null){const s=e?new Date(e):new Date;let i={"M+":s.getMonth()+1,"d+":s.getDate(),"H+":s.getHours(),"m+":s.getMinutes(),"s+":s.getSeconds(),"q+":Math.floor((s.getMonth()+3)/3),S:s.getMilliseconds()};/(y+)/.test(t)&&(t=t.replace(RegExp.$1,(s.getFullYear()+"").substr(4-RegExp.$1.length)));for(let e in i)new RegExp("("+e+")").test(t)&&(t=t.replace(RegExp.$1,1==RegExp.$1.length?i[e]:("00"+i[e]).substr((""+i[e]).length)));return t}msg(e=t,s="",i="",r){const o=t=>{if(!t)return t;if("string"==typeof t)return this.isLoon()?t:this.isQuanX()?{"open-url":t}:this.isSurge()?{url:t}:void 0;if("object"==typeof t){if(this.isLoon()){let e=t.openUrl||t.url||t["open-url"],s=t.mediaUrl||t["media-url"];return{openUrl:e,mediaUrl:s}}if(this.isQuanX()){let e=t["open-url"]||t.url||t.openUrl,s=t["media-url"]||t.mediaUrl;return{"open-url":e,"media-url":s}}if(this.isSurge()){let e=t.url||t.openUrl||t["open-url"];return{url:e}}}};if(this.isMute||(this.isSurge()||this.isLoon()?$notification.post(e,s,i,o(r)):this.isQuanX()&&$notify(e,s,i,o(r))),!this.isMuteLog){let t=["","==============📣系统通知📣=============="];t.push(e),s&&t.push(s),i&&t.push(i),console.log(t.join("\n")),this.logs=this.logs.concat(t)}}log(...t){t.length>0&&(this.logs=[...this.logs,...t]),console.log(t.join(this.logSeparator))}logErr(t,e){const s=!this.isSurge()&&!this.isQuanX()&&!this.isLoon();s?this.log("",`❗️${this.name}, 错误!`,t.stack):this.log("",`❗️${this.name}, 错误!`,t)}wait(t){return new Promise(e=>setTimeout(e,t))}done(t={}){const e=(new Date).getTime(),s=(e-this.startTime)/1e3;this.log("",`🔔${this.name}, 结束! 🕛 ${s} 秒`),this.log(),(this.isSurge()||this.isQuanX()||this.isLoon())&&$done(t)}}(t,e)}
 
 //农场代码
 
@@ -571,7 +570,7 @@ async function jdFruit() {
       jdFruitBeanCard = process.env.FRUIT_BEAN_CARD;
     }
     await myCardInfoForFarm();
-    let { fastCard, doubleCard, beanCard, signCard  } = $.myCardInfoRes;
+    const { fastCard, doubleCard, beanCard, signCard  } = $.myCardInfoRes;
     if (`${jdFruitBeanCard}` === 'true' && JSON.stringify($.myCardInfoRes).match(`限时翻倍`) && beanCard > 0) {
       that.log(`您设置的是使用水滴换豆卡，且背包有水滴换豆卡${beanCard}张, 跳过10次浇水任务`)
       return
@@ -656,7 +655,7 @@ async function jdFruit() {
     let totalEnergy  = $.farmInfo.farmUserPro.totalEnergy;
     that.log(`剩余水滴${totalEnergy}g\n`);
     await myCardInfoForFarm();
-    let { fastCard, doubleCard, beanCard, signCard  } = $.myCardInfoRes;
+    const { fastCard, doubleCard, beanCard, signCard  } = $.myCardInfoRes;
     that.log(`背包已有道具:\n快速浇水卡:${fastCard === -1 ? '未解锁': fastCard + '张'}\n水滴翻倍卡:${doubleCard === -1 ? '未解锁': doubleCard + '张'}\n水滴换京豆卡:${beanCard === -1 ? '未解锁' : beanCard + '张'}\n加签卡:${signCard === -1 ? '未解锁' : signCard + '张'}\n`)
     if (totalEnergy >= 100 && doubleCard > 0) {
       //使用翻倍水滴卡
@@ -1146,7 +1145,7 @@ async function jdFruit() {
       if ($.friendList.friends && $.friendList.friends.length > 0) {
         for (let friend of $.friendList.friends) {
           that.log(`\n开始删除好友 [${friend.shareCode}]`);
-          let deleteFriendForFarm = await request('deleteFriendForFarm', { "shareCode": `${friend.shareCode}`,"version":8,"channel":1 });
+          const deleteFriendForFarm = await request('deleteFriendForFarm', { "shareCode": `${friend.shareCode}`,"version":8,"channel":1 });
           if (deleteFriendForFarm && deleteFriendForFarm.code === '0') {
             that.log(`删除好友 [${friend.shareCode}] 成功\n`);
           }
@@ -1171,7 +1170,7 @@ async function jdFruit() {
     await friendListInitForFarm();
     that.log('开始给好友浇水...');
     await taskInitForFarm();
-    let { waterFriendCountKey, waterFriendMax } = $.farmTask.waterFriendTaskInit;
+    const { waterFriendCountKey, waterFriendMax } = $.farmTask.waterFriendTaskInit;
     that.log(`今日已给${waterFriendCountKey}个好友浇水`);
     if (waterFriendCountKey < waterFriendMax) {
       let needWaterFriends = [];
@@ -1227,7 +1226,7 @@ async function jdFruit() {
   //领取给3个好友浇水后的奖励水滴
   async function getWaterFriendGotAward() {
     await taskInitForFarm();
-    let { waterFriendCountKey, waterFriendMax, waterFriendSendWater, waterFriendGotAward } = $.farmTask.waterFriendTaskInit
+    const { waterFriendCountKey, waterFriendMax, waterFriendSendWater, waterFriendGotAward } = $.farmTask.waterFriendTaskInit
     if (waterFriendCountKey >= waterFriendMax) {
       if (!waterFriendGotAward) {
         await waterFriendGotAwardForFarm();
@@ -1297,7 +1296,7 @@ async function jdFruit() {
   //鸭子，点我有惊喜
   async function getFullCollectionReward() {
     return new Promise(resolve => {
-      let body = {"type": 2, "version": 6, "channel": 2};
+      const body = {"type": 2, "version": 6, "channel": 2};
       $.post(taskUrl("getFullCollectionReward", body), (err, resp, data) => {
         try {
           if (err) {
@@ -1322,27 +1321,27 @@ async function jdFruit() {
    * 领取10次浇水奖励API
    */
   async function totalWaterTaskForFarm() {
-    let functionId = 'totalWaterTaskForFarm';
+    const functionId = 'totalWaterTaskForFarm';
     $.totalWaterReward = await request(functionId);
   }
   //领取首次浇水奖励API
   async function firstWaterTaskForFarm() {
-    let functionId = 'firstWaterTaskForFarm';
+    const functionId = 'firstWaterTaskForFarm';
     $.firstWaterReward = await request(functionId);
   }
   //领取给3个好友浇水后的奖励水滴API
   async function waterFriendGotAwardForFarm() {
-    let functionId = 'waterFriendGotAwardForFarm';
+    const functionId = 'waterFriendGotAwardForFarm';
     $.waterFriendGotAwardRes = await request(functionId, {"version": 4, "channel": 1});
   }
   // 查询背包道具卡API
   async function myCardInfoForFarm() {
-    let functionId = 'myCardInfoForFarm';
+    const functionId = 'myCardInfoForFarm';
     $.myCardInfoRes = await request(functionId, {"version": 5, "channel": 1});
   }
   //使用道具卡API
   async function userMyCardForFarm(cardType) {
-    let functionId = 'userMyCardForFarm';
+    const functionId = 'userMyCardForFarm';
     $.userMyCardRes = await request(functionId, {"cardType": cardType});
   }
   /**
@@ -1358,7 +1357,7 @@ async function jdFruit() {
     await $.wait(1000);
     that.log('等待了1秒');
   
-    let functionId = 'waterGoodForFarm';
+    const functionId = 'waterGoodForFarm';
     $.waterResult = await request(functionId);
   }
   // 初始化集卡抽奖活动数据API
@@ -1382,13 +1381,13 @@ async function jdFruit() {
     if (type === 2) {
       that.log('天天抽奖浏览任务领取水滴');
     }
-    let body = {"type": type,"adId": adId,"version":4,"channel":1};
+    const body = {"type": type,"adId": adId,"version":4,"channel":1};
     $.browserForTurntableFarmRes = await request('browserForTurntableFarm', body);
     // 浏览爆品会场8秒
   }
   //天天抽奖浏览任务领取水滴API
   async function browserForTurntableFarm2(type) {
-    let body = {"type":2,"adId": type,"version":4,"channel":1};
+    const body = {"type":2,"adId": type,"version":4,"channel":1};
     $.browserForTurntableFarm2Res = await request('browserForTurntableFarm', body);
   }
   /**
@@ -1407,12 +1406,12 @@ async function jdFruit() {
   
   //领取5人助力后的额外奖励API
   async function masterGotFinishedTaskForFarm() {
-    let functionId = 'masterGotFinishedTaskForFarm';
+    const functionId = 'masterGotFinishedTaskForFarm';
     $.masterGotFinished = await request(functionId);
   }
   //助力好友信息API
   async function masterHelpTaskInitForFarm() {
-    let functionId = 'masterHelpTaskInitForFarm';
+    const functionId = 'masterHelpTaskInitForFarm';
     $.masterHelpResult = await request(functionId);
   }
   //接受对方邀请,成为对方好友的API
@@ -1440,27 +1439,27 @@ async function jdFruit() {
    * 水滴雨API
    */
   async function waterRainForFarm() {
-    let functionId = 'waterRainForFarm';
-    let body = {"type": 1, "hongBaoTimes": 100, "version": 3};
+    const functionId = 'waterRainForFarm';
+    const body = {"type": 1, "hongBaoTimes": 100, "version": 3};
     $.waterRain = await request(functionId, body);
   }
   /**
    * 打卡领水API
    */
   async function clockInInitForFarm() {
-    let functionId = 'clockInInitForFarm';
+    const functionId = 'clockInInitForFarm';
     $.clockInInit = await request(functionId);
   }
   
   // 连续签到API
   async function clockInForFarm() {
-    let functionId = 'clockInForFarm';
+    const functionId = 'clockInForFarm';
     $.clockInForFarmRes = await request(functionId, {"type": 1});
   }
   
   //关注，领券等API
   async function clockInFollowForFarm(id, type, step) {
-    let functionId = 'clockInFollowForFarm';
+    const functionId = 'clockInFollowForFarm';
     let body = {
       id,
       type,
@@ -1488,7 +1487,7 @@ async function jdFruit() {
   
   //定时领水API
   async function gotThreeMealForFarm() {
-    let functionId ='gotThreeMealForFarm';
+    const functionId ='gotThreeMealForFarm';
     $.threeMeal = await request(functionId);
   }
   /**
@@ -1497,7 +1496,7 @@ async function jdFruit() {
    * type为1时, 领取浏览任务奖励
    */
   async function browseAdTaskForFarm(advertId, type) {
-    let functionId = 'browseAdTaskForFarm';
+    const functionId = 'browseAdTaskForFarm';
     if (type === 0) {
       $.browseResult = await request(functionId, {advertId, type});
     } else if (type === 1) {
@@ -1510,7 +1509,7 @@ async function jdFruit() {
   }
   //签到API
   async function signForFarm() {
-    let functionId = 'signForFarm';
+    const functionId = 'signForFarm';
     $.signResult = await request(functionId);
   }
   /**
@@ -1518,7 +1517,7 @@ async function jdFruit() {
    */
   async function initForFarm() {
     return new Promise(resolve => {
-      let option =  {
+      const option =  {
         url: `${JD_API_HOST}?functionId=initForFarm`,
         body: `body=${escape(JSON.stringify({"version":4}))}&appid=wh5&clientVersion=9.1.0`,
         headers: {
@@ -1561,7 +1560,7 @@ async function jdFruit() {
   // 初始化任务列表API
   async function taskInitForFarm() {
     that.log('\n初始化任务列表')
-    let functionId = 'taskInitForFarm';
+    const functionId = 'taskInitForFarm';
     $.farmTask = await request(functionId);
   }
   //获取好友列表API
@@ -1575,7 +1574,7 @@ async function jdFruit() {
   }
   //为好友浇水API
   async function waterFriendForFarm(shareCode) {
-    let body = {"shareCode": shareCode, "version": 6, "channel": 1}
+    const body = {"shareCode": shareCode, "version": 6, "channel": 1}
     $.waterFriendForFarmRes = await request('waterFriendForFarm', body);
   }
   
@@ -1611,10 +1610,10 @@ async function jdFruit() {
         newShareCodes = jdFruitShareArr[$.index - 1].split('@');
       } else {
         that.log(`由于您第${$.index}个动动账号未提供shareCode,将采纳本脚本自带的助力码\n`)
-        let tempIndex = $.index > shareCodes.length ? (shareCodes.length - 1) : ($.index - 1);
+        const tempIndex = $.index > shareCodes.length ? (shareCodes.length - 1) : ($.index - 1);
         newShareCodes = shareCodes[tempIndex].split('@');
       }
-      let readShareCodeRes = await readShareCode();
+      const readShareCodeRes = await readShareCode();
       if (readShareCodeRes && readShareCodeRes.code === 200) {
         // newShareCodes = newShareCodes.concat(readShareCodeRes.data || []);
         newShareCodes = [...new Set([...newShareCodes, ...(readShareCodeRes.data || [])])];
@@ -1623,34 +1622,7 @@ async function jdFruit() {
       resolve();
     })
   }
-  function requireConfig() {
-    return new Promise(resolve => {
-      that.log('开始获取配置文件\n')
-      notify = $.isNode() ? require('./sendNotify') : '';
-      //Node.js用户请在jdCookie.js处填写动动ck;
-      // let jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-      let jdFruitShareCodes = $.isNode() ? require('./jdFruitShareCodes.js') : '';
-      //IOS等用户直接用NobyDa的jd cookie
-      if ($.isNode()) {
-        Object.keys(jdCookieNode).forEach((item) => {
-          if (jdCookieNode[item]) {
-            cookiesArr.push(jdCookieNode[item])
-          }
-        })
-        if (process.env.JD_DEBUG && process.env.JD_DEBUG === 'false') that.log = () => {};
-      } else {
-        let cookiesData = $.getdata('CookiesJD') || "[]";
-        cookiesData = jsonParse(cookiesData);
-        cookiesArr = cookiesData.map(item => item.cookie);
-        cookiesArr.reverse();
-        cookiesArr.push(...[$.getdata('CookieJD2'), $.getdata('CookieJD')]);
-        cookiesArr.reverse();
-        cookiesArr = cookiesArr.filter(item => item !== "" && item !== null && item !== undefined);
-      }
-      that.log(`共${cookiesArr.length}个动动账号\n`)
-      resolve()
-    })
-  }
+
   function request(function_id, body = {}, timeout = 1000){
     return new Promise(resolve => {
       setTimeout(() => {
@@ -1702,12 +1674,12 @@ async function jdFruit() {
 
 //我加的函数
 function postToDingTalk(messgae) {
-    let dingtalk = "https://oapi.dingtalk.com/robot/send?access_token=2a8124fdff33639034e415df2aacba8b6befdf12c97a881d83c95ddedaf64518"
+    const dingtalk = "https://oapi.dingtalk.com/robot/send?access_token=2a8124fdff33639034e415df2aacba8b6befdf12c97a881d83c95ddedaf64518"
 
-    let message1 = "" + messgae
+    const message1 = "" + messgae
     that.log(messgae)
 
-    let body = {
+    const body = {
         "msgtype": "markdown",
         "markdown": {
             "title":"资产变动",
