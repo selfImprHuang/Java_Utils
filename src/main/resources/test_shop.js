@@ -70,7 +70,8 @@ const JD_API_HOST = 'https://api.m.jd.com/client.action';
     })
     .finally(() => {
       message += getPic()
-       postToDingTalk(message)
+       that.log(message)
+       // postToDingTalk(message)
       $.done();
     })
 async function jdShop() {
