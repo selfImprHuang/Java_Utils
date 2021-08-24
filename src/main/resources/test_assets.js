@@ -106,8 +106,7 @@ async function showMsg() {
   message += "<font color=\'#778899\' size=2>" + `今日收入：${$.todayIncomeBean}京豆 🐶\n` +"</font>\n\n"
   message += "<font color=\'#778899\' size=2>" + `昨日收入：${$.incomeBean}京豆 🐶\n` +"</font>\n\n"
   message += "<font color=\'#778899\' size=2>" + `昨日支出：${$.expenseBean}京豆 🐶\n` +"</font>\n\n"
-  message += "<font color=\'#778899\' size=2>" + `当前京豆：${$.beanCount}` +"</font>\n\n"
-  message += "<font color=\'#778899\' size=2>" + `(今日将过期${$.expirejingdou})京豆 🐶${$.message}${$.index !== cookiesArr.length ? '\n\n' : ''}` +"</font>\n\n"
+  message += "<font color=\'#778899\' size=2>" + `当前京豆：${$.beanCount}(今日将过期${$.expirejingdou})京豆 🐶` +"</font>\n\n"
   // if ($.isNode()) {
   //   await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `账号${$.index}：${$.nickName || $.UserName}\n昨日收入：${$.incomeBean}京豆 🐶\n昨日支出：${$.expenseBean}京豆 🐶\n当前京豆：${$.beanCount}京豆 🐶${$.message}`, { url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean` })
   // }
@@ -1725,7 +1724,7 @@ function postToDingTalk(messgae) {
     const body = {
         "msgtype": "markdown",
         "markdown": {
-            "title":"资产总变化",
+            "title":"动动摇钱树",
             "text": message1
         },
         "at": {
