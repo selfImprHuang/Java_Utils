@@ -62,7 +62,7 @@ let cookiesArr = [], cookie = '';
       $.balance = 0;
       $.expiredBalance = 0;
 
-      if($.UserName != "jd_66ea783827d30" || $.UserName != "jd_4311ac0ff4456"){
+      if($.UserName != "jd_66ea783827d30" && $.UserName != "jd_4311ac0ff4456"){
           continue 
       }
       username = $.UserName
