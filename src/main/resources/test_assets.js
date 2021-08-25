@@ -67,13 +67,16 @@ let cookiesArr = [], cookie = '';
       }
       username = $.UserName
       if ($.UserName == "jd_4521b375ebb5d"){
-        username = "锟锟"
+        username = "锟子"
       }
       if ($.UserName == "jd_542c10c0222bc"){
-        username = "康康"
+        username = "康子"
+      }
+      if($.UserName == "jd_66dcb31363ef6"){
+        username = "涛子"
       }
        //加上名称
-       message = message + "<font color=\'#778899\' size=2>【羊毛姐妹】<font color=\'#FFA500\' size=3>" +  username + " </font> </font> \n\n "
+       message = message + "<font color=\'#778899\' size=1>【羊毛姐妹】<font color=\'#FFA500\' size=2>" +  username + `( ${$.nickName } )`+ " </font> </font> \n\n "
 
       await TotalBean();
       console.log(`\n********开始【京东账号${$.index}】${$.nickName || $.UserName}******\n`);
@@ -139,18 +142,18 @@ let cookiesArr = [], cookie = '';
 async function showMsg() {
   if ($.errorMsg) return
   allMessage += `账号${$.index}：${$.nickName || $.UserName}\n今日收入：${$.todayIncomeBean}京豆 🐶\n昨日收入：${$.incomeBean}京豆 🐶\n昨日支出：${$.expenseBean}京豆 🐶\n当前京豆：${$.beanCount}(今日将过期${$.expirejingdou})京豆 🐶${$.message}${$.index !== cookiesArr.length ? '\n\n' : ''}`;
-  message += "<font color=\'#990000\' size=3>" + `【总京豆】：${$.beanCount}( 今日将过期${$.expirejingdou} )京豆 🐶` +"</font>\n\n"
-  message += "<font color=\'#778899\' size=2>" + `【今日收入】：${$.todayIncomeBean}京豆 🐶` +"</font>\n\n"
-  message += "<font color=\'#778899\' size=2>" + `【昨日收入】：${$.incomeBean}京豆 🐶` +"</font>\n\n"
-  message += "<font color=\'#778899\' size=2>" + `【昨日支出】：${$.expenseBean}京豆 🐶` +"</font>\n\n"
+  message += "<font color=\'#990000\' size=2>" + `【总京豆】：${$.beanCount}( 今日将过期${$.expirejingdou} )京豆 🐶` +"</font>\n\n"
+  message += "<font color=\'#778899\' size=1>" + `【今日收入】：${$.todayIncomeBean}京豆 🐶` +"</font>\n\n"
+  message += "<font color=\'#778899\' size=1>" + `【昨日收入】：${$.incomeBean}京豆 🐶` +"</font>\n\n"
+  message += "<font color=\'#778899\' size=1>" + `【昨日支出】：${$.expenseBean}京豆 🐶` +"</font>\n\n"
   
 
 
-  message += "<font color=\'#990000\' size=3>" + `【当前总红包】：${$.balance}( 今日总过期${$.expiredBalance} )元 🧧` +"</font>\n\n"
-  message += "<font color=\'#778899\' size=2>" + `【京喜红包】：${$.jxRed}( 今日将过期${$.jxRedExpire.toFixed(2)} )元 🧧` +"</font>\n\n"
-  message += "<font color=\'#778899\' size=2>" + `【极速红包】：${$.jsRed}( 今日将过期${$.jsRedExpire.toFixed(2)} )元 🧧` +"</font>\n\n"
-  message += "<font color=\'#778899\' size=2>" + `【京东红包】：${$.jdRed}( 今日将过期${$.jdRedExpire.toFixed(2)} )元 🧧` +"</font>\n\n"
-  message += "<font color=\'#778899\' size=2>" + `【健康红包】：${$.jdhRed}( 今日将过期${$.jdhRedExpire.toFixed(2)} )元 🧧` +"</font>\n\n"
+  message += "<font color=\'#990000\' size=2>" + `【当前总红包】：${$.balance}( 今日总过期${$.expiredBalance} )元 🧧` +"</font>\n\n"
+  message += "<font color=\'#778899\' size=1>" + `【京喜红包】：${$.jxRed}( 今日将过期${$.jxRedExpire.toFixed(2)} )元 🧧` +"</font>\n\n"
+  message += "<font color=\'#778899\' size=1>" + `【极速红包】：${$.jsRed}( 今日将过期${$.jsRedExpire.toFixed(2)} )元 🧧` +"</font>\n\n"
+  message += "<font color=\'#778899\' size=1>" + `【京东红包】：${$.jdRed}( 今日将过期${$.jdRedExpire.toFixed(2)} )元 🧧` +"</font>\n\n"
+  message += "<font color=\'#778899\' size=1>" + `【健康红包】：${$.jdhRed}( 今日将过期${$.jdhRedExpire.toFixed(2)} )元 🧧` +"</font>\n\n"
   // if ($.isNode()) {
   //   await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `账号${$.index}：${$.nickName || $.UserName}\n昨日收入：${$.incomeBean}京豆 🐶\n昨日支出：${$.expenseBean}京豆 🐶\n当前京豆：${$.beanCount}京豆 🐶${$.message}`, { url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean` })
   // }
@@ -443,8 +446,8 @@ async function jdFruit() {
       await initForFarm();
       if ($.farmInfo.farmUserPro) {
         // option['media-url'] = $.farmInfo.farmUserPro.goodsImage;
-        message = message +  "<font color=\'#778899\' size=2>【水果名称】 " + `${$.farmInfo.farmUserPro.name}` + "</font>\n\n";
-        // message +=  "<font color=\'#778899\' size=2>【已兑换水果】" + `${$.farmInfo.farmUserPro.winTimes}` +  "次</font>\n\n";
+        message = message +  "<font color=\'#778899\' size=1>【水果名称】 " + `${$.farmInfo.farmUserPro.name}` + "</font>\n\n";
+        // message +=  "<font color=\'#778899\' size=1>【已兑换水果】" + `${$.farmInfo.farmUserPro.winTimes}` +  "次</font>\n\n";
         that.log(`\n【动动账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${$.farmInfo.farmUserPro.shareCode}\n`);
         that.log(`\n【已成功兑换水果】${$.farmInfo.farmUserPro.winTimes}次\n`);
         await getHelp();
@@ -452,7 +455,7 @@ async function jdFruit() {
          await setHelp();
         if ($.farmInfo.treeState === 2 || $.farmInfo.treeState === 3) {
           option['open-url'] = urlSchema;
-          message = message + "<font color=\'#778899\' size=2> " +  $.UserName + "\n【提醒⏰】" + fruitName + "已可领取\n请去动动APP或微信小程序查看\n点击弹窗即达</font>"
+          message = message + "<font color=\'#778899\' size=1> " +  $.UserName + "\n【提醒⏰】" + fruitName + "已可领取\n请去动动APP或微信小程序查看\n点击弹窗即达</font>"
           $.msg($.name, ``, `【动动账号${$.index}】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n请去动动APP或微信小程序查看\n点击弹窗即达`, option);
           if ($.isNode()) {
             await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}水果已可领取`, `【动动账号${$.index}】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n请去动动APP或微信小程序查看`);
@@ -464,7 +467,7 @@ async function jdFruit() {
           //已下单购买, 但未开始种植新的水果
           option['open-url'] = urlSchema;
           $.msg($.name, ``, `【动动账号${$.index}】 ${$.nickName || $.UserName}\n【提醒⏰】您忘了种植新的水果\n请去动动APP或微信小程序选购并种植新的水果\n点击弹窗即达`, option);
-          message = message + "<font color=\'#778899\' size=2> " +  $.UserName + " \n【提醒⏰】您忘了种植新的水果\n请去动动APP或微信小程序选购并种植新的水果\n点击弹窗即达" + "</font>"
+          message = message + "<font color=\'#778899\' size=1> " +  $.UserName + " \n【提醒⏰】您忘了种植新的水果\n请去动动APP或微信小程序选购并种植新的水果\n点击弹窗即达" + "</font>"
           if ($.isNode()) {
             await notify.sendNotify(`${$.name} - 您忘了种植新的水果`, `动动账号${$.index} ${$.nickName}\n【提醒⏰】您忘了种植新的水果\n请去动动APP或微信小程序选购并种植新的水果`);
           }
@@ -591,21 +594,21 @@ async function jdFruit() {
     await initForFarm();
     await taskInitForFarm();
     let waterEveryDayT = $.farmTask.totalWaterTaskInit.totalWaterTaskTimes;//今天到到目前为止，浇了多少次水
-      // message +=  "<font color=\'#778899\' size=2>【今日共浇水】" + `${waterEveryDayT}` + "次 </font>\n\n"
-      message += "<font color=\'#778899\' size=2>【剩余 水滴】" + `${$.farmInfo.farmUserPro.totalEnergy}` + "g💧 </font> \n\n"
-      message += "<font color=\'#778899\' size=2>【水果🍉进度】" + `${(($.farmInfo.farmUserPro.treeEnergy /
+      // message +=  "<font color=\'#778899\' size=1>【今日共浇水】" + `${waterEveryDayT}` + "次 </font>\n\n"
+      message += "<font color=\'#778899\' size=1>【剩余 水滴】" + `${$.farmInfo.farmUserPro.totalEnergy}` + "g💧 </font> \n\n"
+      message += "<font color=\'#778899\' size=1>【水果🍉进度】" + `${(($.farmInfo.farmUserPro.treeEnergy /
       $.farmInfo.farmUserPro.treeTotalEnergy) * 100).toFixed(2)}` + "%，已浇水" +`${$.farmInfo.farmUserPro.treeEnergy / 10}` + "次,还需"+`${($.farmInfo.farmUserPro.treeTotalEnergy - $.farmInfo.farmUserPro.treeEnergy) / 10}` +"次 </font> \n\n"
     if ($.farmInfo.toFlowTimes > ($.farmInfo.farmUserPro.treeEnergy / 10)) {
-      message += "<font color=\'#778899\' size=2>【水果🍉进度】" + `【开花进度】再浇水${$.farmInfo.toFlowTimes - $.farmInfo.farmUserPro.treeEnergy / 10}次开花\n\n` +"</font>\n\n"
+      message += "<font color=\'#778899\' size=1>【水果🍉进度】" + `【开花进度】再浇水${$.farmInfo.toFlowTimes - $.farmInfo.farmUserPro.treeEnergy / 10}次开花\n\n` +"</font>\n\n"
     } else if ($.farmInfo.toFruitTimes > ($.farmInfo.farmUserPro.treeEnergy / 10)) {
-      message += "<font color=\'#778899\' size=2>【水果🍉进度】" + `【结果进度】再浇水${$.farmInfo.toFruitTimes - $.farmInfo.farmUserPro.treeEnergy / 10}次结果\n\n` + "</font>\n\n"
+      message += "<font color=\'#778899\' size=1>【水果🍉进度】" + `【结果进度】再浇水${$.farmInfo.toFruitTimes - $.farmInfo.farmUserPro.treeEnergy / 10}次结果\n\n` + "</font>\n\n"
     }
     // 预测n天后水果课可兑换功能
     let waterTotalT = ($.farmInfo.farmUserPro.treeTotalEnergy - $.farmInfo.farmUserPro.treeEnergy - $.farmInfo.farmUserPro.totalEnergy) / 10;//一共还需浇多少次水
   
     let waterD = Math.ceil(waterTotalT / waterEveryDayT);
   
-    message = message + "<font color=\'#BA55D3\' size=2>" + `【预测🍉收获时间】${waterD === 1 ? '明天' : waterD === 2 ? '后天' : waterD + '天之后'}(${timeFormat(24 * 60 * 60 * 1000 * waterD + Date.now())}日)可兑换水果🍉` +"</font>\n\n";
+    message = message + "<font color=\'#BA55D3\' size=1>" + `【预测🍉收获时间】${waterD === 1 ? '明天' : waterD === 2 ? '后天' : waterD + '天之后'}(${timeFormat(24 * 60 * 60 * 1000 * waterD + Date.now())}日)可兑换水果🍉` +"</font>\n\n";
   }
   //浇水十次
   async function doTenWater() {
@@ -730,7 +733,7 @@ async function jdFruit() {
         await userMyCardForFarm('beanCard');
         that.log(`使用水滴换豆卡结果:${JSON.stringify($.userMyCardRes)}`);
         if ($.userMyCardRes.code === '0') {
-        //   message +="<font color=\'#BA55D3\' size=2>【水果🍉进度】" + `【水滴换豆卡】获得${$.userMyCardRes.beanCount}个京豆\n` + "</font>\n\n";
+        //   message +="<font color=\'#BA55D3\' size=1>【水果🍉进度】" + `【水滴换豆卡】获得${$.userMyCardRes.beanCount}个京豆\n` + "</font>\n\n";
           return
         }
       } else {
@@ -945,15 +948,15 @@ async function jdFruit() {
           await masterGotFinishedTaskForFarm();
           if ($.masterGotFinished.code === '0') {
             that.log(`已成功领取好友助力奖励：【${$.masterGotFinished.amount}】g水`);
-            // message += "<font color=\'#778899\' size=2>【额外奖励】" + `${$.masterGotFinished.amount}` + "g水领取成功</font>\n\n";
+            // message += "<font color=\'#778899\' size=1>【额外奖励】" + `${$.masterGotFinished.amount}` + "g水领取成功</font>\n\n";
           }
         } else {
           that.log("已经领取过5好友助力额外奖励");
-        //   message += "<font color=\'#BA55D3\' size=2>【水果🍉进度】" + `【额外奖励】已被领取过\n` + "</font>\n\n";
+        //   message += "<font color=\'#BA55D3\' size=1>【水果🍉进度】" + `【额外奖励】已被领取过\n` + "</font>\n\n";
         }
       } else {
         that.log("助力好友未达到5个");
-        // message += "<font color=\'#778899\' size=2>【额外奖励】领取失败,原因：给您助力的人未达5个</font>\n\n";
+        // message += "<font color=\'#778899\' size=1>【额外奖励】领取失败,原因：给您助力的人未达5个</font>\n\n";
       }
       if ($.masterHelpResult.masterHelpPeoples && $.masterHelpResult.masterHelpPeoples.length > 0) {
         let str = '';
@@ -967,7 +970,7 @@ async function jdFruit() {
           let time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getMinutes();
           that.log(`\n动动昵称【${item.nickName || "匿名用户"}】 在 ${time} 给您助过力\n`);
         })
-        // message += "<font color=\'#778899\' size=2>【助力您的好友】 " + `${str}` +  "</font>\n\n"
+        // message += "<font color=\'#778899\' size=1>【助力您的好友】 " + `${str}` +  "</font>\n\n"
       }
       that.log('领取额外奖励水滴结束\n');
     }
@@ -1074,13 +1077,13 @@ async function jdFruit() {
       }
     }
     if (helpSuccessPeoples && helpSuccessPeoples.length > 0) {
-    //   message += "<font color=\'#778899\' size=2> " + `【您助力的好友👬】${helpSuccessPeoples.substr(0, helpSuccessPeoples.length - 1)}\n` + "</font>\n\n";
+    //   message += "<font color=\'#778899\' size=1> " + `【您助力的好友👬】${helpSuccessPeoples.substr(0, helpSuccessPeoples.length - 1)}\n` + "</font>\n\n";
     }
     if (salveHelpAddWater > 0) {
       // message += `【助力好友👬】获得${salveHelpAddWater}g💧\n`;
       that.log(`【助力好友👬】获得${salveHelpAddWater}g💧\n`);
     }
-    // message += "<font color=\'#778899\' size=2>" + `【今日剩余助力👬】${remainTimes}次\n` + "</font>\n\n";
+    // message += "<font color=\'#778899\' size=1>" + `【今日剩余助力👬】${remainTimes}次\n` + "</font>\n\n";
     that.log('助力好友结束，即将开始领取额外水滴奖励\n');
   }
   //水滴雨
