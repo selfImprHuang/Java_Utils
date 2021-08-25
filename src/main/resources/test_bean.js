@@ -99,8 +99,9 @@ let num;
     message +=  "<font color=\'#778899\' size=2> " +  `❌ ${$.name}, 失败! 原因: ${e}!` + "</font>\n\n"
   $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
 }).finally(() => {
-   message += getPic()
+   // message += getPic()
    that.log(message)
+   postToDingTalk(messgae)
   $.done();
 })
 
@@ -780,7 +781,7 @@ function Env(t,e){"undefined"!=typeof process&&JSON.stringify(process.env).index
 
 //我加的函数
 function postToDingTalk(messgae) {
-    const dingtalk = "https://oapi.dingtalk.com/robot/send?access_token=fa87e34729eaa6113fddfa857efebb477dea0a433d6eecfe93b1d3f5e24847b9"
+    const dingtalk = "https://oapi.dingtalk.com/robot/send?access_token=18444b555747aad3381bc1d1e3dea72b03158e152a846f818d82a1ca946bd430"
 
     const message1 = "" + messgae
     that.log(messgae)
@@ -828,11 +829,11 @@ function toDingtalk(urlmain, bodyMain) {
     }
 }
 
-function getPic(){
-    let code = ["1.gif","2.png","3.png","4.png","5.gif","6.gif","7.gif","8.gif","9.gif","10.png","11.png"]
-    let address = "\n\n ![screenshot](https://cdn.jsdelivr.net/gh/selfImprHuang/Go-Tool@v1.2/test/emptyDirTest/3/"
+// function getPic(){
+//     let code = ["1.gif","2.png","3.png","4.png","5.gif","6.gif","7.gif","8.gif","9.gif","10.png","11.png"]
+//     let address = "\n\n ![screenshot](https://cdn.jsdelivr.net/gh/selfImprHuang/Go-Tool@v1.2/test/emptyDirTest/3/"
 
-        pos = parseInt(11*Math.random())
-    address = address + code[pos] + ")"
-    return address
-}
+//         pos = parseInt(11*Math.random())
+//     address = address + code[pos] + ")"
+//     return address
+// }
