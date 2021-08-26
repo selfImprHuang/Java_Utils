@@ -57,7 +57,8 @@ if ($.isNode()) {
       $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
     })
     .finally(() => {
-     postToDingTalk(messgae)
+      that.log(message)
+     postToDingTalk(message)
       $.done();
     })
 async function jdDailyEgg() {
