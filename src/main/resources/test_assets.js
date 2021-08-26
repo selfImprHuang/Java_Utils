@@ -78,6 +78,10 @@ let cookiesArr = [], cookie = '';
       if($.UserName == "18070420956_p"){
           username = "奇怪子"
       }
+      if($.UserName == "jd_45d917547c763"){
+          username = "跑腿小弟子"
+      }
+
       
       await TotalBean();
        //加上名称
