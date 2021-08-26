@@ -75,10 +75,14 @@ let cookiesArr = [], cookie = '';
       if($.UserName == "jd_66dcb31363ef6"){
         username = "涛子"
       }
+      if($.UserName == "18070420956_p"){
+          username = "奇怪子"
+      }
+      
+      await TotalBean();
        //加上名称
        message = message + "<font color=\'#778899\' size=1>【羊毛姐妹】<font color=\'#FFA500\' size=2>" +  username + `( ${$.name } )`+ " </font> </font> \n\n "
 
-      await TotalBean();
       console.log(`\n********开始【京东账号${$.index}】${$.nickName || $.UserName}******\n`);
       if (!$.isLogin) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
