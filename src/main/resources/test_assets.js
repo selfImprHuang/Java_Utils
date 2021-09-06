@@ -16,7 +16,6 @@ cron "2 9 * * *" script-path=https://jdsharedresourcescdn.azureedge.net/jdresour
 =============Surge===========
 [Script]
 京东资产变动通知 = type=cron,cronexp="2 9 * * *",wake-system=1,timeout=3600,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_bean_change.js
-
 ============小火箭=========
 京东资产变动通知 = type=cron,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_bean_change.js, cronexpr="2 9 * * *", timeout=3600, enable=true
  */
@@ -67,15 +66,26 @@ let cookiesArr = [], cookie = '';
       }
       username = $.UserName
       if ($.UserName == "jd_4521b375ebb5d"){
-        username = "锟锟"
+        username = "锟子"
       }
       if ($.UserName == "jd_542c10c0222bc"){
-        username = "康康"
+        username = "康子"
       }
-       //加上名称
-       message = message + "<font color=\'#778899\' size=2>【羊毛姐妹】<font color=\'#FFA500\' size=3>" +  username + " </font> </font> \n\n "
+      if($.UserName == "jd_66dcb31363ef6"){
+        username = "涛子"
+      }
+      if($.UserName == "18070420956_p"){
+          username = "奇怪子"
+      }
+      if($.UserName == "jd_45d917547c763"){
+          username = "跑腿小弟子"
+      }
 
+      
       await TotalBean();
+       //加上名称
+       message = message + "<font color=\'#778899\' size=1>【羊毛姐妹】<font color=\'#FFA500\' size=2>" +  username + `( ${$.name } )`+ " </font> </font> \n\n "
+
       console.log(`\n********开始【京东账号${$.index}】${$.nickName || $.UserName}******\n`);
       if (!$.isLogin) {
         $.msg($.name, `【提示】cookie已失效`, `京东账号${$.index} ${$.nickName || $.UserName}\n请重新登录获取\nhttps://bean.m.jd.com/bean/signIndex.action`, {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
@@ -138,21 +148,20 @@ let cookiesArr = [], cookie = '';
     }
 
 async function showMsg() {
-
-  if ($.errorMsg) return
+  // if ($.errorMsg) return
   allMessage += `账号${$.index}：${$.nickName || $.UserName}\n今日收入：${$.todayIncomeBean}京豆 🐶\n昨日收入：${$.incomeBean}京豆 🐶\n昨日支出：${$.expenseBean}京豆 🐶\n当前京豆：${$.beanCount}(今日将过期${$.expirejingdou})京豆 🐶${$.message}${$.index !== cookiesArr.length ? '\n\n' : ''}`;
-  message += "<font color=\'#990000\' size=3>" + `【总京豆】：${$.beanCount}( 今日将过期${$.expirejingdou} )京豆 🐶` +"</font>\n\n"
-  message += "<font color=\'#778899\' size=2>" + `【今日收入】：${$.todayIncomeBean}京豆 🐶` +"</font>\n\n"
-  message += "<font color=\'#778899\' size=2>" + `【昨日收入】：${$.incomeBean}京豆 🐶` +"</font>\n\n"
-  message += "<font color=\'#778899\' size=2>" + `【昨日支出】：${$.expenseBean}京豆 🐶` +"</font>\n\n"
+  message += "<font color=\'#990000\' size=2>" + `【总京豆】：${$.beanCount}( 今日将过期${$.expirejingdou} )京豆 🐶` +"</font>\n\n"
+  message += "<font color=\'#778899\' size=1>" + `【今日收入】：${$.todayIncomeBean}京豆 🐶` +"</font>\n\n"
+  message += "<font color=\'#778899\' size=1>" + `【昨日收入】：${$.incomeBean}京豆 🐶` +"</font>\n\n"
+  message += "<font color=\'#778899\' size=1>" + `【昨日支出】：${$.expenseBean}京豆 🐶` +"</font>\n\n"
   
 
 
-  message += "<font color=\'#CCFF00\' size=2>" + `【当前总红包】：${$.balance}( 今日总过期${$.expiredBalance} )元 🧧` +"</font>\n\n"
-  message += "<font color=\'#778899\' size=2>" + `【京喜红包】：${$.jxRed}( 今日将过期${$.jxRedExpire.toFixed(2)} )元 🧧` +"</font>\n\n"
-  message += "<font color=\'#778899\' size=2>" + `【极速红包】：${$.jsRed}( 今日将过期${$.jsRedExpire.toFixed(2)} )元 🧧` +"</font>\n\n"
-  message += "<font color=\'#778899\' size=2>" + `【京东红包】：${$.jdRed}( 今日将过期${$.jdRedExpire.toFixed(2)} )元 🧧` +"</font>\n\n"
-  message += "<font color=\'#778899\' size=2>" + `【健康红包】：${$.jdhRed}( 今日将过期${$.jdhRedExpire.toFixed(2)} )元 🧧` +"</font>\n\n"
+  message += "<font color=\'#990000\' size=2>" + `【当前总红包】：${$.balance}( 今日总过期${$.expiredBalance} )元 🧧` +"</font>\n\n"
+  message += "<font color=\'#778899\' size=1>" + `【京喜红包】：${$.jxRed}( 今日将过期${$.jxRedExpire.toFixed(2)} )元 🧧` +"</font>\n\n"
+  message += "<font color=\'#778899\' size=1>" + `【极速红包】：${$.jsRed}( 今日将过期${$.jsRedExpire.toFixed(2)} )元 🧧` +"</font>\n\n"
+  message += "<font color=\'#778899\' size=1>" + `【京东红包】：${$.jdRed}( 今日将过期${$.jdRedExpire.toFixed(2)} )元 🧧` +"</font>\n\n"
+  message += "<font color=\'#778899\' size=1>" + `【健康红包】：${$.jdhRed}( 今日将过期${$.jdhRedExpire.toFixed(2)} )元 🧧` +"</font>\n\n"
   // if ($.isNode()) {
   //   await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}`, `账号${$.index}：${$.nickName || $.UserName}\n昨日收入：${$.incomeBean}京豆 🐶\n昨日支出：${$.expenseBean}京豆 🐶\n当前京豆：${$.beanCount}京豆 🐶${$.message}`, { url: `https://bean.m.jd.com/beanDetail/index.action?resourceValue=bean` })
   // }
@@ -437,7 +446,7 @@ function timeFormat(time) {
 // prettier-ignore
 function Env(t,e){class s{constructor(t){this.env=t}send(t,e="GET"){t="string"==typeof t?{url:t}:t;let s=this.get;return"POST"===e&&(s=this.post),new Promise((e,i)=>{s.call(this,t,(t,s,r)=>{t?i(t):e(s)})})}get(t){return this.send.call(this.env,t)}post(t){return this.send.call(this.env,t,"POST")}}return new class{constructor(t,e){this.name=t,this.http=new s(this),this.data=null,this.dataFile="box.dat",this.logs=[],this.isMute=!1,this.isNeedRewrite=!1,this.logSeparator="\n",this.startTime=(new Date).getTime(),Object.assign(this,e),this.log("",`🔔${this.name}, 开始!`)}isNode(){return"undefined"!=typeof module&&!!module.exports}isQuanX(){return"undefined"!=typeof $task}isSurge(){return"undefined"!=typeof $httpClient&&"undefined"==typeof $loon}isLoon(){return"undefined"!=typeof $loon}toObj(t,e=null){try{return JSON.parse(t)}catch{return e}}toStr(t,e=null){try{return JSON.stringify(t)}catch{return e}}getjson(t,e){let s=e;const i=this.getdata(t);if(i)try{s=JSON.parse(this.getdata(t))}catch{}return s}setjson(t,e){try{return this.setdata(JSON.stringify(t),e)}catch{return!1}}getScript(t){return new Promise(e=>{this.get({url:t},(t,s,i)=>e(i))})}runScript(t,e){return new Promise(s=>{let i=this.getdata("@chavy_boxjs_userCfgs.httpapi");i=i?i.replace(/\n/g,"").trim():i;let r=this.getdata("@chavy_boxjs_userCfgs.httpapi_timeout");r=r?1*r:20,r=e&&e.timeout?e.timeout:r;const[o,h]=i.split("@"),n={url:`http://${h}/v1/scripting/evaluate`,body:{script_text:t,mock_type:"cron",timeout:r},headers:{"X-Key":o,Accept:"*/*"}};this.post(n,(t,e,i)=>s(i))}).catch(t=>this.logErr(t))}loaddata(){if(!this.isNode())return{};{this.fs=this.fs?this.fs:require("fs"),this.path=this.path?this.path:require("path");const t=this.path.resolve(this.dataFile),e=this.path.resolve(process.cwd(),this.dataFile),s=this.fs.existsSync(t),i=!s&&this.fs.existsSync(e);if(!s&&!i)return{};{const i=s?t:e;try{return JSON.parse(this.fs.readFileSync(i))}catch(t){return{}}}}}writedata(){if(this.isNode()){this.fs=this.fs?this.fs:require("fs"),this.path=this.path?this.path:require("path");const t=this.path.resolve(this.dataFile),e=this.path.resolve(process.cwd(),this.dataFile),s=this.fs.existsSync(t),i=!s&&this.fs.existsSync(e),r=JSON.stringify(this.data);s?this.fs.writeFileSync(t,r):i?this.fs.writeFileSync(e,r):this.fs.writeFileSync(t,r)}}lodash_get(t,e,s){const i=e.replace(/\[(\d+)\]/g,".$1").split(".");let r=t;for(const t of i)if(r=Object(r)[t],void 0===r)return s;return r}lodash_set(t,e,s){return Object(t)!==t?t:(Array.isArray(e)||(e=e.toString().match(/[^.[\]]+/g)||[]),e.slice(0,-1).reduce((t,s,i)=>Object(t[s])===t[s]?t[s]:t[s]=Math.abs(e[i+1])>>0==+e[i+1]?[]:{},t)[e[e.length-1]]=s,t)}getdata(t){let e=this.getval(t);if(/^@/.test(t)){const[,s,i]=/^@(.*?)\.(.*?)$/.exec(t),r=s?this.getval(s):"";if(r)try{const t=JSON.parse(r);e=t?this.lodash_get(t,i,""):e}catch(t){e=""}}return e}setdata(t,e){let s=!1;if(/^@/.test(e)){const[,i,r]=/^@(.*?)\.(.*?)$/.exec(e),o=this.getval(i),h=i?"null"===o?null:o||"{}":"{}";try{const e=JSON.parse(h);this.lodash_set(e,r,t),s=this.setval(JSON.stringify(e),i)}catch(e){const o={};this.lodash_set(o,r,t),s=this.setval(JSON.stringify(o),i)}}else s=this.setval(t,e);return s}getval(t){return this.isSurge()||this.isLoon()?$persistentStore.read(t):this.isQuanX()?$prefs.valueForKey(t):this.isNode()?(this.data=this.loaddata(),this.data[t]):this.data&&this.data[t]||null}setval(t,e){return this.isSurge()||this.isLoon()?$persistentStore.write(t,e):this.isQuanX()?$prefs.setValueForKey(t,e):this.isNode()?(this.data=this.loaddata(),this.data[e]=t,this.writedata(),!0):this.data&&this.data[e]||null}initGotEnv(t){this.got=this.got?this.got:require("got"),this.cktough=this.cktough?this.cktough:require("tough-cookie"),this.ckjar=this.ckjar?this.ckjar:new this.cktough.CookieJar,t&&(t.headers=t.headers?t.headers:{},void 0===t.headers.Cookie&&void 0===t.cookieJar&&(t.cookieJar=this.ckjar))}get(t,e=(()=>{})){t.headers&&(delete t.headers["Content-Type"],delete t.headers["Content-Length"]),this.isSurge()||this.isLoon()?(this.isSurge()&&this.isNeedRewrite&&(t.headers=t.headers||{},Object.assign(t.headers,{"X-Surge-Skip-Scripting":!1})),$httpClient.get(t,(t,s,i)=>{!t&&s&&(s.body=i,s.statusCode=s.status),e(t,s,i)})):this.isQuanX()?(this.isNeedRewrite&&(t.opts=t.opts||{},Object.assign(t.opts,{hints:!1})),$task.fetch(t).then(t=>{const{statusCode:s,statusCode:i,headers:r,body:o}=t;e(null,{status:s,statusCode:i,headers:r,body:o},o)},t=>e(t))):this.isNode()&&(this.initGotEnv(t),this.got(t).on("redirect",(t,e)=>{try{if(t.headers["set-cookie"]){const s=t.headers["set-cookie"].map(this.cktough.Cookie.parse).toString();s&&this.ckjar.setCookieSync(s,null),e.cookieJar=this.ckjar}}catch(t){this.logErr(t)}}).then(t=>{const{statusCode:s,statusCode:i,headers:r,body:o}=t;e(null,{status:s,statusCode:i,headers:r,body:o},o)},t=>{const{message:s,response:i}=t;e(s,i,i&&i.body)}))}post(t,e=(()=>{})){if(t.body&&t.headers&&!t.headers["Content-Type"]&&(t.headers["Content-Type"]="application/x-www-form-urlencoded"),t.headers&&delete t.headers["Content-Length"],this.isSurge()||this.isLoon())this.isSurge()&&this.isNeedRewrite&&(t.headers=t.headers||{},Object.assign(t.headers,{"X-Surge-Skip-Scripting":!1})),$httpClient.post(t,(t,s,i)=>{!t&&s&&(s.body=i,s.statusCode=s.status),e(t,s,i)});else if(this.isQuanX())t.method="POST",this.isNeedRewrite&&(t.opts=t.opts||{},Object.assign(t.opts,{hints:!1})),$task.fetch(t).then(t=>{const{statusCode:s,statusCode:i,headers:r,body:o}=t;e(null,{status:s,statusCode:i,headers:r,body:o},o)},t=>e(t));else if(this.isNode()){this.initGotEnv(t);const{url:s,...i}=t;this.got.post(s,i).then(t=>{const{statusCode:s,statusCode:i,headers:r,body:o}=t;e(null,{status:s,statusCode:i,headers:r,body:o},o)},t=>{const{message:s,response:i}=t;e(s,i,i&&i.body)})}}time(t,e=null){const s=e?new Date(e):new Date;let i={"M+":s.getMonth()+1,"d+":s.getDate(),"H+":s.getHours(),"m+":s.getMinutes(),"s+":s.getSeconds(),"q+":Math.floor((s.getMonth()+3)/3),S:s.getMilliseconds()};/(y+)/.test(t)&&(t=t.replace(RegExp.$1,(s.getFullYear()+"").substr(4-RegExp.$1.length)));for(let e in i)new RegExp("("+e+")").test(t)&&(t=t.replace(RegExp.$1,1==RegExp.$1.length?i[e]:("00"+i[e]).substr((""+i[e]).length)));return t}msg(e=t,s="",i="",r){const o=t=>{if(!t)return t;if("string"==typeof t)return this.isLoon()?t:this.isQuanX()?{"open-url":t}:this.isSurge()?{url:t}:void 0;if("object"==typeof t){if(this.isLoon()){let e=t.openUrl||t.url||t["open-url"],s=t.mediaUrl||t["media-url"];return{openUrl:e,mediaUrl:s}}if(this.isQuanX()){let e=t["open-url"]||t.url||t.openUrl,s=t["media-url"]||t.mediaUrl;return{"open-url":e,"media-url":s}}if(this.isSurge()){let e=t.url||t.openUrl||t["open-url"];return{url:e}}}};if(this.isMute||(this.isSurge()||this.isLoon()?$notification.post(e,s,i,o(r)):this.isQuanX()&&$notify(e,s,i,o(r))),!this.isMuteLog){let t=["","==============📣系统通知📣=============="];t.push(e),s&&t.push(s),i&&t.push(i),console.log(t.join("\n")),this.logs=this.logs.concat(t)}}log(...t){t.length>0&&(this.logs=[...this.logs,...t]),console.log(t.join(this.logSeparator))}logErr(t,e){const s=!this.isSurge()&&!this.isQuanX()&&!this.isLoon();s?this.log("",`❗️${this.name}, 错误!`,t.stack):this.log("",`❗️${this.name}, 错误!`,t)}wait(t){return new Promise(e=>setTimeout(e,t))}done(t={}){const e=(new Date).getTime(),s=(e-this.startTime)/1e3;this.log("",`🔔${this.name}, 结束! 🕛 ${s} 秒`),this.log(),(this.isSurge()||this.isQuanX()||this.isLoon())&&$done(t)}}(t,e)}
 
-//-------------农场代码------------------------------------------------
+//农场代码
 
 async function jdFruit() {
     subTitle = `【动动账号${$.index}】${$.nickName}`;
@@ -445,8 +454,8 @@ async function jdFruit() {
       await initForFarm();
       if ($.farmInfo.farmUserPro) {
         // option['media-url'] = $.farmInfo.farmUserPro.goodsImage;
-        message = message +  "<font color=\'#778899\' size=2>【水果名称】 " + `${$.farmInfo.farmUserPro.name}` + "</font>\n\n";
-        // message +=  "<font color=\'#778899\' size=2>【已兑换水果】" + `${$.farmInfo.farmUserPro.winTimes}` +  "次</font>\n\n";
+        message = message +  "<font color=\'#778899\' size=1>【水果名称】 " + `${$.farmInfo.farmUserPro.name}` + "</font>\n\n";
+        // message +=  "<font color=\'#778899\' size=1>【已兑换水果】" + `${$.farmInfo.farmUserPro.winTimes}` +  "次</font>\n\n";
         that.log(`\n【动动账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${$.farmInfo.farmUserPro.shareCode}\n`);
         that.log(`\n【已成功兑换水果】${$.farmInfo.farmUserPro.winTimes}次\n`);
         await getHelp();
@@ -454,7 +463,7 @@ async function jdFruit() {
          await setHelp();
         if ($.farmInfo.treeState === 2 || $.farmInfo.treeState === 3) {
           option['open-url'] = urlSchema;
-          message = message + "<font color=\'#778899\' size=2> " +  $.UserName + "\n【提醒⏰】" + fruitName + "已可领取\n请去动动APP或微信小程序查看\n点击弹窗即达</font>"
+          message = message + "<font color=\'#778899\' size=1> " +  $.UserName + "\n【提醒⏰】" + fruitName + "已可领取\n请去动动APP或微信小程序查看\n点击弹窗即达</font>"
           $.msg($.name, ``, `【动动账号${$.index}】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n请去动动APP或微信小程序查看\n点击弹窗即达`, option);
           if ($.isNode()) {
             await notify.sendNotify(`${$.name} - 账号${$.index} - ${$.nickName}水果已可领取`, `【动动账号${$.index}】${$.nickName || $.UserName}\n【提醒⏰】${$.farmInfo.farmUserPro.name}已可领取\n请去动动APP或微信小程序查看`);
@@ -466,7 +475,7 @@ async function jdFruit() {
           //已下单购买, 但未开始种植新的水果
           option['open-url'] = urlSchema;
           $.msg($.name, ``, `【动动账号${$.index}】 ${$.nickName || $.UserName}\n【提醒⏰】您忘了种植新的水果\n请去动动APP或微信小程序选购并种植新的水果\n点击弹窗即达`, option);
-          message = message + "<font color=\'#778899\' size=2> " +  $.UserName + " \n【提醒⏰】您忘了种植新的水果\n请去动动APP或微信小程序选购并种植新的水果\n点击弹窗即达" + "</font>"
+          message = message + "<font color=\'#778899\' size=1> " +  $.UserName + " \n【提醒⏰】您忘了种植新的水果\n请去动动APP或微信小程序选购并种植新的水果\n点击弹窗即达" + "</font>"
           if ($.isNode()) {
             await notify.sendNotify(`${$.name} - 您忘了种植新的水果`, `动动账号${$.index} ${$.nickName}\n【提醒⏰】您忘了种植新的水果\n请去动动APP或微信小程序选购并种植新的水果`);
           }
@@ -593,21 +602,21 @@ async function jdFruit() {
     await initForFarm();
     await taskInitForFarm();
     let waterEveryDayT = $.farmTask.totalWaterTaskInit.totalWaterTaskTimes;//今天到到目前为止，浇了多少次水
-      // message +=  "<font color=\'#778899\' size=2>【今日共浇水】" + `${waterEveryDayT}` + "次 </font>\n\n"
-      message += "<font color=\'#778899\' size=2>【剩余 水滴】" + `${$.farmInfo.farmUserPro.totalEnergy}` + "g💧 </font> \n\n"
-      message += "<font color=\'#778899\' size=2>【水果🍉进度】" + `${(($.farmInfo.farmUserPro.treeEnergy /
+      // message +=  "<font color=\'#778899\' size=1>【今日共浇水】" + `${waterEveryDayT}` + "次 </font>\n\n"
+      message += "<font color=\'#778899\' size=1>【剩余 水滴】" + `${$.farmInfo.farmUserPro.totalEnergy}` + "g💧 </font> \n\n"
+      message += "<font color=\'#778899\' size=1>【水果🍉进度】" + `${(($.farmInfo.farmUserPro.treeEnergy /
       $.farmInfo.farmUserPro.treeTotalEnergy) * 100).toFixed(2)}` + "%，已浇水" +`${$.farmInfo.farmUserPro.treeEnergy / 10}` + "次,还需"+`${($.farmInfo.farmUserPro.treeTotalEnergy - $.farmInfo.farmUserPro.treeEnergy) / 10}` +"次 </font> \n\n"
     if ($.farmInfo.toFlowTimes > ($.farmInfo.farmUserPro.treeEnergy / 10)) {
-      message += "<font color=\'#778899\' size=2>【水果🍉进度】" + `【开花进度】再浇水${$.farmInfo.toFlowTimes - $.farmInfo.farmUserPro.treeEnergy / 10}次开花\n\n` +"</font>\n\n"
+      message += "<font color=\'#778899\' size=1>【水果🍉进度】" + `【开花进度】再浇水${$.farmInfo.toFlowTimes - $.farmInfo.farmUserPro.treeEnergy / 10}次开花\n\n` +"</font>\n\n"
     } else if ($.farmInfo.toFruitTimes > ($.farmInfo.farmUserPro.treeEnergy / 10)) {
-      message += "<font color=\'#778899\' size=2>【水果🍉进度】" + `【结果进度】再浇水${$.farmInfo.toFruitTimes - $.farmInfo.farmUserPro.treeEnergy / 10}次结果\n\n` + "</font>\n\n"
+      message += "<font color=\'#778899\' size=1>【水果🍉进度】" + `【结果进度】再浇水${$.farmInfo.toFruitTimes - $.farmInfo.farmUserPro.treeEnergy / 10}次结果\n\n` + "</font>\n\n"
     }
     // 预测n天后水果课可兑换功能
     let waterTotalT = ($.farmInfo.farmUserPro.treeTotalEnergy - $.farmInfo.farmUserPro.treeEnergy - $.farmInfo.farmUserPro.totalEnergy) / 10;//一共还需浇多少次水
   
     let waterD = Math.ceil(waterTotalT / waterEveryDayT);
   
-    message = message + "<font color=\'#BA55D3\' size=2>" + `【预测🍉收获时间】${waterD === 1 ? '明天' : waterD === 2 ? '后天' : waterD + '天之后'}(${timeFormat(24 * 60 * 60 * 1000 * waterD + Date.now())}日)可兑换水果🍉` +"</font>\n\n";
+    message = message + "<font color=\'#BA55D3\' size=1>" + `【预测🍉收获时间】${waterD === 1 ? '明天' : waterD === 2 ? '后天' : waterD + '天之后'}(${timeFormat(24 * 60 * 60 * 1000 * waterD + Date.now())}日)可兑换水果🍉` +"</font>\n\n";
   }
   //浇水十次
   async function doTenWater() {
@@ -732,7 +741,7 @@ async function jdFruit() {
         await userMyCardForFarm('beanCard');
         that.log(`使用水滴换豆卡结果:${JSON.stringify($.userMyCardRes)}`);
         if ($.userMyCardRes.code === '0') {
-        //   message +="<font color=\'#BA55D3\' size=2>【水果🍉进度】" + `【水滴换豆卡】获得${$.userMyCardRes.beanCount}个京豆\n` + "</font>\n\n";
+        //   message +="<font color=\'#BA55D3\' size=1>【水果🍉进度】" + `【水滴换豆卡】获得${$.userMyCardRes.beanCount}个京豆\n` + "</font>\n\n";
           return
         }
       } else {
@@ -947,15 +956,15 @@ async function jdFruit() {
           await masterGotFinishedTaskForFarm();
           if ($.masterGotFinished.code === '0') {
             that.log(`已成功领取好友助力奖励：【${$.masterGotFinished.amount}】g水`);
-            // message += "<font color=\'#778899\' size=2>【额外奖励】" + `${$.masterGotFinished.amount}` + "g水领取成功</font>\n\n";
+            // message += "<font color=\'#778899\' size=1>【额外奖励】" + `${$.masterGotFinished.amount}` + "g水领取成功</font>\n\n";
           }
         } else {
           that.log("已经领取过5好友助力额外奖励");
-        //   message += "<font color=\'#BA55D3\' size=2>【水果🍉进度】" + `【额外奖励】已被领取过\n` + "</font>\n\n";
+        //   message += "<font color=\'#BA55D3\' size=1>【水果🍉进度】" + `【额外奖励】已被领取过\n` + "</font>\n\n";
         }
       } else {
         that.log("助力好友未达到5个");
-        // message += "<font color=\'#778899\' size=2>【额外奖励】领取失败,原因：给您助力的人未达5个</font>\n\n";
+        // message += "<font color=\'#778899\' size=1>【额外奖励】领取失败,原因：给您助力的人未达5个</font>\n\n";
       }
       if ($.masterHelpResult.masterHelpPeoples && $.masterHelpResult.masterHelpPeoples.length > 0) {
         let str = '';
@@ -969,7 +978,7 @@ async function jdFruit() {
           let time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getMinutes();
           that.log(`\n动动昵称【${item.nickName || "匿名用户"}】 在 ${time} 给您助过力\n`);
         })
-        // message += "<font color=\'#778899\' size=2>【助力您的好友】 " + `${str}` +  "</font>\n\n"
+        // message += "<font color=\'#778899\' size=1>【助力您的好友】 " + `${str}` +  "</font>\n\n"
       }
       that.log('领取额外奖励水滴结束\n');
     }
@@ -1076,13 +1085,13 @@ async function jdFruit() {
       }
     }
     if (helpSuccessPeoples && helpSuccessPeoples.length > 0) {
-    //   message += "<font color=\'#778899\' size=2> " + `【您助力的好友👬】${helpSuccessPeoples.substr(0, helpSuccessPeoples.length - 1)}\n` + "</font>\n\n";
+    //   message += "<font color=\'#778899\' size=1> " + `【您助力的好友👬】${helpSuccessPeoples.substr(0, helpSuccessPeoples.length - 1)}\n` + "</font>\n\n";
     }
     if (salveHelpAddWater > 0) {
       // message += `【助力好友👬】获得${salveHelpAddWater}g💧\n`;
       that.log(`【助力好友👬】获得${salveHelpAddWater}g💧\n`);
     }
-    // message += "<font color=\'#778899\' size=2>" + `【今日剩余助力👬】${remainTimes}次\n` + "</font>\n\n";
+    // message += "<font color=\'#778899\' size=1>" + `【今日剩余助力👬】${remainTimes}次\n` + "</font>\n\n";
     that.log('助力好友结束，即将开始领取额外水滴奖励\n');
   }
   //水滴雨
@@ -1714,270 +1723,245 @@ async function jdFruit() {
       timeout: 10000,
     }
   }
-  
-//-------------------------------------------------东东赚赚------------------------------------------------------------
+  //-------------------------------------------------东东赚赚------------------------------------------------------------
 
 
 async function jdWish() {
-  $.bean = 0
-  $.tuan = null
-  $.hasOpen = false
-  await getTaskList(true)
-  await getUserTuanInfo()
-  if (!$.tuan) {
-    await openTuan()
-    if ($.hasOpen) await getUserTuanInfo()
-  }
-  if ($.tuan) $.tuanList.push($.tuan)
-  await helpFriends()
-  await getUserInfo()
-  $.nowBean = parseInt($.totalBeanNum)
-  $.nowNum = parseInt($.totalNum)
-  for (let i = 0; i < $.taskList.length; ++i) {
-    let task = $.taskList[i]
-    if (task['taskId'] === 1 && task['status'] !== 2) {
-      that.log(`去做任务：${task.taskName}`)
-      await doTask({"taskId": task['taskId'],"mpVersion":"3.4.0"})
-    } else if (task['taskId'] !== 3 && task['status'] !== 2) {
-      that.log(`去做任务：${task.taskName}`)
-      if(task['itemId'])
-        await doTask({"itemId":task['itemId'],"taskId":task['taskId'],"mpVersion":"3.4.0"})
-      else
+    $.bean = 0
+    $.tuan = null
+    $.hasOpen = false
+    await getTaskList(true)
+    await getUserTuanInfo()
+    if (!$.tuan) {
+      await openTuan()
+      if ($.hasOpen) await getUserTuanInfo()
+    }
+    if ($.tuan) $.tuanList.push($.tuan)
+    await helpFriends()
+    await getUserInfo()
+    $.nowBean = parseInt($.totalBeanNum)
+    $.nowNum = parseInt($.totalNum)
+    for (let i = 0; i < $.taskList.length; ++i) {
+      let task = $.taskList[i]
+      if (task['taskId'] === 1 && task['status'] !== 2) {
+        that.log(`去做任务：${task.taskName}`)
         await doTask({"taskId": task['taskId'],"mpVersion":"3.4.0"})
-      await $.wait(3000)
+      } else if (task['taskId'] !== 3 && task['status'] !== 2) {
+        that.log(`去做任务：${task.taskName}`)
+        if(task['itemId'])
+          await doTask({"itemId":task['itemId'],"taskId":task['taskId'],"mpVersion":"3.4.0"})
+        else
+          await doTask({"taskId": task['taskId'],"mpVersion":"3.4.0"})
+        await $.wait(3000)
+      }
     }
+    await getTaskList();
+    await showMsg1();
   }
-  await getTaskList();
-  await showMsg1();
-}
-
-
-function helpFriendTuan(body) {
-  return new Promise(resolve => {
-    $.get(taskTuanUrl("vvipclub_distributeBean_assist", body), async (err, resp, data) => {
-      try {
-        if (err) {
-          that.log(`${JSON.stringify(err)}`)
-          that.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          if (safeGet(data)) {
-            data = JSON.parse(data);
-            if (data.success) {
-              that.log('助力成功')
-            } else {
-              if (data.resultCode === '9200008') that.log('不能助力自己')
-              else if (data.resultCode === '9200011') that.log('已经助力过')
-              else if (data.resultCode === '2400205') that.log('团已满')
-              else if (data.resultCode === '2400203') {that.log('助力次数已耗尽');$.canHelp = false}
-              else that.log(`未知错误`)
-            }
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve(data);
-      }
-    })
-  })
-}
-
-function getUserTuanInfo() {
-  let body = {"paramData": {"channel": "FISSION_BEAN"}}
-  return new Promise(resolve => {
-    $.get(taskTuanUrl("distributeBeanActivityInfo", body), async (err, resp, data) => {
-      try {
-        if (err) {
-          that.log(`${JSON.stringify(err)}`)
-          that.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          if (safeGet(data)) {
-            data = JSON.parse(data);
-            if (data.data && !data.data.canStartNewAssist) {
-              $.tuan = {
-                "activityIdEncrypted": data.data.id,
-                "assistStartRecordId": data.data.assistStartRecordId,
-                "assistedPinEncrypted": data.data.encPin,
-                "channel": "FISSION_BEAN"
-              }
-              $.tuanActId = data.data.id
-            }
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve(data);
-      }
-    })
-  })
-}
-
-function openTuan() {
-  let body = {"activityIdEncrypted": $.tuanActId, "channel": "FISSION_BEAN"}
-  return new Promise(resolve => {
-    $.get(taskTuanUrl("vvipclub_distributeBean_startAssist", body), async (err, resp, data) => {
-      try {
-        if (err) {
-          that.log(`${JSON.stringify(err)}`)
-          that.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          if (safeGet(data)) {
-            data = JSON.parse(data);
-            if (data['success']) {
-              $.hasOpen = true
-            }
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve(data);
-      }
-    })
-  })
-}
-
-function getUserInfo() {
-  return new Promise(resolve => {
-    $.get(taskUrl1("interactIndex"), async (err, resp, data) => {
-      try {
-        if (err) {
-          that.log(`${JSON.stringify(err)}`)
-          that.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          if (safeGet(data)) {
-            data = JSON.parse(data);
-            // if (data.data.shareTaskRes) {
-            //   that.log(`\n【动动账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${data.data.shareTaskRes.itemId}\n`);
-            // } else {
-            //   that.log(`\n\n已满5人助力或助力功能已下线,故暂时无${$.name}好友助力码\n\n`)
-            // }
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve(data);
-      }
-    })
-  })
-}
-
-function getTaskList(flag = false) {
-  return new Promise(resolve => {
-    $.get(taskUrl1("interactTaskIndex"), async (err, resp, data) => {
-      try {
-        if (err) {
-          that.log(`${JSON.stringify(err)}`)
-          that.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          if (safeGet(data)) {
-            data = JSON.parse(data);
-            $.taskList = data.data.taskDetailResList
-            $.totalNum = data.data.totalNum
-            $.totalBeanNum = data.data.totalBeanNum
-            if (flag && $.taskList.filter(item => !!item && item['taskId']=== 3) && $.taskList.filter(item => !!item && item['taskId']=== 3).length) {
-                 $.shareId=$.taskList.filter(item => !!item && item['taskId']=== 3)[0]['itemId'];
-              that.log(`\n【动动账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${$.taskList.filter(item => !!item && item['taskId']=== 3)[0]['itemId']}\n`);
-            }
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve(data);
-      }
-    })
-  })
-}
-
-// 完成
-function doTask(body, func = "doInteractTask") {
-  // that.log(taskUrl("doInteractTask", body))
-  return new Promise(resolve => {
-    $.get(taskUrl1(func, body), async (err, resp, data) => {
-      try {
-        if (err) {
-          that.log(`${JSON.stringify(err)}`)
-          that.log(`${$.name} API请求失败，请检查网路重试`)
-        } else {
-          if (safeGet(data)) {
-            data = JSON.parse(data);
-            // that.log(data)
-            if (func === "doInteractTask") {
-              if (data.subCode === "S000") {
-                that.log(`任务完成，获得 ${data.data.taskDetailResList[0].incomeAmountConf} 金币，${data.data.taskDetailResList[0].beanNum} 京豆`)
-                $.bean += parseInt(data.data.taskDetailResList[0].beanNum)
-              } else {
-                that.log(`任务失败，错误信息：${data.message}`)
-              }
-            } else {
-              that.log(`${data.data.helpResDesc}`)
-            }
-          }
-        }
-      } catch (e) {
-        $.logErr(e, resp)
-      } finally {
-        resolve(data);
-      }
-    })
-  })
-}
-
-async function helpFriends() {
-    await getHelp();
-  for (let code of $.newShareCodes) {
-    if (!code) continue
-    await doTask({"itemId": code, "taskId": "3", "mpVersion": "3.4.0"}, "doHelpTask")
-  }
-  await setHelp();
-}
-
-function getHelp() {
-    $.newShareCodes = [];
+  
+  
+  function helpFriendTuan(body) {
     return new Promise(resolve => {
-      $.get({
-        url: "http://api.tyh52.com/act/get/jdzz/3"
-      }, (err, resp, data) => {
+      $.get(taskTuanUrl("vvipclub_distributeBean_assist", body), async (err, resp, data) => {
         try {
-          if (data) {
-            data = JSON.parse(data);
-            if (data.code == 1) {
-              let list = data.data;
-              if (!(list instanceof Array)) {
-                list = JSON.parse(list);
-              }
-              if (list.length > 0) {
-                for (var i in list) {
-                  $.newShareCodes.push(list[i]);
-                }
+          if (err) {
+            that.log(`${JSON.stringify(err)}`)
+            that.log(`${$.name} API请求失败，请检查网路重试`)
+          } else {
+            if (safeGet(data)) {
+              data = JSON.parse(data);
+              if (data.success) {
+                that.log('助力成功')
+              } else {
+                if (data.resultCode === '9200008') that.log('不能助力自己')
+                else if (data.resultCode === '9200011') that.log('已经助力过')
+                else if (data.resultCode === '2400205') that.log('团已满')
+                else if (data.resultCode === '2400203') {that.log('助力次数已耗尽');$.canHelp = false}
+                else that.log(`未知错误`)
               }
             }
           }
         } catch (e) {
-          $.logErr(e, resp);
+          $.logErr(e, resp)
         } finally {
           resolve(data);
         }
       })
-    });
+    })
   }
-
-  function setHelp() {
+  
+  function getUserTuanInfo() {
+    let body = {"paramData": {"channel": "FISSION_BEAN"}}
     return new Promise(resolve => {
-      if ($.shareId) {
+      $.get(taskTuanUrl("distributeBeanActivityInfo", body), async (err, resp, data) => {
+        try {
+          if (err) {
+            that.log(`${JSON.stringify(err)}`)
+            that.log(`${$.name} API请求失败，请检查网路重试`)
+          } else {
+            if (safeGet(data)) {
+              data = JSON.parse(data);
+              if (data.data && !data.data.canStartNewAssist) {
+                $.tuan = {
+                  "activityIdEncrypted": data.data.id,
+                  "assistStartRecordId": data.data.assistStartRecordId,
+                  "assistedPinEncrypted": data.data.encPin,
+                  "channel": "FISSION_BEAN"
+                }
+                $.tuanActId = data.data.id
+              }
+            }
+          }
+        } catch (e) {
+          $.logErr(e, resp)
+        } finally {
+          resolve(data);
+        }
+      })
+    })
+  }
+  
+  function openTuan() {
+    let body = {"activityIdEncrypted": $.tuanActId, "channel": "FISSION_BEAN"}
+    return new Promise(resolve => {
+      $.get(taskTuanUrl("vvipclub_distributeBean_startAssist", body), async (err, resp, data) => {
+        try {
+          if (err) {
+            that.log(`${JSON.stringify(err)}`)
+            that.log(`${$.name} API请求失败，请检查网路重试`)
+          } else {
+            if (safeGet(data)) {
+              data = JSON.parse(data);
+              if (data['success']) {
+                $.hasOpen = true
+              }
+            }
+          }
+        } catch (e) {
+          $.logErr(e, resp)
+        } finally {
+          resolve(data);
+        }
+      })
+    })
+  }
+  
+  function getUserInfo() {
+    return new Promise(resolve => {
+      $.get(taskUrl1("interactIndex"), async (err, resp, data) => {
+        try {
+          if (err) {
+            that.log(`${JSON.stringify(err)}`)
+            that.log(`${$.name} API请求失败，请检查网路重试`)
+          } else {
+            if (safeGet(data)) {
+              data = JSON.parse(data);
+              // if (data.data.shareTaskRes) {
+              //   that.log(`\n【动动账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${data.data.shareTaskRes.itemId}\n`);
+              // } else {
+              //   that.log(`\n\n已满5人助力或助力功能已下线,故暂时无${$.name}好友助力码\n\n`)
+              // }
+            }
+          }
+        } catch (e) {
+          $.logErr(e, resp)
+        } finally {
+          resolve(data);
+        }
+      })
+    })
+  }
+  
+  function getTaskList(flag = false) {
+    return new Promise(resolve => {
+      $.get(taskUrl1("interactTaskIndex"), async (err, resp, data) => {
+        try {
+          if (err) {
+            that.log(`${JSON.stringify(err)}`)
+            that.log(`${$.name} API请求失败，请检查网路重试`)
+          } else {
+            if (safeGet(data)) {
+              data = JSON.parse(data);
+              $.taskList = data.data.taskDetailResList
+              $.totalNum = data.data.totalNum
+              $.totalBeanNum = data.data.totalBeanNum
+              if (flag && $.taskList.filter(item => !!item && item['taskId']=== 3) && $.taskList.filter(item => !!item && item['taskId']=== 3).length) {
+                   $.shareId=$.taskList.filter(item => !!item && item['taskId']=== 3)[0]['itemId'];
+                that.log(`\n【动动账号${$.index}（${$.nickName || $.UserName}）的${$.name}好友互助码】${$.taskList.filter(item => !!item && item['taskId']=== 3)[0]['itemId']}\n`);
+              }
+            }
+          }
+        } catch (e) {
+          $.logErr(e, resp)
+        } finally {
+          resolve(data);
+        }
+      })
+    })
+  }
+  
+  // 完成
+  function doTask(body, func = "doInteractTask") {
+    // that.log(taskUrl("doInteractTask", body))
+    return new Promise(resolve => {
+      $.get(taskUrl1(func, body), async (err, resp, data) => {
+        try {
+          if (err) {
+            that.log(`${JSON.stringify(err)}`)
+            that.log(`${$.name} API请求失败，请检查网路重试`)
+          } else {
+            if (safeGet(data)) {
+              data = JSON.parse(data);
+              // that.log(data)
+              if (func === "doInteractTask") {
+                if (data.subCode === "S000") {
+                  that.log(`任务完成，获得 ${data.data.taskDetailResList[0].incomeAmountConf} 金币，${data.data.taskDetailResList[0].beanNum} 京豆`)
+                  $.bean += parseInt(data.data.taskDetailResList[0].beanNum)
+                } else {
+                  that.log(`任务失败，错误信息：${data.message}`)
+                }
+              } else {
+                that.log(`${data.data.helpResDesc}`)
+              }
+            }
+          }
+        } catch (e) {
+          $.logErr(e, resp)
+        } finally {
+          resolve(data);
+        }
+      })
+    })
+  }
+  
+  async function helpFriends() {
+      await getHelp();
+    for (let code of $.newShareCodes) {
+      if (!code) continue
+      await doTask({"itemId": code, "taskId": "3", "mpVersion": "3.4.0"}, "doHelpTask")
+    }
+    await setHelp();
+  }
+  
+  function getHelp() {
+      $.newShareCodes = [];
+      return new Promise(resolve => {
         $.get({
-          url: "http://api.tyh52.com/act/set/jdzz/" + $.shareId
+          url: "http://api.tyh52.com/act/get/jdzz/3"
         }, (err, resp, data) => {
           try {
             if (data) {
               data = JSON.parse(data);
               if (data.code == 1) {
-                that.log("提交自己的邀請碼成功");
-              } else {
-                that.log("提交邀请码失败，" + data.message);
+                let list = data.data;
+                if (!(list instanceof Array)) {
+                  list = JSON.parse(list);
+                }
+                if (list.length > 0) {
+                  for (var i in list) {
+                    $.newShareCodes.push(list[i]);
+                  }
+                }
               }
             }
           } catch (e) {
@@ -1986,66 +1970,65 @@ function getHelp() {
             resolve(data);
           }
         })
-      } else {
-        resolve();
-      }
-
-    });
-  }
+      });
+    }
   
-  function getHelpTuan() {
-    $.tuanList = [];
-    return new Promise(resolve => {
-      $.get({
-        url: "http://api.tyh52.com/act/get/jdzzTuan/3"
-      }, (err, resp, data) => {
-        try {
-          if (data) {
-            data = JSON.parse(data);
-            if (data.code == 1) {
-              let list = data.data;
-              if (!(list instanceof Array)) {
-                list = JSON.parse(list);
-              }
-              if (list.length > 0) {
-                for (var item of list) {
-                    let its=item.split('@');
-                    if(its.length==2){
-                        let  tuan={
-                                            "activityIdEncrypted": $.tuanActId,
-                                            "assistStartRecordId": its[0],
-                                            "assistedPinEncrypted": its[1],
-                                            "channel": "FISSION_BEAN"
-                                        }
-                      $.tuanList.push(tuan);
-                    }
+    function setHelp() {
+      return new Promise(resolve => {
+        if ($.shareId) {
+          $.get({
+            url: "http://api.tyh52.com/act/set/jdzz/" + $.shareId
+          }, (err, resp, data) => {
+            try {
+              if (data) {
+                data = JSON.parse(data);
+                if (data.code == 1) {
+                  that.log("提交自己的邀請碼成功");
+                } else {
+                  that.log("提交邀请码失败，" + data.message);
                 }
               }
+            } catch (e) {
+              $.logErr(e, resp);
+            } finally {
+              resolve(data);
             }
-          }
-        } catch (e) {
-          $.logErr(e, resp);
-        } finally {
-          resolve(data);
+          })
+        } else {
+          resolve();
         }
-      })
-    });
-  }
-
-  function setHelpTuan() {
-    return new Promise(resolve => {
-      if ($.tuan) {
+  
+      });
+    }
+    
+    function getHelpTuan() {
+      $.tuanList = [];
+      return new Promise(resolve => {
         $.get({
-          url: "http://api.tyh52.com/act/set/jdzzTuan/" + $.tuan.assistStartRecordId+'@'+$.tuan.assistedPinEncrypted
+          url: "http://api.tyh52.com/act/get/jdzzTuan/3"
         }, (err, resp, data) => {
           try {
             if (data) {
-                that.log(data);
               data = JSON.parse(data);
               if (data.code == 1) {
-                that.log("提交自己的开团碼成功");
-              }else{
-                  that.log("提交开团码失败，" + data.message);
+                let list = data.data;
+                if (!(list instanceof Array)) {
+                  list = JSON.parse(list);
+                }
+                if (list.length > 0) {
+                  for (var item of list) {
+                      let its=item.split('@');
+                      if(its.length==2){
+                          let  tuan={
+                                              "activityIdEncrypted": $.tuanActId,
+                                              "assistStartRecordId": its[0],
+                                              "assistedPinEncrypted": its[1],
+                                              "channel": "FISSION_BEAN"
+                                          }
+                        $.tuanList.push(tuan);
+                      }
+                  }
+                }
               }
             }
           } catch (e) {
@@ -2054,66 +2037,93 @@ function getHelp() {
             resolve(data);
           }
         })
-      } else {
-        resolve();
-      }
-
-    });
-  }
-
-function taskUrl1(functionId, body = {}) {
-  return {
-    url: `${JD_API_HOST}?functionId=${functionId}&body=${escape(JSON.stringify(body))}&client=wh5&clientVersion=9.1.0`,
-    headers: {
-      'Cookie': cookie,
-      'Host': 'api.m.jd.com',
-      'Connection': 'keep-alive',
-      'Content-Type': 'application/json',
-      'Referer': 'http://wq.jd.com/wxapp/pages/hd-interaction/index/index',
-      'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
-      'Accept-Language': 'zh-cn',
-      'Accept-Encoding': 'gzip, deflate, br',
+      });
     }
-  }
-}
-
-function taskTuanUrl(function_id, body = {}) {
-  return {
-    url: `${JD_API_HOST}?functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=swat_miniprogram&osVersion=5.0.0&clientVersion=3.1.3&fromType=wxapp&timestamp=${new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000}`,
-    headers: {
-      "Accept": "*/*",
-      "Accept-Encoding": "gzip, deflate, br",
-      "Accept-Language": "zh-cn",
-      "Connection": "keep-alive",
-      "Content-Type": "application/x-www-form-urlencoded",
-      "Host": "api.m.jd.com",
-      "Referer": "https://servicewechat.com/wxa5bf5ee667d91626/108/page-frame.html",
-      "Cookie": cookie,
-      "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
-    }
-  }
-}
-
-
   
-function showMsg1() {
-  return new Promise(async resolve => {
-    that.log( "<font color=\'#778899\' size=2>" +  `本次获得${parseInt($.totalBeanNum) - $.nowBean}京豆，${parseInt($.totalNum) - $.nowNum}金币\n` + "</font>\n\n")
-    message += "<font color=\'#778899\' size=2>"  + `累计获得${$.totalBeanNum}京豆，${$.totalNum}金币\n可兑换${$.totalNum / 10000}元无门槛红包` + "</font>\n\n"
-    if (parseInt($.totalBeanNum) - $.nowBean > 0) {
-      $.msg($.name, '', `动动账号${$.index} ${$.nickName}\n${message}`);
-    } else {
-      $.log(message)
+    function setHelpTuan() {
+      return new Promise(resolve => {
+        if ($.tuan) {
+          $.get({
+            url: "http://api.tyh52.com/act/set/jdzzTuan/" + $.tuan.assistStartRecordId+'@'+$.tuan.assistedPinEncrypted
+          }, (err, resp, data) => {
+            try {
+              if (data) {
+                  that.log(data);
+                data = JSON.parse(data);
+                if (data.code == 1) {
+                  that.log("提交自己的开团碼成功");
+                }else{
+                    that.log("提交开团码失败，" + data.message);
+                }
+              }
+            } catch (e) {
+              $.logErr(e, resp);
+            } finally {
+              resolve(data);
+            }
+          })
+        } else {
+          resolve();
+        }
+  
+      });
     }
-    // 云端大于10元无门槛红包时进行通知推送
-    if ($.isNode() && $.totalNum >= 1000000) await notify.sendNotify(`${$.name} - 动动账号${$.index} - ${$.nickName}`, `动动账号${$.index} ${$.nickName}\n当前金币：${$.totalNum}个\n可兑换无门槛红包：${parseInt($.totalNum) / 10000}元\n`,)
-    resolve();
-  })
-}
+  
+  function taskUrl1(functionId, body = {}) {
+    return {
+      url: `${JD_API_HOST}?functionId=${functionId}&body=${escape(JSON.stringify(body))}&client=wh5&clientVersion=9.1.0`,
+      headers: {
+        'Cookie': cookie,
+        'Host': 'api.m.jd.com',
+        'Connection': 'keep-alive',
+        'Content-Type': 'application/json',
+        'Referer': 'http://wq.jd.com/wxapp/pages/hd-interaction/index/index',
+        'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+        'Accept-Language': 'zh-cn',
+        'Accept-Encoding': 'gzip, deflate, br',
+      }
+    }
+  }
+  
+  function taskTuanUrl(function_id, body = {}) {
+    return {
+      url: `${JD_API_HOST}?functionId=${function_id}&body=${escape(JSON.stringify(body))}&appid=swat_miniprogram&osVersion=5.0.0&clientVersion=3.1.3&fromType=wxapp&timestamp=${new Date().getTime() + new Date().getTimezoneOffset() * 60 * 1000 + 8 * 60 * 60 * 1000}`,
+      headers: {
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "zh-cn",
+        "Connection": "keep-alive",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Host": "api.m.jd.com",
+        "Referer": "https://servicewechat.com/wxa5bf5ee667d91626/108/page-frame.html",
+        "Cookie": cookie,
+        "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.2.2;14.2;%E4%BA%AC%E4%B8%9C/9.2.2 CFNetwork/1206 Darwin/20.1.0"),
+      }
+    }
+  }
+  
+  
+    
+  function showMsg1() {
+    return new Promise(async resolve => {
+      that.log( "<font color=\'#778899\' size=2>" +  `本次获得${parseInt($.totalBeanNum) - $.nowBean}京豆，${parseInt($.totalNum) - $.nowNum}金币\n` + "</font>\n\n")
+      message += "<font color=\'#778899\' size=2>"  + `累计获得${$.totalBeanNum}京豆，${$.totalNum}金币\n可兑换${$.totalNum / 10000}元无门槛红包` + "</font>\n\n"
+      if (parseInt($.totalBeanNum) - $.nowBean > 0) {
+        $.msg($.name, '', `动动账号${$.index} ${$.nickName}\n${message}`);
+      } else {
+        $.log(message)
+      }
+      // 云端大于10元无门槛红包时进行通知推送
+      if ($.isNode() && $.totalNum >= 1000000) await notify.sendNotify(`${$.name} - 动动账号${$.index} - ${$.nickName}`, `动动账号${$.index} ${$.nickName}\n当前金币：${$.totalNum}个\n可兑换无门槛红包：${parseInt($.totalNum) / 10000}元\n`,)
+      resolve();
+    })
+  }
+  
+  
 
 
 
-//------------------------------------------------我加的函数-----------------------------------------------------------
+//我加的函数
 function postToDingTalk(messgae) {
     const dingtalk = "https://oapi.dingtalk.com/robot/send?access_token=fa87e34729eaa6113fddfa857efebb477dea0a433d6eecfe93b1d3f5e24847b9"
 
