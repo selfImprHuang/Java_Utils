@@ -84,7 +84,7 @@ let cookiesArr = [], cookie = '';
       
       await TotalBean();
        //加上名称
-       message = message + "<font color=\'#778899\' size=1>【羊毛姐妹】<font color=\'#FFA500\' size=2>" +  username + `( ${$.name } )`+ " </font> </font> \n\n "
+       message = message + "<font color=\'#778899\' size=1>【羊毛姐妹】<font color=\'#FFA500\' size=2>" +  username + `( ${$.nickName} )`+ " </font> </font> \n\n "
 
       console.log(`\n********开始【京东账号${$.index}】${$.nickName || $.UserName}******\n`);
       if (!$.isLogin) {
