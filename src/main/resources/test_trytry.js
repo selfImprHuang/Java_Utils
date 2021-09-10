@@ -18,7 +18,7 @@
  * 请提前取关至少250个商店确保京东试用脚本正常运行
  * 没有写通知，是否申请成功没有进行通知，但脚本会把状态log出日志
  */
-const $ = new Env('京东试用')
+const $ = new Env('京东试用')       
 const URL = 'https://api.m.jd.com/client.action'
 let trialActivityIdList = []
 let trialActivityTitleList = []
@@ -54,7 +54,7 @@ let args_xh = {
      * 试用商品标题过滤
      * 可设置环境变量：JD_TRY_TITLEFILTERS，关键词与关键词之间用@分隔
      * */
-    titleFilters: process.env.JD_TRY_TITLEFILTERS && process.env.JD_TRY_TITLEFILTERS.split('@') || ["幼儿园", "教程", "英语", "辅导", "培训", "孩子", "小学"],
+    titleFilters: process.env.JD_TRY_TITLEFILTERS && process.env.JD_TRY_TITLEFILTERS.split('@'),
     // 试用价格(中了要花多少钱)，高于这个价格都不会试用，小于等于才会试用
     trialPrice: 100,
     /*
@@ -94,7 +94,7 @@ let args_xh = {
             return
         }
         message += "<font color=\'#FFA500\'>[通知] </font><font color=\'#006400\' size='3'>dd试用</font> \n\n --- \n\n"
-        for (let j = 1;j<=5 ;j++) {
+        for (let j = 1;j<=2 ;j++) {
             for(let i = 0; i < $.cookiesArr.length; i++){
                 if($.cookiesArr[i]){
                     $.cookie = $.cookiesArr[i];
