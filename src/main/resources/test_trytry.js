@@ -18,7 +18,7 @@
  * 请提前取关至少250个商店确保京东试用脚本正常运行
  * 没有写通知，是否申请成功没有进行通知，但脚本会把状态log出日志
  */
-const $ = new Env('京东试用')       
+const $ = new Env('京东试用')
 const URL = 'https://api.m.jd.com/client.action'
 let trialActivityIdList = []
 let trialActivityTitleList = []
@@ -54,7 +54,7 @@ let args_xh = {
      * 试用商品标题过滤
      * 可设置环境变量：JD_TRY_TITLEFILTERS，关键词与关键词之间用@分隔
      * */
-    titleFilters: process.env.JD_TRY_TITLEFILTERS && process.env.JD_TRY_TITLEFILTERS.split('@'),
+    titleFilters: process.env.JD_TRY_TITLEFILTERS && process.env.JD_TRY_TITLEFILTERS.split('@') || ["幼儿园", "教程", "英语", "辅导", "培训", "孩子", "小学"],
     // 试用价格(中了要花多少钱)，高于这个价格都不会试用，小于等于才会试用
     trialPrice: 100,
     /*
@@ -79,7 +79,7 @@ let args_xh = {
      * 例如是18件，将会进行第三次获取，直到过滤完毕后为20件才会停止，不建议设置太大
      * 可设置环境变量：JD_TRY_MAXLENGTH
      * */
-    maxLength:  30
+    maxLength:  300
 }
 
 !(async() => {
@@ -94,7 +94,6 @@ let args_xh = {
             return
         }
         message += "<font color=\'#FFA500\'>[通知] </font><font color=\'#006400\' size='3'>dd试用</font> \n\n --- \n\n"
-        for (let j = 1;j<=2 ;j++) {
             for(let i = 0; i < $.cookiesArr.length; i++){
                 if($.cookiesArr[i]){
                     $.cookie = $.cookiesArr[i];
@@ -130,7 +129,14 @@ let args_xh = {
                     let size = 1;
                     while(trialActivityIdList.length < args_xh.maxLength){
                         console.log(`\n正在进行第 ${size} 次获取试用商品\n`)
-                        await try_feedsList(j, size++)   //这个是一点进京东试用就显示的页面，默认为精选页面
+                        await try_feedsList(1, size++)   //这个是一点进京东试用就显示的页面，默认为精选页面
+                        await try_feedsList(2, size++)
+                        await try_feedsList(3, size++)
+                        await try_feedsList(4, size++)
+                        await try_feedsList(5, size++)
+                        await try_feedsList(6, size++)
+                        await try_feedsList(10, size++)
+                        await try_feedsList(12, size++)
                         if(trialActivityIdList.length < args_xh.maxLength){
                             console.log(`间隔延时中，请等待 ${args_xh.applyInterval} ms`)
                             await $.wait(args_xh.applyInterval);
@@ -151,7 +157,6 @@ let args_xh = {
                     await showMsg()
                 }
             }      
-        } 
         await $.notify.sendNotify(`${$.name}`, notifyMsg);
     } else {
         console.log(`\n您未设置运行【京东试用】脚本，结束运行！\n`)
