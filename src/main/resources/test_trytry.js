@@ -37,7 +37,7 @@ let args_xh = {
      * */
 //     isNotify: process.env.JD_TRY_NOTIFY || true,
     // 商品原价，低于这个价格都不会试用
-    jdPrice: process.env.JD_TRY_PRICE || 0,
+    jdPrice: process.env.JD_TRY_PRICE || 100,
     /*
      * 获取试用商品类型，默认为1
      * 1 - 精选
@@ -54,7 +54,7 @@ let args_xh = {
      * 试用商品标题过滤
      * 可设置环境变量：JD_TRY_TITLEFILTERS，关键词与关键词之间用@分隔
      * */
-    titleFilters: process.env.JD_TRY_TITLEFILTERS && process.env.JD_TRY_TITLEFILTERS.split('@') || ["幼儿园","小学"],
+    titleFilters: process.env.JD_TRY_TITLEFILTERS && process.env.JD_TRY_TITLEFILTERS.split('@') || ["幼儿园","收纳","衣架","鼠标垫","卡套","避孕套","架","夹","手机壳","小学","牙刷头","安全帽","挂钩","油漆","烟","笔","保护套","飞机","手套","护肤","洗面","清洁","膜","理发","润滑"],
     // 试用价格(中了要花多少钱)，高于这个价格都不会试用，小于等于才会试用
     trialPrice: 100,
     /*
