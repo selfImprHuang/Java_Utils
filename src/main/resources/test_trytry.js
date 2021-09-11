@@ -37,7 +37,7 @@ let args_xh = {
      * */
 //     isNotify: process.env.JD_TRY_NOTIFY || true,
     // 商品原价，低于这个价格都不会试用
-    jdPrice: process.env.JD_TRY_PRICE || 100,
+    jdPrice: process.env.JD_TRY_PRICE || 60,
     /*
      * 获取试用商品类型，默认为1
      * 1 - 精选
@@ -79,11 +79,11 @@ let args_xh = {
      * 例如是18件，将会进行第三次获取，直到过滤完毕后为20件才会停止，不建议设置太大
      * 可设置环境变量：JD_TRY_MAXLENGTH
      * */
-    maxLength:  30
+    maxLength:  60
 }
 
 !(async() => {
-    console.log(`\n本脚本默认不运行，也不建议运行\n如需运行请自行添加环境变量：JD_TRY，值填：true\n`)
+    // console.log(`\n本脚本默认不运行，也不建议运行\n如需运行请自行添加环境变量：JD_TRY，值填：true\n`)
     await $.wait(1000)
     if(process.env.JD_TRY && process.env.JD_TRY === 'true'){
         await requireConfig()
@@ -129,14 +129,12 @@ let args_xh = {
                     let size = 1;
                     while(trialActivityIdList.length < args_xh.maxLength){
                         console.log(`\n正在进行第 ${size} 次获取试用商品\n`)
-                        await try_feedsList(1, size++)   //这个是一点进京东试用就显示的页面，默认为精选页面
+                        await try_feedsList(1, size++) 
                         await try_feedsList(2, size++)
                         await try_feedsList(12, size++)
-                        await try_feedsList(3, size++)
                         await try_feedsList(4, size++)
                         await try_feedsList(5, size++)
                         await try_feedsList(6, size++)
-                        await try_feedsList(10, size++)
                         if(trialActivityIdList.length < args_xh.maxLength){
                             console.log(`间隔延时中，请等待 ${args_xh.applyInterval} ms`)
                             await $.wait(args_xh.applyInterval);
@@ -156,6 +154,7 @@ let args_xh = {
                     // await try_MyTrials(1, 3)    //申请失败的商品
                     await showMsg()
                 }
+                 message = message +"----\n"
             }      
         await $.notify.sendNotify(`${$.name}`, notifyMsg);
     } else {
@@ -201,10 +200,6 @@ function requireConfig(){
 //获取商品列表并且过滤 By X1a0He
 function try_feedsList(tabId, page){
     return new Promise((resolve, reject) => {
-        if(page > $.totalPages){
-            console.log("请求页数错误")
-            return;
-        }
         const body = JSON.stringify({
             "tabId": `${tabId}`,
             "page": page,
@@ -289,6 +284,7 @@ function try_apply(title, activityId){
                     $.totalTry++
                     data = JSON.parse(data)
                     if(data.success && data.code === "1"){  // 申请成功
+                        message += "<font color=\'#778899\' size=2>"  + title + "</font>\n\n" 
                         console.log(data.message)
                         $.totalSuccess++
                     } else if(data.code === "-106"){
