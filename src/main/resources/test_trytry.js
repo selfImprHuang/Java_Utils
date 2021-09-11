@@ -79,7 +79,7 @@ let args_xh = {
      * 例如是18件，将会进行第三次获取，直到过滤完毕后为20件才会停止，不建议设置太大
      * 可设置环境变量：JD_TRY_MAXLENGTH
      * */
-    maxLength:  300
+    maxLength:  100
 }
 
 !(async() => {
@@ -131,12 +131,12 @@ let args_xh = {
                         console.log(`\n正在进行第 ${size} 次获取试用商品\n`)
                         await try_feedsList(1, size++)   //这个是一点进京东试用就显示的页面，默认为精选页面
                         await try_feedsList(2, size++)
+                        await try_feedsList(12, size++)
                         await try_feedsList(3, size++)
                         await try_feedsList(4, size++)
                         await try_feedsList(5, size++)
                         await try_feedsList(6, size++)
                         await try_feedsList(10, size++)
-                        await try_feedsList(12, size++)
                         if(trialActivityIdList.length < args_xh.maxLength){
                             console.log(`间隔延时中，请等待 ${args_xh.applyInterval} ms`)
                             await $.wait(args_xh.applyInterval);
