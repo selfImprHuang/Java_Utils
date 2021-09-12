@@ -54,7 +54,7 @@ let args_xh = {
      * 试用商品标题过滤
      * 可设置环境变量：JD_TRY_TITLEFILTERS，关键词与关键词之间用@分隔
      * */
-    titleFilters: process.env.JD_TRY_TITLEFILTERS && process.env.JD_TRY_TITLEFILTERS.split('@') || ["幼儿园","收纳","衣架","鼠标垫","卡套","避孕套","架","夹","手机壳","小学","牙刷头","安全帽","挂钩","油漆","烟","笔","保护套","飞机","手套","护肤","洗面","清洁","膜","理发","润滑"],
+    titleFilters: process.env.JD_TRY_TITLEFILTERS && process.env.JD_TRY_TITLEFILTERS.split('@') || ["宠物","幼儿园","收纳","衣架","鼠标垫","卡套","避孕套","架","夹","手机壳","小学","牙刷头","安全帽","挂钩","油漆","烟","笔","保护套","飞机","手套","护肤","洗面","清洁","膜","理发","润滑"],
     // 试用价格(中了要花多少钱)，高于这个价格都不会试用，小于等于才会试用
     trialPrice: 100,
     /*
