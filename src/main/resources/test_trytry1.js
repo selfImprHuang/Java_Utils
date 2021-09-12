@@ -37,7 +37,7 @@ let args_xh = {
      * */
 //     isNotify: process.env.JD_TRY_NOTIFY || true,
     // 商品原价，低于这个价格都不会试用
-    jdPrice: process.env.JD_TRY_PRICE || 60,
+    jdPrice: process.env.JD_TRY_PRICE || 10,
     /*
      * 获取试用商品类型，默认为1
      * 1 - 精选
@@ -79,7 +79,7 @@ let args_xh = {
      * 例如是18件，将会进行第三次获取，直到过滤完毕后为20件才会停止，不建议设置太大
      * 可设置环境变量：JD_TRY_MAXLENGTH
      * */
-    maxLength:  60
+    maxLength:  50
 }
 
 !(async() => {
