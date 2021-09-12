@@ -54,7 +54,7 @@ let args_xh = {
      * 试用商品标题过滤
      * 可设置环境变量：JD_TRY_TITLEFILTERS，关键词与关键词之间用@分隔
      * */
-    titleFilters: process.env.JD_TRY_TITLEFILTERS && process.env.JD_TRY_TITLEFILTERS.split('@') || ["腰带","皮带","裤头","眼镜","框","老花",,"USB","雨刮","车漆","帽","宠物","幼儿园","收纳","衣架","鼠标垫","卡套","避孕套","架","夹","手机壳","小学","牙刷头","安全帽","挂钩","油漆","烟","笔","保护套","飞机","手套","护肤","洗面","清洁","膜","理发","润滑"],
+    titleFilters: process.env.JD_TRY_TITLEFILTERS && process.env.JD_TRY_TITLEFILTERS.split('@') || ["腰带","皮带","裤头","眼镜","框","老花",,"USB","雨刮","车漆","帽","宠物","幼儿园","收纳","衣架","鼠标垫","卡套","避孕套","架","夹","手机壳","小学","牙刷头","安全帽","挂钩","油漆","烟","笔","保护套","飞机","手套","护肤","洗面","清洁","膜","理发","润滑","延时","usb","坐垫","酒","毛孔","墨水"],
     // 试用价格(中了要花多少钱)，高于这个价格都不会试用，小于等于才会试用
     trialPrice: 100,
     /*
@@ -343,6 +343,9 @@ function try_MyTrials(page, selected){
                         if(selected == 2){
                             if (data.success && data.data) {
                                 $.successList = data.data.list.filter(item => {
+                                    if (item.text.text.includes('请尽快领取')){
+                                         message += "<font color=\'#778899\' size=2>"  + item.text.text + "</font>\n\n"  
+                                    }
                                     return item.text.text.includes('请尽快领取')
                                 })
                                 console.log(`待领取: ${$.successList.length}个`)
