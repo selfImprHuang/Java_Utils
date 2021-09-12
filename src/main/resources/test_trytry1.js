@@ -54,7 +54,7 @@ let args_xh = {
      * 试用商品标题过滤
      * 可设置环境变量：JD_TRY_TITLEFILTERS，关键词与关键词之间用@分隔
      * */
-    titleFilters: process.env.JD_TRY_TITLEFILTERS && process.env.JD_TRY_TITLEFILTERS.split('@') || ["宠物","幼儿园","收纳","衣架","鼠标垫","卡套","避孕套","架","夹","手机壳","小学","牙刷头","安全帽","挂钩","油漆","烟","笔","保护套","飞机","手套","护肤","洗面","清洁","膜","理发","润滑"],
+    titleFilters: process.env.JD_TRY_TITLEFILTERS && process.env.JD_TRY_TITLEFILTERS.split('@') || ["USB","雨刮","车漆","帽","宠物","幼儿园","收纳","衣架","鼠标垫","卡套","避孕套","架","夹","手机壳","小学","牙刷头","安全帽","挂钩","油漆","烟","笔","保护套","飞机","手套","护肤","洗面","清洁","膜","理发","润滑"], 
     // 试用价格(中了要花多少钱)，高于这个价格都不会试用，小于等于才会试用
     trialPrice: 100,
     /*
@@ -93,8 +93,9 @@ let args_xh = {
             })
             return
         }
-        message += "<font color=\'#FFA500\'>[通知] </font><font color=\'#006400\' size='3'>dd试用</font> \n\n --- \n\n"
+       
             for(let i = 0; i < $.cookiesArr.length; i++){
+                 message += "<font color=\'#FFA500\'>[通知] </font><font color=\'#006400\' size='3'>dd试用</font> \n\n --- \n\n"
                 if($.cookiesArr[i]){
                     $.cookie = $.cookiesArr[i];
                     $.UserName = decodeURIComponent($.cookie.match(/pt_pin=(.+?);/) && $.cookie.match(/pt_pin=(.+?);/)[1])
@@ -151,7 +152,9 @@ let args_xh = {
                     // await try_MyTrials(1, 3)    //申请失败的商品
                     await showMsg()
                 }
-                 message = message +"----\n"
+                 postToDingTalk(message)
+                 console.log(message)
+                 message = ""
             }      
         await $.notify.sendNotify(`${$.name}`, notifyMsg);
     } else {
@@ -161,7 +164,7 @@ let args_xh = {
     console.log(`❗️ ${$.name} 运行错误！\n${e}`)
 }).finally(() => {
  $.done()
- postToDingTalk(message)
+
 })
 
 function requireConfig(){
