@@ -66,19 +66,22 @@ let cookiesArr = [], cookie = '';
       }
       username = $.UserName
       if ($.UserName == "jd_4521b375ebb5d"){
-        username = "锟子"
+        username = "锟子怪"
       }
       if ($.UserName == "jd_542c10c0222bc"){
-        username = "康子"
+        username = "康子怪"
       }
       if($.UserName == "jd_66dcb31363ef6"){
-        username = "涛子"
+        username = "涛子怪"
       }
       if($.UserName == "18070420956_p"){
-          username = "奇怪子"
+          username = "奇怪"
       }
       if($.UserName == "jd_45d917547c763"){
-          username = "跑腿小弟子"
+          username = "跑腿小怪"
+      }
+      if($.UserNam == "417040678_m"){
+          username = "斌子怪"
       }
 
       
