@@ -80,7 +80,7 @@ let cookiesArr = [], cookie = '';
       if($.UserName == "jd_45d917547c763"){
           username = "跑腿小怪"
       }
-      if($.UserNam == "417040678_m"){
+      if($.UserName == "417040678_m"){
           username = "斌子怪"
       }
 
