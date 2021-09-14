@@ -18,7 +18,7 @@
  * 请提前取关至少250个商店确保京东试用脚本正常运行
  * 没有写通知，是否申请成功没有进行通知，但脚本会把状态log出日志
  */
- let maxSize = 1000
+ let maxSize = 150
  const $ = new Env('京东试用')
  const URL = 'https://api.m.jd.com/client.action'
  let trialActivityIdList = []
