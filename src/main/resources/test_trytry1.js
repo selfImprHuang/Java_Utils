@@ -18,6 +18,7 @@
  * 请提前取关至少250个商店确保京东试用脚本正常运行
  * 没有写通知，是否申请成功没有进行通知，但脚本会把状态log出日志
  */
+ let maxSize = 50
  const $ = new Env('京东试用')
  const URL = 'https://api.m.jd.com/client.action'
  let trialActivityIdList = []
@@ -127,7 +128,7 @@
                      $.totalTry = 0
                      $.totalSuccess = 0
                      let size = 1;
-                     while(trialActivityIdList.length < args_xh.maxLength){
+                     while(trialActivityIdList.length < args_xh.maxLength && size < maxSize){
                          console.log(`\n正在进行第 ${size} 次获取试用商品\n`)
                          await try_feedsList(2, size++) 
                          await try_feedsList(3, size++) 
