@@ -18,7 +18,8 @@
  * 请提前取关至少250个商店确保京东试用脚本正常运行
  * 没有写通知，是否申请成功没有进行通知，但脚本会把状态log出日志
  */
- let maxSize = 20
+ let maxSize = 100
+ let totalPages = 999999 //总页数
  const $ = new Env('京东试用')
  const URL = 'https://api.m.jd.com/client.action'
  let trialActivityIdList = []
@@ -55,7 +56,7 @@
       * 试用商品标题过滤
       * 可设置环境变量：JD_TRY_TITLEFILTERS，关键词与关键词之间用@分隔
       * */
-     titleFilters: process.env.JD_TRY_TITLEFILTERS && process.env.JD_TRY_TITLEFILTERS.split('@') || ["扩音器","龟头","猫粮","狗粮","神露","前列腺","硅胶","儿童成长","孕妇","尤尖锐湿疣","痔疮","乳腺","蟑螂药","用友","自慰","儿童口罩","啪啪","门把手","鞋带","丰胸","多功能尺子","情趣","适配器","尼龙管","铆管","哺乳套装","屏蔽袋","SD卡","条码","钢化蛋","鸭肠","猪油","绿幕","尿素霜","婴儿","分流器","VGA","纸尿裤","墨盒","水晶头","眼霜","机顶盒","数据线","交换机","屏风","地漏","彩带","便秘","插座","密封条","玻璃镜片","摄像头镜片","腰带","皮带","裤头","眼镜","框","老花","USB","雨刮","车漆","帽","宠物","幼儿园","收纳","衣架","鼠标垫","卡套","避孕套","架","夹","手机壳","小学","牙刷头","安全帽","挂钩","油漆","烟","笔","保护套","飞机","手套","护肤","洗面","清洁","膜","理发","润滑","延时","usb","坐垫","酒","毛孔","墨水","托","耳罩","袖套","丝袜","飞机杯","袜子","滤网","砂纸","眼影","钢化膜","鞋垫","内裤","面膜","手机卡","流量卡","胶带","艾条","便签纸","电池","花籽","工作服","眉笔","口红","挑逗","卡托","保护套","字帖","钉子","坐垫","数据线","座垫","电缆剪"],
+     titleFilters: process.env.JD_TRY_TITLEFILTERS && process.env.JD_TRY_TITLEFILTERS.split('@') || ["砂盆","电池","加温器","矫正带","手机维修","锁精环","包皮","扩音器","龟头","猫粮","狗粮","神露","前列腺","硅胶","儿童成长","孕妇","尤尖锐湿疣","痔疮","乳腺","蟑螂药","用友","自慰","儿童口罩","啪啪","门把手","鞋带","丰胸","多功能尺子","情趣","适配器","尼龙管","铆管","哺乳套装","屏蔽袋","SD卡","条码","钢化蛋","鸭肠","猪油","绿幕","尿素霜","婴儿","分流器","VGA","纸尿裤","墨盒","水晶头","眼霜","机顶盒","数据线","交换机","屏风","地漏","彩带","便秘","插座","密封条","玻璃镜片","摄像头镜片","腰带","皮带","裤头","眼镜","框","老花","USB","雨刮","车漆","帽","宠物","幼儿园","收纳","衣架","鼠标垫","卡套","避孕套","架","夹","手机壳","小学","牙刷头","安全帽","挂钩","油漆","烟","笔","保护套","飞机","手套","护肤","洗面","清洁","膜","理发","润滑","延时","usb","坐垫","酒","毛孔","墨水","托","耳罩","袖套","丝袜","飞机杯","袜子","滤网","砂纸","眼影","钢化膜","鞋垫","内裤","面膜","手机卡","流量卡","胶带","艾条","便签纸","电池","花籽","工作服","眉笔","口红","挑逗","卡托","保护套","字帖","钉子","坐垫","数据线","座垫","电缆剪"],
      // 试用价格(中了要花多少钱)，高于这个价格都不会试用，小于等于才会试用
      trialPrice: 100,
      /*
@@ -80,7 +81,7 @@
       * 例如是18件，将会进行第三次获取，直到过滤完毕后为20件才会停止，不建议设置太大
       * 可设置环境变量：JD_TRY_MAXLENGTH
       * */
-     maxLength:  30
+     maxLength:  60
  }
  
  !(async() => {
@@ -128,17 +129,19 @@
                      $.totalTry = 0
                      $.totalSuccess = 0
                      let size = 1;
-                     while(trialActivityIdList.length < args_xh.maxLength && size < maxSize){
-                         console.log(`\n正在进行第 ${size} 次获取试用商品\n`)
-                         await try_feedsList(2, size++) 
-                         await try_feedsList(3, size++) 
-                         await try_feedsList(4, size++) 
-                         await try_feedsList(5, size++) 
-                         if(trialActivityIdList.length < args_xh.maxLength){
-                             console.log(`间隔延时中，请等待 ${args_xh.applyInterval} ms`)
-                             await $.wait(args_xh.applyInterval);
-                         }
-                     }
+                     let list = [3,4,5] 
+                    for (let i =0;i<list.length;i++){
+                        while(trialActivityIdList.length < args_xh.maxLength && size < maxSize &&  size < totalPages){
+                            console.log(`\n正在进行第 ${size} 次获取试用商品\n`)
+                            console.log(`\n当前产品页面总长度为${totalPages} 页\n`)
+                            await try_feedsList(list[i], size++) 
+                            if(trialActivityIdList.length < args_xh.maxLength){
+                                console.log(`间隔延时中，请等待 ${args_xh.applyInterval} ms`)
+                                await $.wait(args_xh.applyInterval);
+                            }
+                        }
+                    }
+                     
                      console.log("正在执行试用申请...")
                      await $.wait(args_xh.applyInterval);
                      for(let i = 0; i < trialActivityIdList.length; i++){
@@ -215,6 +218,7 @@
                      data = JSON.parse(data)
                      if(data.success){
                          $.totalPages = data.data.pages
+                         totalPages = $.totalPages
                          console.log(`获取到商品 ${data.data.feedList.length} 条\n`)
                          for(let i = 0; i < data.data.feedList.length; i++){
                              if(trialActivityIdList.length > args_xh.maxLength){
@@ -258,6 +262,7 @@
              } catch(e){
                   console.log(e);
                  reject(`⚠️ ${arguments.callee.name.toString()} API返回结果解析出错\n${e}\n${JSON.stringify(data)}`)
+                 console.log(`${JSON.stringify(data)}`)
              } finally{
                  resolve()
              }
