@@ -81,7 +81,7 @@
       * 例如是18件，将会进行第三次获取，直到过滤完毕后为20件才会停止，不建议设置太大
       * 可设置环境变量：JD_TRY_MAXLENGTH
       * */
-     maxLength:  60
+     maxLength:  40
  }
  
  !(async() => {
