@@ -131,6 +131,8 @@
                      while(trialActivityIdList.length < args_xh.maxLength && size < maxSize){
                          console.log(`\n正在进行第 ${size} 次获取试用商品\n`)
                          await try_feedsList(1, size++) 
+                         await try_feedsList(2, size++) 
+                         await try_feedsList(16, size++) 
                          if(trialActivityIdList.length < args_xh.maxLength){
                              console.log(`间隔延时中，请等待 ${args_xh.applyInterval} ms`)
                              await $.wait(args_xh.applyInterval);
