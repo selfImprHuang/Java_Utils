@@ -38,7 +38,7 @@
       * */
  //     isNotify: process.env.JD_TRY_NOTIFY || true,
      // 商品原价，低于这个价格都不会试用
-     jdPrice: process.env.JD_TRY_PRICE || 10,
+     jdPrice: process.env.JD_TRY_PRICE || 0,
      /*
       * 获取试用商品类型，默认为1
       * 1 - 精选
@@ -95,7 +95,7 @@
              return
          }
              for(let i = 0; i < $.cookiesArr.length; i++){
-                 message += "<font color=\'#FFA500\'>[通知] </font><font color=\'#006400\' size='3'>dd试用</font> \n\n --- \n\n"
+                 message += "<font color=\'#FFA500\'>[通知] </font><font color=\'#006400\' size='3'>动动试用(搞笑版)</font> \n\n --- \n\n"
                  if($.cookiesArr[i]){
                      $.cookie = $.cookiesArr[i];
                      $.UserName = decodeURIComponent($.cookie.match(/pt_pin=(.+?);/) && $.cookie.match(/pt_pin=(.+?);/)[1])
