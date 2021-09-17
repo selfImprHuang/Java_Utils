@@ -55,7 +55,7 @@
       * 试用商品标题过滤
       * 可设置环境变量：JD_TRY_TITLEFILTERS，关键词与关键词之间用@分隔
       * */
-     titleFilters: process.env.JD_TRY_TITLEFILTERS && process.env.JD_TRY_TITLEFILTERS.split('@') || ["避孕","锁精","延时","延迟","润滑","私处","跳蛋","乳贴","情趣","龟头","自慰","啪啪","情趣","避孕套","飞机","润滑","延时","飞机杯"],
+     titleFilters: process.env.JD_TRY_TITLEFILTERS && process.env.JD_TRY_TITLEFILTERS.split('@') || ["避孕","锁精","延时","延迟","润滑","私处","跳蛋","乳贴","情趣","龟头","自慰","啪啪","情趣","避孕套","润滑","延时","飞机杯"],
      // 试用价格(中了要花多少钱)，高于这个价格都不会试用，小于等于才会试用
      trialPrice: 100,
      /*
