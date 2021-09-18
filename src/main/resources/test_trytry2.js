@@ -290,7 +290,7 @@
                      data = JSON.parse(data)
                      if(data.success && data.code === "1"){  // 申请成功
                          message += "<font color=\'#778899\' size=2>"  + title + "</font>\n\n" 
-                         message += "<font color=\'#778899\' size=2>"  + ---- + "</font>\n\n" 
+                         message += "<font color=\'#778899\' size=2>"  + `--------` + "</font>\n\n"
                          console.log(data.message)
                          $.totalSuccess++
                      } else if(data.code === "-106"){
