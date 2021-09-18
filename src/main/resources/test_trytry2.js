@@ -233,8 +233,8 @@
                                  console.log(`商品状态异常,跳过：${data.data.feedList[i].skuTitle}`)
                                  continue
                              }else
-                             if(data.data.feedList[i].){
-                                 console.log(`检测第 ${page} 页 第 ${i + 1} 个商品\n${data.data.feedList[skuTitlei].skuTitle}`)
+                             if(data.data.feedList[i].skuTitle){
+                                 console.log(`检测第 ${page} 页 第 ${i + 1} 个商品\n${data.data.feedList[i].skuTitle}`)
                                  if(parseFloat(data.data.feedList[i].jdPrice) <= args_xh.jdPrice){
                                      console.log(`商品被过滤，${data.data.feedList[i].jdPrice} < ${args_xh.jdPrice} \n`)
                                  }else if(parseFloat(data.data.feedList[i].supplyNum) < args_xh.minSupplyNum && data.data.feedList[i].supplyNum !== null){
