@@ -116,18 +116,17 @@ async function showMsg() {
     ReturnMessage=`📣=============账号${$.index}=============📣\n`
     ReturnMessage+=`账号名称：${$.nickName || $.UserName}\n`;
     ReturnMessage+=`今日收入：${$.todayIncomeBean}京豆 🐶\n`;
-    message += "<font color=\'#990000\' size=3>" +`今日收入：${$.todayIncomeBean}京豆 🐶\n` +  "</font>\n\n"
-    ReturnMessage+=`昨日收入：${$.incomeBean}京豆 🐶\n`;
-    message += "<font color=\'#778899\' size=2>" + `昨日收入：${$.incomeBean}京豆 🐶\n` +"</font>\n\n"
     ReturnMessage+=`昨日支出：${$.expenseBean}京豆 🐶\n`;
-    message += "<font color=\'#778899\' size=2>" +`昨日支出：${$.expenseBean}京豆 🐶\n` +"</font>\n\n"
+    ReturnMessage+=`昨日收入：${$.incomeBean}京豆 🐶\n`;
     ReturnMessage+=`当前京豆：${$.beanCount}(今日将过期${$.expirejingdou})京豆🐶\n`;
-    message += "<font color=\'#778899\' size=2>" + `当前京豆：${$.beanCount}(今日将过期${$.expirejingdou})京豆🐶\n` +"</font>\n\n"
 
-    if(typeof $.JDEggcnt !== "undefined"){
-        ReturnMessage+=`京喜牧场：${$.JDEggcnt}枚鸡蛋\n`;
-        message += "<font color=\'#778899\' size=2>" + `京喜牧场：${$.JDEggcnt}枚鸡蛋\n` +"</font>\n\n"
-    }
+    message += "<font color=\'#990000\' size=3>" + `当前京豆：${$.beanCount}(今日将过期${$.expirejingdou})京豆🐶\n` +"</font>\n\n"
+    message += "<font color=\'#778899\' size=2>" +`今日收入：${$.todayIncomeBean}京豆 🐶\n` +  "</font>\n\n"
+    message += "<font color=\'#778899\' size=2>" + `昨日收入：${$.incomeBean}京豆 🐶\n` +"</font>\n\n"
+    message += "<font color=\'#778899\' size=2>" +`昨日支出：${$.expenseBean}京豆 🐶\n` +"</font>\n\n"
+    message += "<font color=\'#778899\' size=2>" +`🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶` +"</font>\n\n"
+    
+
     if(typeof $.JDtotalcash !== "undefined"){
         ReturnMessage+=`极速金币：${$.JDtotalcash}金币(≈${$.JDtotalcash / 10000}元)\n`;
         message += "<font color=\'#778899\' size=2>" + `极速金币：${$.JDtotalcash}金币(≈${$.JDtotalcash / 10000}元)\n` +"</font>\n\n"
@@ -140,15 +139,23 @@ async function showMsg() {
         ReturnMessage+=`京东秒杀：${$.JdMsScore}秒秒币(≈${$.JdMsScore / 1000}元)\n`;
         message += "<font color=\'#778899\' size=2>" + `京东秒杀：${$.JdMsScore}秒秒币(≈${$.JdMsScore / 1000}元)\n` +"</font>\n\n"
     }
+
+    message += "<font color=\'#778899\' size=2>" +`🏭🏭🏭🏭🏭🏭🏭🏭🏭🏭` +"</font>\n\n"
+
+    
+    if(typeof $.JDEggcnt !== "undefined"){
+      ReturnMessage+=`京喜牧场：${$.JDEggcnt}枚鸡蛋\n`;
+      message += "<font color=\'#778899\' size=2>" + `京喜牧场：${$.JDEggcnt}枚鸡蛋\n` +"</font>\n\n"
+    }
     if($.JdFarmProdName != ""){
         if($.JdtreeEnergy!=0){
             ReturnMessage+=`东东农场：${$.JdFarmProdName},进度${(($.JdtreeEnergy / $.JdtreeTotalEnergy) * 100).toFixed(2)}%`;
-            message += "<font color=\'#778899\' size=2>" + `东东农场：${$.JdFarmProdName},进度${(($.JdtreeEnergy / $.JdtreeTotalEnergy) * 100).toFixed(2)}%` +"</font>\n\n"
+            message += "<font color=\'#778899\' size=2>" + `东东农场：${$.JdFarmProdName},进度${(($.JdtreeEnergy / $.JdtreeTotalEnergy) * 100).toFixed(2)}%`
             if($.JdwaterD!='Infinity' && $.JdwaterD!='-Infinity'){
                 ReturnMessage+=`,${$.JdwaterD === 1 ? '明天' : $.JdwaterD === 2 ? '后天' : $.JdwaterD + '天后'}可兑🍉\n`;
                 message += "<font color=\'#778899\' size=2>" + `,${$.JdwaterD === 1 ? '明天' : $.JdwaterD === 2 ? '后天' : $.JdwaterD + '天后'}可兑🍉\n` +"</font>\n\n"
-            } else {
-                ReturnMessage+=`\n`;
+            } else { 
+                ReturnMessage+=`\n` + "</font>\n\n";
             }
         } else {
             ReturnMessage+=`东东农场：${$.JdFarmProdName}\n`;
@@ -172,7 +179,7 @@ async function showMsg() {
             ReturnMessage += `东东萌宠：${$.petInfo.goodsInfo.goodsName},`;
             ReturnMessage += `勋章${response.result.medalNum}/${response.result.medalNum+response.result.needCollectMedalNum}块(${response.result.medalPercent}%)\n`;
             //ReturnMessage += `          已有${response.result.medalNum}块勋章，还需${response.result.needCollectMedalNum}块\n`;
-            message += "<font color=\'#778899\' size=2>" +`东东萌宠：${$.petInfo.goodsInfo.goodsName},` +"</font>\n\n"
+            message += "<font color=\'#778899\' size=2>" +`东东萌宠：${$.petInfo.goodsInfo.goodsName},`
             message += "<font color=\'#778899\' size=2>" + `勋章${response.result.medalNum}/${response.result.medalNum+response.result.needCollectMedalNum}块(${response.result.medalPercent}%)\n` +"</font>\n\n"
 
         }
