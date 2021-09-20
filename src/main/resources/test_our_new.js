@@ -91,6 +91,7 @@ if ($.isNode()) {
             await getJxFactory();   //惊喜工厂
             await getDdFactoryInfo(); // 京东工厂
             await showMsg();
+            message +=  "----\n\n"
         }
     }
 
@@ -1168,7 +1169,7 @@ function postToDingTalk(messgae) {
         },
         "at": {
             "atMobiles": [],
-            "isAtAll": false
+            "isAtAll": true
         }
     }
 
