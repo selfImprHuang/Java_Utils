@@ -1181,7 +1181,7 @@ function postToDingTalk(messgae) {
         },
         "at": {
             "atMobiles": [],
-            "isAtAll": false
+            "isAtAll": true
         }
     }
 
