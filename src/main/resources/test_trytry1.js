@@ -364,8 +364,10 @@
                          if(selected == 2){
                              if (data.success && data.data) {
                                  $.successList = data.data.list.filter(item => {
+                                     message += "<font color=\'#778899\' size=2>"  + item.trialName + "</font>\n\n"
+                                     message += "<font color=\'#778899\' size=2>"  + item.text.text + "</font>\n\n"  
                                      if (item.text.text.includes('请尽快领取')){
-                                          message += "<font color=\'#778899\' size=2>"  + item.text.text + "</font>\n\n"  
+                                         
                                      }
                                      return item.text.text.includes('请尽快领取')
                                  })
