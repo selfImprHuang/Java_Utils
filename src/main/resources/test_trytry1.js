@@ -364,11 +364,7 @@
                          if(selected == 2){
                              if (data.success && data.data) {
                                  $.successList = data.data.list.filter(item => {
-                                     message += "<font color=\'#778899\' size=2>"  + item.trialName + "</font>\n\n"
-                                     message += "<font color=\'#778899\' size=2>"  + item.text.text + "</font>\n\n"  
-                                     if (item.text.text.includes('请尽快领取')){
-                                         
-                                     }
+                                    
                                      return item.text.text.includes('请尽快领取')
                                  })
                                  console.log(`待领取: ${$.successList.length}个`)
@@ -376,15 +372,23 @@
                                  console.log(`获得成功列表失败: ${data.message}`)
                              }
                          }
-                         // if(data.data.list.length > 0){
-                         //     for(let item of data.data.list){
-                         //         console.log(`申请时间：${new Date(parseInt(item.applyTime)).toLocaleString()}`)
-                         //         console.log(`申请商品：${item.trialName}`)
-                         //         console.log(`当前状态：${item.text.text}`)
-                         //         console.log(`剩余时间：${remaining(item.leftTime)}`)
-                         //         console.log()
-                         //     }
-                         // } else {
+                         if(data.data.list.length > 0){
+                             for(let item of data.data.list){
+                                 console.log(`申请时间：${new Date(parseInt(item.applyTime)).toLocaleString()}`)
+                                 console.log(`申请商品：${item.trialName}`)
+                                 console.log(`当前状态：${item.text.text}`)
+                                 console.log(`剩余时间：${remaining(item.leftTime)}`)
+                                 console.log()
+
+
+                                 message += "<font color=\'#778899\' size=2>"  + `申请时间：${new Date(parseInt(item.applyTime)).toLocaleString()}` + "</font>\n\n"
+                                 message += "<font color=\'#778899\' size=2>"  + `申请商品：${item.trialName}` + "</font>\n\n"
+                                 message += "<font color=\'#778899\' size=2>"  + `当前状态：${item.text.text}` + "</font>\n\n"
+                                 message += "<font color=\'#778899\' size=2>"  + `剩余时间：${remaining(item.leftTime)}` + "</font>\n\n"
+                                 message += "<font color=\'#778899\' size=2>"  + `-----\n\n` + "</font>\n\n"
+                             }
+                         }
+                          // else {
                          //     switch(selected){
                          //         case 1:
                          //             console.log('无已申请的商品\n')
