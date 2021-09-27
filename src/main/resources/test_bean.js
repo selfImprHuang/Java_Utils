@@ -101,7 +101,7 @@ let num;
 }).finally(() => {
    // message += getPic()
    that.log(message)
-   postToDingTalk(messgae)
+   postToDingTalk(message)
   $.done();
 })
 
