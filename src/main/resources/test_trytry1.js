@@ -39,7 +39,7 @@
       * */
  //     isNotify: process.env.JD_TRY_NOTIFY || true,
      // 商品原价，低于这个价格都不会试用
-     jdPrice: process.env.JD_TRY_PRICE || 10,
+     jdPrice: process.env.JD_TRY_PRICE || 0,
      /*
       * 获取试用商品类型，默认为1
       * 1 - 精选
