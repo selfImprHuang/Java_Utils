@@ -140,7 +140,7 @@
                      $.totalTry = 0
                      $.totalSuccess = 0
                      let size = 1;
-                     let list = [3,9,5,6,12,13,14,15,16] 
+                     let list = [3,9,12,13,14] 
                     for (let i =0;i<list.length;i++){
                         while(trialActivityIdList.length < args_xh.maxLength && size < maxSize &&  size < totalPages){
                             console.log(`\n正在进行第 ${size} 次获取试用商品\n`)
