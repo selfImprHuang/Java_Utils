@@ -365,12 +365,12 @@
                              if (data.success && data.data) {
                                  $.successList = data.data.list.filter(item => {
                                     
-                                     if (item.text.text.includes('请尽快领取')){
+                                     if (item.text.text.includes('试用资格将保留10天')){
                                          console.log(item.text.text)
                                          console.log(item.text) 
                                      }
                                       console.log(`获得成功列表失败: ${JSON.stringify(item)}`)
-                                     return item.text.text.includes('请尽快领取')
+                                     return item.text.text.includes('试用资格将保留10天')
                                  })
                                  console.log(`待领取: ${$.successList.length}个`)
                              } else {
@@ -1077,7 +1077,7 @@
      const dingtalk = "https://oapi.dingtalk.com/robot/send?access_token=18444b555747aad3381bc1d1e3dea72b03158e152a846f818d82a1ca946bd430"
  
      const message1 = "" + messgae
-     that.log(messgae)
+     // that.log(messgae)
  
      const body = {
          "msgtype": "markdown",
