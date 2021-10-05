@@ -264,13 +264,18 @@
                                      console.log(`商品被过滤，已申请试用人数大于预设人数 \n`)
                                  }else if(parseFloat(data.data.feedList[i].trialPrice) > args_xh.trialPrice){
                                      console.log(`商品被过滤，期待价格高于预设价格 \n`)
-                                 }else if(args_xh.titleFilters.some(fileter_word => {
-                                    data.data.feedList[i].skuTitle.includes(fileter_word)
-                                    fileter_word1 = fileter_word 
-                                })) {
+                                 }else if(args_xh.titleFilters.some(fileter_word => data.data.feedList[i].skuTitle.includes(fileter_word))) {
                                      if (fileterCan == 0) {
+                                    
+                                       let word = ""
+                                       args_xh.titleFilters.some(fileter_word =>{
+                                         if (data.data.feedList[i].skuTitle.includes(fileter_word)){
+                                          word = fileter_word
+                                         }
+                                          return data.data.feedList[i].skuTitle.includes(fileter_word)
+                                        })
                                         fileterList += "<font color=\'#778899\' size=2>"  + data.data.feedList[i].skuTitle + "</font>\n\n" 
-                                        fileterList += "<font color=\'#778899\' size=2>"  + `关键字为：`+fileter_word1 + "</font>\n\n"
+                                        fileterList += "<font color=\'#778899\' size=2>"  + `关键字为：`+word + "</font>\n\n"
                                         fileterList += "<font color=\'#778899\' size=2>"  + `--------` + "</font>\n\n"
                                      }
                                      console.log('商品被过滤，含有关键词 \n')
