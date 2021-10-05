@@ -26,8 +26,6 @@
  let trialActivityTitleList = []
  let notifyMsg = ''
  let message = ""
- let fileterList = ""
- let fileterCan = 0 
  let process={
      env:{
          "JD_TRY":"true"
@@ -99,7 +97,6 @@
          }
              for(let i = 0; i < $.cookiesArr.length; i++){
                  message += "<font color=\'#FFA500\'>[通知] </font><font color=\'#006400\' size='3'>试用精选</font> \n\n --- \n\n"
-                 fileterList+= "<font color=\'#FFA500\'>[通知] </font><font color=\'#006400\' size='3'>试用精选(排除的)</font> \n\n --- \n\n"
                  if($.cookiesArr[i]){
                      $.cookie = $.cookiesArr[i];
                      $.UserName = decodeURIComponent($.cookie.match(/pt_pin=(.+?);/) && $.cookie.match(/pt_pin=(.+?);/)[1])
@@ -155,7 +152,7 @@
                                 await $.wait(args_xh.applyInterval);
                             }
                         }
-                        size = 1 
+                         size = 1 
                     }
                      
                      console.log("正在执行试用申请...")
@@ -173,10 +170,6 @@
                      await showMsg()
                  }
                   postToDingTalk(message)
-                  if (fileterCan == 0){
-                     postToDingTalk(fileterList)
-                     fileterCan = 1 
-                  }
                   message = ""
              }      
          await $.notify.sendNotify(`${$.name}`, notifyMsg);
@@ -184,8 +177,8 @@
          console.log(`\n您未设置运行【京东试用】脚本，结束运行！\n`)
      }
  })().catch((e) => {
-     postToDingTalk(e)
      console.log(`❗️ ${$.name} 运行错误！\n${e}`)
+     postToDingTalk(e)
  }).finally(() => {
   $.done()
  })
@@ -254,7 +247,6 @@
                                  continue
                              }else
                              if(data.data.feedList[i].skuTitle){
-                                 fileter_word1 = ""
                                  console.log(`检测第 ${page} 页 第 ${i + 1} 个商品\n${data.data.feedList[i].skuTitle}`)
                                  if(parseFloat(data.data.feedList[i].jdPrice) <= args_xh.jdPrice){
                                      console.log(`商品被过滤，${data.data.feedList[i].jdPrice} < ${args_xh.jdPrice} \n`)
@@ -264,20 +256,7 @@
                                      console.log(`商品被过滤，已申请试用人数大于预设人数 \n`)
                                  }else if(parseFloat(data.data.feedList[i].trialPrice) > args_xh.trialPrice){
                                      console.log(`商品被过滤，期待价格高于预设价格 \n`)
-                                 }else if(args_xh.titleFilters.some(fileter_word => data.data.feedList[i].skuTitle.includes(fileter_word))) {
-                                     if (fileterCan == 0) {
-                                    
-                                       let word = ""
-                                       args_xh.titleFilters.some(fileter_word =>{
-                                         if (data.data.feedList[i].skuTitle.includes(fileter_word)){
-                                          word = fileter_word
-                                         }
-                                          return data.data.feedList[i].skuTitle.includes(fileter_word)
-                                        })
-                                        fileterList += "<font color=\'#778899\' size=2>"  + data.data.feedList[i].skuTitle + "</font>\n\n" 
-                                        fileterList += "<font color=\'#778899\' size=2>"  + `关键字为：`+word + "</font>\n\n"
-                                        fileterList += "<font color=\'#778899\' size=2>"  + `--------` + "</font>\n\n"
-                                     }
+                                 }else if(args_xh.titleFilters.some(fileter_word => data.data.feedList[i].skuTitle.includes(fileter_word))){
                                      console.log('商品被过滤，含有关键词 \n')
                                  }else{
                                      console.log(`商品通过，将加入试用组，trialActivityId为${data.data.feedList[i].trialActivityId}\n`)
@@ -337,7 +316,7 @@
                          console.log(data.message)   // 抱歉，此试用需为种草官才能申请。查看下方详情了解更多。
                      } else {
                          console.log("申请失败", JSON.stringify(data))
-                         message += "<font color=\'#778899\' size=2>"  +  JSON.stringify(data) + "</font>\n\n" 
+                         message += "<font color=\'#778899\' size=2>"  + JSON.stringify(data) + "</font>\n\n" 
                          message += "<font color=\'#778899\' size=2>"  + `--------` + "</font>\n\n"
                      }
                  }
@@ -386,11 +365,6 @@
                              if (data.success && data.data) {
                                  $.successList = data.data.list.filter(item => {
                                     
-                                     if (item.text.text.includes('试用资格将保留10天')){
-                                         console.log(item.text.text)
-                                         console.log(item.text) 
-                                     }
-                                      console.log(`获得成功列表失败: ${JSON.stringify(item)}`)
                                      return item.text.text.includes('试用资格将保留10天')
                                  })
                                  console.log(`待领取: ${$.successList.length}个`)
@@ -406,13 +380,14 @@
                                  console.log(`剩余时间：${remaining(item.leftTime)}`)
                                  console.log()
 
-                                message += "<font color=\'#4B0082\' size=1>"  + `申请商品：${item.trialName}` + "</font>\n\n"
+
+                                 message += "<font color=\'#4B0082\' size=1>"  + `申请商品：${item.trialName}` + "</font>\n\n"
                                  message += "<font color=\'#4B0082\' size=1>"  + `当前状态：${item.text.text}` + "</font>\n\n"
                                  message += "<font color=\'#4B0082\' size=1>"  + `-----\n\n` + "</font>\n\n"
 
                              }
-                         } 
-                         // else {
+                         }
+                          // else {
                          //     switch(selected){
                          //         case 1:
                          //             console.log('无已申请的商品\n')
@@ -1108,7 +1083,7 @@
          },
          "at": {
              "atMobiles": [],
-             "isAtAll": false
+             "isAtAll": true
          }
      }
  
@@ -1151,4 +1126,3 @@
      address = address + code[pos] + ")"
      return address
  }
- 
