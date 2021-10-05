@@ -26,6 +26,8 @@
  let trialActivityTitleList = []
  let notifyMsg = ''
  let message = ""
+ let fileterList = ""
+ let fileterCan = 0 
  let process={
      env:{
          "JD_TRY":"true"
@@ -170,6 +172,10 @@
                      await showMsg()
                  }
                   postToDingTalk(message)
+                  if (fileterCan == 0){
+                     postToDingTalk(fileterList)
+                     fileterCan = 1 
+                  }
                   message = ""
              }      
          await $.notify.sendNotify(`${$.name}`, notifyMsg);
@@ -257,6 +263,10 @@
                                  }else if(parseFloat(data.data.feedList[i].trialPrice) > args_xh.trialPrice){
                                      console.log(`商品被过滤，期待价格高于预设价格 \n`)
                                  }else if(args_xh.titleFilters.some(fileter_word => data.data.feedList[i].skuTitle.includes(fileter_word))){
+                                     if (fileterCan == 0) {
+                                        fileterList += "<font color=\'#778899\' size=2>"  + data.data.feedList[i].skuTitle + "</font>\n\n" 
+                                        fileterList += "<font color=\'#778899\' size=2>"  + `--------` + "</font>\n\n"
+                                     }
                                      console.log('商品被过滤，含有关键词 \n')
                                  }else{
                                      console.log(`商品通过，将加入试用组，trialActivityId为${data.data.feedList[i].trialActivityId}\n`)
