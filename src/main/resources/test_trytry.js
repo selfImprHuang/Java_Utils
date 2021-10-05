@@ -99,6 +99,7 @@
          }
              for(let i = 0; i < $.cookiesArr.length; i++){
                  message += "<font color=\'#FFA500\'>[通知] </font><font color=\'#006400\' size='3'>试用精选</font> \n\n --- \n\n"
+                 fileterList+= "<font color=\'#FFA500\'>[通知] </font><font color=\'#006400\' size='3'>试用精选(排除的)</font> \n\n --- \n\n"
                  if($.cookiesArr[i]){
                      $.cookie = $.cookiesArr[i];
                      $.UserName = decodeURIComponent($.cookie.match(/pt_pin=(.+?);/) && $.cookie.match(/pt_pin=(.+?);/)[1])
