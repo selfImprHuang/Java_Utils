@@ -142,25 +142,29 @@
                      $.totalSuccess = 0
                      let size = 1;
                      let list = [1,8,7,10,11] 
-                    for (let i =0;i<list.length;i++){
-                        while(trialActivityIdList.length < args_xh.maxLength && size < maxSize &&  size < totalPages){
-                            console.log(`\n正在进行第 ${size} 次获取试用商品\n`)
-                            console.log(`\n当前产品页面总长度为${totalPages} 页\n`)
-                            await try_feedsList(list[i], size++) 
-                            if(trialActivityIdList.length < args_xh.maxLength){
-                                console.log(`间隔延时中，请等待 ${args_xh.applyInterval} ms`)
-                                await $.wait(args_xh.applyInterval);
+                     while(true){
+                        for (let i =0;i<list.length;i++){
+                            while(trialActivityIdList.length < args_xh.maxLength && size < maxSize &&  size < totalPages){
+                                console.log(`\n正在进行第 ${size} 次获取试用商品\n`)
+                                console.log(`\n当前产品页面总长度为${totalPages} 页\n`)
+                                await try_feedsList(list[i], size++) 
+                                if(trialActivityIdList.length < args_xh.maxLength){
+                                    console.log(`间隔延时中，请等待 ${args_xh.applyInterval} ms`)
+                                    await $.wait(args_xh.applyInterval);
+                                }
                             }
                         }
-                         size = 1 
-                    }
-                     
-                     console.log("正在执行试用申请...")
-                     await $.wait(args_xh.applyInterval);
-                     for(let i = 0; i < trialActivityIdList.length; i++){
-                         await try_apply(trialActivityTitleList[i], trialActivityIdList[i])
-                         console.log(`间隔延时中，请等待 ${args_xh.applyInterval} ms\n`)
+                         
+                         console.log("正在执行试用申请...")
                          await $.wait(args_xh.applyInterval);
+                         for(let i = 0; i < trialActivityIdList.length; i++){
+                             await try_apply(trialActivityTitleList[i], trialActivityIdList[i])
+                             console.log(`间隔延时中，请等待 ${args_xh.applyInterval} ms\n`)
+                             await $.wait(args_xh.applyInterval);
+                         }
+                         await $.wait(args_xh.applyInterval);
+                         trialActivityIdList.length = 0 
+                         size = 1
                      }
                      console.log("试用申请执行完毕...")
      
@@ -258,7 +262,6 @@
                                      console.log(`商品被过滤，期待价格高于预设价格 \n`)
                                  }else if(args_xh.titleFilters.some(fileter_word => data.data.feedList[i].skuTitle.includes(fileter_word))){
                                      console.log('商品被过滤，含有关键词 \n')
-                                 }else{
                                      console.log(`商品通过，将加入试用组，trialActivityId为${data.data.feedList[i].trialActivityId}\n`)
                                      trialActivityIdList.push(data.data.feedList[i].trialActivityId)
                                      trialActivityTitleList.push(data.data.feedList[i].skuTitle)
