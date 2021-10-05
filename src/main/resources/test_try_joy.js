@@ -128,7 +128,8 @@
                      $.totalTry = 0
                      $.totalSuccess = 0
                      let size = 1;
-                     while(trialActivityIdList.length < args_xh.maxLength && size < maxSize){
+                     while(true){
+                        while(trialActivityIdList.length < args_xh.maxLength && size < maxSize){
                          console.log(`\n正在进行第 ${size} 次获取试用商品\n`)
                          await try_feedsList(1, size++) 
                          await try_feedsList(2, size++) 
@@ -138,13 +139,16 @@
                              console.log(`间隔延时中，请等待 ${args_xh.applyInterval} ms`)
                              await $.wait(args_xh.applyInterval);
                          }
-                     }
-                     console.log("正在执行试用申请...")
-                     await $.wait(args_xh.applyInterval);
-                     for(let i = 0; i < trialActivityIdList.length; i++){
-                         await try_apply(trialActivityTitleList[i], trialActivityIdList[i])
-                         console.log(`间隔延时中，请等待 ${args_xh.applyInterval} ms\n`)
+                        }
+                         console.log("正在执行试用申请...")
                          await $.wait(args_xh.applyInterval);
+                         for(let i = 0; i < trialActivityIdList.length; i++){
+                             await try_apply(trialActivityTitleList[i], trialActivityIdList[i])
+                             console.log(`间隔延时中，请等待 ${args_xh.applyInterval} ms\n`)
+                             await $.wait(args_xh.applyInterval);
+                         }
+                         trialActivityIdList.length = 0 
+                         size = 1
                      }
                      console.log("试用申请执行完毕...")
      
