@@ -266,6 +266,7 @@
                                  }else if(args_xh.titleFilters.some(fileter_word => data.data.feedList[i].skuTitle.includes(fileter_word))){
                                      if (fileterCan == 0) {
                                         fileterList += "<font color=\'#778899\' size=2>"  + data.data.feedList[i].skuTitle + "</font>\n\n" 
+                                        fileterList += "<font color=\'#778899\' size=2>"  + `关键字为：`+fileter_word + "</font>\n\n"
                                         fileterList += "<font color=\'#778899\' size=2>"  + `--------` + "</font>\n\n"
                                      }
                                      console.log('商品被过滤，含有关键词 \n')
