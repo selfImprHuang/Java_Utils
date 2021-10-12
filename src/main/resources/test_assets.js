@@ -99,6 +99,12 @@ let cookiesArr = [], cookie = '';
       await jdWish()
     }
     message +=  "----\n\n"
+	
+	if((i+1)%4 == 0 || i == cookiesArr.length -1) {
+		message = message + getPic()
+        postToDingTalk(message)
+		message = ""
+	}
   }
 
   if ($.isNode() && allMessage) {
@@ -109,8 +115,6 @@ let cookiesArr = [], cookie = '';
       $.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')
     })
     .finally(() => {
-        message = message + getPic()
-        postToDingTalk(message)
       $.done();
     })
 

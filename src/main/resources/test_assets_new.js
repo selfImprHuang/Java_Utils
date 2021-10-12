@@ -101,6 +101,12 @@ if ($.isNode()) {
             await showMsg();
             message +=  "----\n\n"
         }
+		
+		if((i+1)%4 == 0 || i == cookiesArr.length -1) {
+			message = message + getPic()
+			postToDingTalk(message)
+			message = ""
+		}
     }
 
     if ($.isNode() && allMessage) {
