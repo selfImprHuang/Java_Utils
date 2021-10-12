@@ -2,6 +2,18 @@
 cron "30 10,22 * * *" jd_bean_change.js, tag:资产变化强化版by-ccwav
 */
 
+let roleMap = {
+    "jd_4521b375ebb5d":"锟子怪",
+    "jd_542c10c0222bc":"康子怪",
+    "jd_66dcb31363ef6":"涛子怪",
+    "18070420956_p":"奇怪子",
+    "jd_45d917547c763":"跑腿小怪",
+    "417040678_m":"斌子",
+    "jd_73d88459d908e":"杰子怪",
+    "jd_66ea783827d30":"军军酱",
+    "jd_4311ac0ff4456":"居居酱"
+}
+let dingtalk = "https://oapi.dingtalk.com/robot/send?access_token=fa87e34729eaa6113fddfa857efebb477dea0a433d6eecfe93b1d3f5e24847b9"
 //更新by ccwav,20210821
 const $ = new Env('京东资产变动通知');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -61,12 +73,7 @@ if ($.isNode()) {
                 continue 
             }
             username = $.UserName
-            if ($.UserName == "jd_66ea783827d30"){
-              username = "军军酱"
-            }
-            if ($.UserName == "jd_4311ac0ff4456"){
-              username = "居居酱"
-            }
+            username = roleMap[username]
              //加上名称
              message = message + "<font color=\'#778899\' size=2>【羊毛姐妹】<font color=\'#FFA500\' size=3>" +  username + " </font> </font> \n\n "
       
@@ -91,7 +98,6 @@ if ($.isNode()) {
             await getJxFactory();   //惊喜工厂
             await getDdFactoryInfo(); // 京东工厂
             await showMsg();
-            message +=  "----\n\n"
         }
     }
 
@@ -117,17 +123,18 @@ async function showMsg() {
     ReturnMessage=`📣=============账号${$.index}=============📣\n`
     ReturnMessage+=`账号名称：${$.nickName || $.UserName}\n`;
     ReturnMessage+=`今日收入：${$.todayIncomeBean}京豆 🐶\n`;
-    ReturnMessage+=`昨日支出：${$.expenseBean}京豆 🐶\n`;
+    message += "<font color=\'#990000\' size=3>" +`今日收入：${$.todayIncomeBean}京豆 🐶\n` +  "</font>\n\n"
     ReturnMessage+=`昨日收入：${$.incomeBean}京豆 🐶\n`;
-    ReturnMessage+=`当前京豆：${$.beanCount}(今日将过期${$.expirejingdou})京豆🐶\n`;
-
-    message += "<font color=\'#990000\' size=3>" + `当前京豆：${$.beanCount}(今日将过期${$.expirejingdou})京豆🐶\n` +"</font>\n\n"
-    message += "<font color=\'#778899\' size=2>" +`今日收入：${$.todayIncomeBean}京豆 🐶\n` +  "</font>\n\n"
     message += "<font color=\'#778899\' size=2>" + `昨日收入：${$.incomeBean}京豆 🐶\n` +"</font>\n\n"
+    ReturnMessage+=`昨日支出：${$.expenseBean}京豆 🐶\n`;
     message += "<font color=\'#778899\' size=2>" +`昨日支出：${$.expenseBean}京豆 🐶\n` +"</font>\n\n"
-    message += "<font color=\'#778899\' size=2>" +`🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶` +"</font>\n\n"
-    
+    ReturnMessage+=`当前京豆：${$.beanCount}(今日将过期${$.expirejingdou})京豆🐶\n`;
+    message += "<font color=\'#778899\' size=2>" + `当前京豆：${$.beanCount}(今日将过期${$.expirejingdou})京豆🐶\n` +"</font>\n\n"
 
+    if(typeof $.JDEggcnt !== "undefined"){
+        ReturnMessage+=`京喜牧场：${$.JDEggcnt}枚鸡蛋\n`;
+        message += "<font color=\'#778899\' size=2>" + `京喜牧场：${$.JDEggcnt}枚鸡蛋\n` +"</font>\n\n"
+    }
     if(typeof $.JDtotalcash !== "undefined"){
         ReturnMessage+=`极速金币：${$.JDtotalcash}金币(≈${$.JDtotalcash / 10000}元)\n`;
         message += "<font color=\'#778899\' size=2>" + `极速金币：${$.JDtotalcash}金币(≈${$.JDtotalcash / 10000}元)\n` +"</font>\n\n"
@@ -140,23 +147,15 @@ async function showMsg() {
         ReturnMessage+=`京东秒杀：${$.JdMsScore}秒秒币(≈${$.JdMsScore / 1000}元)\n`;
         message += "<font color=\'#778899\' size=2>" + `京东秒杀：${$.JdMsScore}秒秒币(≈${$.JdMsScore / 1000}元)\n` +"</font>\n\n"
     }
-
-    message += "<font color=\'#778899\' size=2>" +`🏭🏭🏭🏭🏭🏭🏭🏭🏭🏭` +"</font>\n\n"
-
-    
-    if(typeof $.JDEggcnt !== "undefined"){
-      ReturnMessage+=`京喜牧场：${$.JDEggcnt}枚鸡蛋\n`;
-      message += "<font color=\'#778899\' size=2>" + `京喜牧场：${$.JDEggcnt}枚鸡蛋\n` +"</font>\n\n"
-    }
     if($.JdFarmProdName != ""){
         if($.JdtreeEnergy!=0){
             ReturnMessage+=`东东农场：${$.JdFarmProdName},进度${(($.JdtreeEnergy / $.JdtreeTotalEnergy) * 100).toFixed(2)}%`;
-            message += "<font color=\'#778899\' size=2>" + `东东农场：${$.JdFarmProdName},进度${(($.JdtreeEnergy / $.JdtreeTotalEnergy) * 100).toFixed(2)}%`
+            message += "<font color=\'#778899\' size=2>" + `东东农场：${$.JdFarmProdName},进度${(($.JdtreeEnergy / $.JdtreeTotalEnergy) * 100).toFixed(2)}%` +"</font>\n\n"
             if($.JdwaterD!='Infinity' && $.JdwaterD!='-Infinity'){
                 ReturnMessage+=`,${$.JdwaterD === 1 ? '明天' : $.JdwaterD === 2 ? '后天' : $.JdwaterD + '天后'}可兑🍉\n`;
                 message += "<font color=\'#778899\' size=2>" + `,${$.JdwaterD === 1 ? '明天' : $.JdwaterD === 2 ? '后天' : $.JdwaterD + '天后'}可兑🍉\n` +"</font>\n\n"
-            } else { 
-                ReturnMessage+=`\n` + "</font>\n\n";
+            } else {
+                ReturnMessage+=`\n`;
             }
         } else {
             ReturnMessage+=`东东农场：${$.JdFarmProdName}\n`;
@@ -180,7 +179,7 @@ async function showMsg() {
             ReturnMessage += `东东萌宠：${$.petInfo.goodsInfo.goodsName},`;
             ReturnMessage += `勋章${response.result.medalNum}/${response.result.medalNum+response.result.needCollectMedalNum}块(${response.result.medalPercent}%)\n`;
             //ReturnMessage += `          已有${response.result.medalNum}块勋章，还需${response.result.needCollectMedalNum}块\n`;
-            message += "<font color=\'#778899\' size=2>" +`东东萌宠：${$.petInfo.goodsInfo.goodsName},`
+            message += "<font color=\'#778899\' size=2>" +`东东萌宠：${$.petInfo.goodsInfo.goodsName},` +"</font>\n\n"
             message += "<font color=\'#778899\' size=2>" + `勋章${response.result.medalNum}/${response.result.medalNum+response.result.needCollectMedalNum}块(${response.result.medalPercent}%)\n` +"</font>\n\n"
 
         }
@@ -1156,8 +1155,6 @@ function Env(t,e){class s{constructor(t){this.env=t}send(t,e="GET"){t="string"==
 
 //我加的函数
 function postToDingTalk(messgae) {
-    const dingtalk = "https://oapi.dingtalk.com/robot/send?access_token=c8bdebe8c25ff8d0e0619af6ca1f2b5d7279337b9aa24f2a3e320a3f8ab37783"
-
     const message1 = "" + messgae
     that.log(messgae)
 
@@ -1169,7 +1166,7 @@ function postToDingTalk(messgae) {
         },
         "at": {
             "atMobiles": [],
-            "isAtAll": true
+            "isAtAll": false
         }
     }
 

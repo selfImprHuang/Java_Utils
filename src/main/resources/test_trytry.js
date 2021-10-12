@@ -18,6 +18,7 @@
  * 请提前取关至少250个商店确保京东试用脚本正常运行
  * 没有写通知，是否申请成功没有进行通知，但脚本会把状态log出日志
  */
+ let dingtalk = "https://oapi.dingtalk.com/robot/send?access_token=fa87e34729eaa6113fddfa857efebb477dea0a433d6eecfe93b1d3f5e24847b9"
  let maxSize = 200
  let totalPages = 999999 //总页数
  const $ = new Env('京东试用')
@@ -1070,8 +1071,6 @@
  
  //我加的函数
  function postToDingTalk(messgae) {
-     const dingtalk = "https://oapi.dingtalk.com/robot/send?access_token=18444b555747aad3381bc1d1e3dea72b03158e152a846f818d82a1ca946bd430"
- 
      const message1 = "" + messgae
      // that.log(messgae)
  

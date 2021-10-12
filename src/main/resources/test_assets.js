@@ -19,6 +19,18 @@ cron "2 9 * * *" script-path=https://jdsharedresourcescdn.azureedge.net/jdresour
 ============小火箭=========
 京东资产变动通知 = type=cron,script-path=https://jdsharedresourcescdn.azureedge.net/jdresource/jd_bean_change.js, cronexpr="2 9 * * *", timeout=3600, enable=true
  */
+let roleMap = {
+    "jd_4521b375ebb5d":"锟子怪",
+    "jd_542c10c0222bc":"康子怪",
+    "jd_66dcb31363ef6":"涛子怪",
+    "18070420956_p":"奇怪子",
+    "jd_45d917547c763":"跑腿小怪",
+    "417040678_m":"斌子",
+    "jd_73d88459d908e":"杰子怪",
+    "jd_66ea783827d30":"军军酱",
+    "jd_4311ac0ff4456":"居居酱"
+}
+let dingtalk = "https://oapi.dingtalk.com/robot/send?access_token=fa87e34729eaa6113fddfa857efebb477dea0a433d6eecfe93b1d3f5e24847b9"
 const $ = new Env('京东资产变动通知');
 let  jdFruitShareArr = [], isBox = false, notify, newShareCodes;
 //助力好友分享码(最多4个,否则后面的助力失败),原因:动动农场每人每天只有四次助力机会
@@ -65,26 +77,8 @@ let cookiesArr = [], cookie = '';
           continue 
       }
       username = $.UserName
-      if ($.UserName == "jd_4521b375ebb5d"){
-        username = "锟子怪"
-      }
-      if ($.UserName == "jd_542c10c0222bc"){
-        username = "康子怪"
-      }
-      if($.UserName == "jd_66dcb31363ef6"){
-        username = "涛子怪"
-      }
-      if($.UserName == "18070420956_p"){
-          username = "奇怪"
-      }
-      if($.UserName == "jd_45d917547c763"){
-          username = "跑腿小怪"
-      }
-      if($.UserName == "417040678_m"){
-          username = "斌子怪"
-      }
+      username = roleMap[username]
 
-      
       await TotalBean();
        //加上名称
        message = message + "<font color=\'#778899\' size=1>【羊毛姐妹】<font color=\'#FFA500\' size=2>" +  username + `( ${$.nickName} )`+ " </font> </font> \n\n "
@@ -2128,8 +2122,6 @@ async function jdWish() {
 
 //我加的函数
 function postToDingTalk(messgae) {
-    const dingtalk = "https://oapi.dingtalk.com/robot/send?access_token=fa87e34729eaa6113fddfa857efebb477dea0a433d6eecfe93b1d3f5e24847b9"
-
     const message1 = "" + messgae
     that.log(messgae)
 

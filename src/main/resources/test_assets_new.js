@@ -1,7 +1,18 @@
 /*
 cron "30 10,22 * * *" jd_bean_change.js, tag:资产变化强化版by-ccwav
 */
-
+let roleMap = {
+    "jd_4521b375ebb5d":"锟子怪",
+    "jd_542c10c0222bc":"康子怪",
+    "jd_66dcb31363ef6":"涛子怪",
+    "18070420956_p":"奇怪子",
+    "jd_45d917547c763":"跑腿小怪",
+    "417040678_m":"斌子",
+    "jd_73d88459d908e":"杰子怪",
+    "jd_66ea783827d30":"军军酱",
+    "jd_4311ac0ff4456":"居居酱"
+}
+let dingtalk = "https://oapi.dingtalk.com/robot/send?access_token=fa87e34729eaa6113fddfa857efebb477dea0a433d6eecfe93b1d3f5e24847b9"
 //更新by ccwav,20210821
 const $ = new Env('京东资产变动通知');
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -62,24 +73,8 @@ if ($.isNode()) {
                 continue 
             }
             username = $.UserName
-            if ($.UserName == "jd_4521b375ebb5d"){
-              username = "锟子怪"
-            }
-            if ($.UserName == "jd_542c10c0222bc"){
-              username = "康子怪"
-            }
-            if($.UserName == "jd_66dcb31363ef6"){
-              username = "涛子怪"
-            }
-            if($.UserName == "18070420956_p"){
-                username = "奇怪"
-            }
-            if($.UserName == "jd_45d917547c763"){
-                username = "跑腿小怪"
-            }
-            if($.UserName == "417040678_m"){
-                username = "斌子怪"
-            }
+            username = roleMap[username]
+             
              //加上名称
              message = message + "<font color=\'#778899\' size=2>【羊毛姐妹】<font color=\'#FFA500\' size=3>" +  username + " </font> </font> \n\n "
       
@@ -138,7 +133,7 @@ async function showMsg() {
     message += "<font color=\'#778899\' size=2>" +`今日收入：${$.todayIncomeBean}京豆 🐶\n` +  "</font>\n\n"
     message += "<font color=\'#778899\' size=2>" + `昨日收入：${$.incomeBean}京豆 🐶\n` +"</font>\n\n"
     message += "<font color=\'#778899\' size=2>" +`昨日支出：${$.expenseBean}京豆 🐶\n` +"</font>\n\n"
-    message += "<font color=\'#778899\' size=2>" +`🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶` +"</font>\n\n"
+    // message += "<font color=\'#778899\' size=2>" +`🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶` +"</font>\n\n"
     
 
     if(typeof $.JDtotalcash !== "undefined"){
@@ -154,7 +149,7 @@ async function showMsg() {
         message += "<font color=\'#778899\' size=2>" + `京东秒杀：${$.JdMsScore}秒秒币(≈${$.JdMsScore / 1000}元)\n` +"</font>\n\n"
     }
 
-    message += "<font color=\'#778899\' size=2>" +`🏭🏭🏭🏭🏭🏭🏭🏭🏭🏭` +"</font>\n\n"
+    // message += "<font color=\'#778899\' size=2>" +`🏭🏭🏭🏭🏭🏭🏭🏭🏭🏭` +"</font>\n\n"
 
     
     if(typeof $.JDEggcnt !== "undefined"){
@@ -830,10 +825,10 @@ function getJxFactory() {
                                 } else {
                                     $.unActive = false;//标记是否开启了京喜活动或者选购了商品进行生产
                                     if (!data.factoryList) {
-                                        infoMsg = "当前未开始生产商品,请手动去京东APP->游戏与互动->查看更多->京喜工厂 开启活动"
+                                        // infoMsg = "当前未开始生产商品,请手动去京东APP->游戏与互动->查看更多->京喜工厂 开启活动"
                                         // $.msg($.name, '【提示】', `京东账号${$.index}[${$.nickName}]京喜工厂活动未开始\n请手动去京东APP->游戏与互动->查看更多->京喜工厂 开启活动`);
                                     } else if (data.factoryList && !data.productionList) {
-                                        infoMsg = "当前未开始生产商品,请手动去京东APP->游戏与互动->查看更多->京喜工厂 开启活动"
+                                        // infoMsg = "当前未开始生产商品,请手动去京东APP->游戏与互动->查看更多->京喜工厂 开启活动"
                                     }
                                 }
                             }
@@ -938,7 +933,7 @@ async function getDdFactoryInfo() {
                                 }
 
                             } else {
-                                infoMsg = `当前未选择商品(或未开启活动) , 请到京东APP=>首页=>京东电器=>(底栏)东东工厂 选择商品!`
+                                // infoMsg = `当前未选择商品(或未开启活动) , 请到京东APP=>首页=>京东电器=>(底栏)东东工厂 选择商品!`
                             }
                         } else {
                             $.ddFactoryInfo = "获取失败!"
@@ -1169,8 +1164,6 @@ function Env(t,e){class s{constructor(t){this.env=t}send(t,e="GET"){t="string"==
 
 //我加的函数
 function postToDingTalk(messgae) {
-    const dingtalk = "https://oapi.dingtalk.com/robot/send?access_token=fa87e34729eaa6113fddfa857efebb477dea0a433d6eecfe93b1d3f5e24847b9"
-
     const message1 = "" + messgae
     that.log(messgae)
 
